@@ -1,0 +1,20 @@
+/* Pagination arrow icons are super big for some reason. This resizes them. */
+svg.w-5.h-5 {
+    width: 10px;
+    height: 10px;
+}
+
+
+
+section.all-lines-page li.single-line input[type=checkbox] {
+    display: none;
+}
+
+section.all-lines-page li.single-line input[type=checkbox]:not(:checked) ~ input[type=text],
+section.all-lines-page li.single-line input[type=checkbox]:not(:checked) ~ button.save-btn {
+    display: none;
+}
+
+section.all-lines-page li.single-line input[type=checkbox]:checked ~ button.edit-btn {
+    display: none;
+}
