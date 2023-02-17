@@ -1,3 +1,30 @@
+section {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+button {
+    font-family: sans-serif;
+    text-transform: uppercase;
+}
+
+
+
+.error {
+    color: rgb(243 37 76);
+}
+
+.success {
+    color: rgb(51 181 37);
+}
+
+.warning {
+    color: rgb(207 163 35);
+}
+
+
+
 /* Pagination arrow icons are super big for some reason. This resizes them. */
 svg.w-5.h-5 {
     width: 10px;
@@ -6,15 +33,18 @@ svg.w-5.h-5 {
 
 
 
-section.all-lines-page li.single-line input[type=checkbox] {
-    display: none;
+.single-example {
+    margin-bottom: 1rem;
 }
 
-section.all-lines-page li.single-line input[type=checkbox]:not(:checked) ~ input[type=text],
-section.all-lines-page li.single-line input[type=checkbox]:not(:checked) ~ button.save-btn {
-    display: none;
+.single-example > p {
+    margin: 0.25rem 0;
 }
 
-section.all-lines-page li.single-line input[type=checkbox]:checked ~ button.edit-btn {
-    display: none;
+
+
+span.label {
+    text-transform: uppercase;
+    font-family: sans-serif;
+    font-size: 0.7em;
 }

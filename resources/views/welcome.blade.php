@@ -16,7 +16,13 @@
 
     <body>
 
-        <livewire:all-lines />
+        <livewire:term-adder />
+
+        <livewire:term-index />
+
+        <livewire:example-adder />
+
+        <livewire:example-index />
 
         @livewireScripts
 
