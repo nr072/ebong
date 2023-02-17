@@ -25,6 +25,12 @@ button {
 
 
 
+.text-center {
+    text-align: center;
+}
+
+
+
 /* Pagination arrow icons are super big for some reason. This resizes them. */
 svg.w-5.h-5 {
     width: 10px;
@@ -33,18 +39,29 @@ svg.w-5.h-5 {
 
 
 
-.single-example {
-    margin-bottom: 1rem;
+table {
+    width: 100%;
 }
 
-.single-example > p {
-    margin: 0.25rem 0;
+.alt-rows thead tr {
+    background: #aaa;
 }
 
+.alt-rows tbody tr:nth-child(2n+1) {
+    background: #eee;
+}
 
+.alt-rows tbody tr:nth-child(2n) {
+    background: #ddd;
+}
 
-span.label {
+th {
     text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    font-size: 0.8em;
     font-family: sans-serif;
-    font-size: 0.7em;
+}
+
+td {
+    padding: 0.1rem 0.35rem;
 }

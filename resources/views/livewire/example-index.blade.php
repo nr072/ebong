@@ -15,39 +15,45 @@
 
     @else
 
-        <ul>
 
-            @foreach ($examples as $example)
-                <li class="single-example">
+        <table class="alt-rows">
+            <thead>
+                <tr>
+                    <th>en</th>
+                    <th>bn</th>
+                    <th>Source</th>
+                    <th>Links</th>
+                </tr>
+            </thead>
+            <tbody>
 
-                    <p><span class="label">en:</span> {{ $example->en }}</p>
-                    @if ($example->bn)
-                        <p><span class="label">bn:</span> {{ $example->bn }}</p>
-                    @endif
+                @foreach ($examples as $example)
+                    <tr>
+                        <td>{{ $example->en }}</td>
+                        <td>{{ $example->bn }}</td>
+                        <td class="text-center">{{ $example->source }}</td>
+                        <td class="text-center">
+                            <span>
+                                @if ($example->link_1)
+                                    <a href="{{ $example->link_1 }}">#1</a>
+                                @endif
+                            </span>
+                            <span>
+                                @if ($example->link_2)
+                                    <a href="{{ $example->link_2 }}">#2</a>
+                                @endif
+                            </span>
+                            <span>
+                                @if ($example->link_3)
+                                    <a href="{{ $example->link_3 }}">#3</a>
+                                @endif
+                            </span>
+                        </td>
+                    </tr>
+                @endforeach
 
-                    @if ($example->source)
-                        <p><span class="label">Source:</span> {{ $example->source }}</p>
-                    @endif
-
-                    {{-- If no links exist, no need to show the line for links. --}}
-                    @if ( $example->link_1 || $example->link_2 || $example->link_3 )
-                        <p><span class="label">Links:</span>
-                            @if ($example->link_1)
-                                <a href="{{ $example->link_1 }}">#1</a>&nbsp;
-                            @endif
-                            @if ($example->link_2)
-                                <a href="{{ $example->link_2 }}">#2</a>&nbsp;
-                            @endif
-                            @if ($example->link_3)
-                                <a href="{{ $example->link_3 }}">#3</a>
-                            @endif
-                        </p>
-                    @endif
-
-                </li>
-            @endforeach
-
-        </ul>
+            </tbody>
+        </table>
 
         {{ $examples->links() }}
 
