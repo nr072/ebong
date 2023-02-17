@@ -3,7 +3,10 @@
     <h1>Add a term</h1>
 
     <div>
-        <input type="text" wire:model="newText" placeholder="Enter a new term here">
+        <input type="text"
+            wire:model="newText" wire:keydown.enter="addTerm"
+            placeholder="Enter a new term here"
+        >
         @error ('newText')
             <span class="error">{{ $message }}</span>
         @enderror
