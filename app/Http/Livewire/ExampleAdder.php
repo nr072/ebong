@@ -43,7 +43,7 @@ class ExampleAdder extends Component
 
     public function addExample()
     {
-        $this->validate();
+        $validatedData = $this->validate();
 
         // Nice visual cue that things are starting.
         $this->status['type'] = 'warning';
@@ -57,13 +57,13 @@ class ExampleAdder extends Component
 
         // Example creation.
         $newExample = Example::create([
-            'en' => $this->newTextEn,
-            'bn' => $this->newTextBn,
-            'source' => $this->source,
-            'link_1' => $this->link1,
-            'link_2' => $this->link2,
-            'link_3' => $this->link3,
-            'term_id' => $this->termId
+            'en' => $validatedData['newTextEn'],
+            'bn' => $validatedData['newTextBn'],
+            'source' => $validatedData['source'],
+            'link_1' => $validatedData['link1'],
+            'link_2' => $validatedData['link2'],
+            'link_3' => $validatedData['link3'],
+            'term_id' => $validatedData['termId']
         ]);
 
         // Association to... associated term.
