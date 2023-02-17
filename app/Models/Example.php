@@ -13,10 +13,12 @@ class Example extends Model
     protected $fillable = [
         'en',
         'bn',
+        'context',
+        'subcontext',
+        'source',
         'link_1',
         'link_2',
         'link_3',
-        'source',
         'term_id',
     ];
 

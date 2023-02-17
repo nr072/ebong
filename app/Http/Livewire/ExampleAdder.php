@@ -13,6 +13,9 @@ class ExampleAdder extends Component
 
     public $newTextEn = '';
     public $newTextBn = '';
+    
+    public $context = '';
+    public $subcontext = '';
 
     public $source = '';
     public $link1 = '';
@@ -32,6 +35,8 @@ class ExampleAdder extends Component
     protected $rules = [
         'newTextEn' => 'required|string',
         'newTextBn' => 'nullable|string',
+        'context' => 'nullable|max:200',
+        'subcontext' => 'nullable|max:200',
         'source' => 'nullable|max:100',
         'link1' => 'nullable|max:200',
         'link2' => 'nullable|max:200',
@@ -59,6 +64,8 @@ class ExampleAdder extends Component
         $newExample = Example::create([
             'en' => $validatedData['newTextEn'],
             'bn' => $validatedData['newTextBn'],
+            'context' => $validatedData['context'],
+            'subcontext' => $validatedData['subcontext'],
             'source' => $validatedData['source'],
             'link_1' => $validatedData['link1'],
             'link_2' => $validatedData['link2'],

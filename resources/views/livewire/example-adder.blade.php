@@ -24,6 +24,24 @@
 
         <p>
             <input type="text"
+                wire:model="context" wire:keydown.enter="addExample"
+                placeholder="Enter context here"
+            >
+            @error ('context')
+                <span class="error">{{ $message }}</span>
+            @enderror
+
+            <input type="text"
+                wire:model.lazy="subcontext" wire:keydown.enter="addExample"
+                placeholder="Enter subcontext here"
+            >
+            @error ('subcontext')
+                <span class="error">{{ $message }}</span>
+            @enderror
+        </p>
+
+        <p>
+            <input type="text"
                 wire:model.lazy="source" wire:keydown.enter="addExample"
                 placeholder="Enter source name here"
             >

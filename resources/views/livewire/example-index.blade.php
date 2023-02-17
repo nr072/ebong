@@ -21,7 +21,11 @@
                 <tr>
                     <th>en</th>
                     <th>bn</th>
+
+                    <th>Context</th>
+
                     <th>Source</th>
+
                     <th>Links</th>
                 </tr>
             </thead>
@@ -31,7 +35,18 @@
                     <tr>
                         <td>{{ $example->en }}</td>
                         <td>{{ $example->bn }}</td>
+
+                        <td>
+                            @if ($example->context)
+                                <div>{{ $example->context }}</div>
+                            @endif
+                            @if ($example->subcontext)
+                                <div>{{ $example->subcontext }}</div>
+                            @endif
+                        </td>
+
                         <td class="text-center">{{ $example->source }}</td>
+
                         <td class="text-center">
                             <span>
                                 @if ($example->link_1)
