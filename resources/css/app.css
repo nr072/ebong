@@ -1,3 +1,14 @@
+:root {
+    font-size: 15px;
+    font-family: serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+
 section {
     border: 1px solid #ccc;
     padding: 1rem;
@@ -63,5 +74,19 @@ th {
 }
 
 td {
-    padding: 0.1rem 0.35rem;
+    padding: 0.25rem 0.35rem;
+}
+
+
+
+/*
+    Crowdin contexts can contain IDs which appear in this format:
+        abcd.efgh.ijkl.mnop
+*/
+td.cell-context > div {
+    word-break: break-word;
+}
+
+td.cell-context > div:first-child {
+    margin-bottom: 0.35rem;
 }
