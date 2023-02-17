@@ -13,7 +13,10 @@
                 <span class="error">{{ $message }}</span>
             @enderror
 
-            <input type="text" wire:model.lazy="newTextBn" placeholder="Enter its bn here">
+            <input type="text"
+                wire:model.lazy="newTextBn" wire:keydown.enter="addExample"
+                placeholder="Enter its bn here"
+            >
             @error ('newTextBn')
                 <span class="error">{{ $message }}</span>
             @enderror
