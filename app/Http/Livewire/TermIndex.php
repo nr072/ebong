@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Term;
-use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Log;
 
@@ -12,6 +11,7 @@ class TermIndex extends Component
 {
 
     private $terms;
+    private $paginCount = 20;
 
     protected $queryString = [
         'searchedEn' => ['except' => '', 'as' => 'en'],
@@ -33,16 +33,16 @@ class TermIndex extends Component
 
     public function render()
     {
-        $this->terms = DB::table('terms');
-
         // If something was searched, results are filtered.
         if ($this->searchedEn != '') {
-            $this->terms = $this->terms
-                ->where('en', 'like', '%'.$this->searchedEn.'%');
+            $this->terms = Term::where('en', 'like', '%'.$this->searchedEn.'%')
+                ->paginate($this->paginCount);
+        } else {
+            $this->terms = Term::paginate($this->paginCount);
         }
 
         return view('livewire.term-index', [
-            'terms' => $this->terms->paginate(10)
+            'terms' => $this->terms
         ]);
     }
 
