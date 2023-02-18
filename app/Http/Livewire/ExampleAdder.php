@@ -62,14 +62,14 @@ class ExampleAdder extends Component
 
         // Example creation.
         $newExample = Example::create([
-            'en' => $validatedData['newTextEn'],
-            'bn' => $validatedData['newTextBn'],
-            'context' => $validatedData['context'],
-            'subcontext' => $validatedData['subcontext'],
-            'source' => $validatedData['source'],
-            'link_1' => $validatedData['link1'],
-            'link_2' => $validatedData['link2'],
-            'link_3' => $validatedData['link3'],
+            'en' => trim( $validatedData['newTextEn'] ),
+            'bn' => trim( $validatedData['newTextBn'] ),
+            'context' => trim( $validatedData['context'] ),
+            'subcontext' => trim( $validatedData['subcontext'] ),
+            'source' => trim( $validatedData['source'] ),
+            'link_1' => trim( $validatedData['link1'] ),
+            'link_2' => trim( $validatedData['link2'] ),
+            'link_3' => trim( $validatedData['link3'] ),
             'term_id' => $validatedData['termId']
         ]);
 
