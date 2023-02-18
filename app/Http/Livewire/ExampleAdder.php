@@ -91,9 +91,13 @@ class ExampleAdder extends Component
 
     public function render()
     {
+
+        // Terms are returned alphabetically sorted so that they can be
+        // shown in groups using the HTML <optgroup> element.
         return view('livewire.example-adder', [
-            'terms' => Term::all()
+            'terms' => Term::orderBy('en')->get()
         ]);
+
     }
 
 }

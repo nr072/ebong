@@ -20,6 +20,19 @@
             @error ('newTextBn')
                 <span class="error">{{ $message }}</span>
             @enderror
+
+            {{-- A custom Laravel component is used for showing options
+                alphabetically in groups. --}}
+            <span>Associated with: </span>
+            <x-alphabetical-optgroup livewire-model="termId"
+                :options="$terms"
+                opt-id-key="id" opt-value-key="en"
+                default-opt-value="Select a term"
+            />
+            @error ('termId')
+                <span class="error">{{ $message }}</span>
+            @enderror
+
         </p>
 
         <p>
@@ -70,19 +83,6 @@
                 placeholder="Enter one more link here"
             >
             @error ('link3')
-                <span class="error">{{ $message }}</span>
-            @enderror
-        </p>
-
-        <p>
-            <span>Associated with: </span>
-            <select wire:model="termId">
-                <option value="0">Select a term</option>
-                @foreach ($terms as $term)
-                    <option value="{{ $term->id }}">{{ $term->en }}</option>
-                @endforeach
-            </select>
-            @error ('termId')
                 <span class="error">{{ $message }}</span>
             @enderror
         </p>
