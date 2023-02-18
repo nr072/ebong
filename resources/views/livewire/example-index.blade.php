@@ -19,6 +19,8 @@
         <table class="alt-rows">
             <thead>
                 <tr>
+                    <th class="cell-term">Term</th>
+
                     <th class="cell-en">en</th>
                     <th class="cell-bn">bn</th>
 
@@ -33,6 +35,8 @@
 
                 @foreach ($examples as $example)
                     <tr>
+                        <td class="cell-term">{{ $example->term->en }}</td>
+
                         <td class="cell-en">{{ $example->en }}</td>
                         <td class="cell-bn">{{ $example->bn }}</td>
 
@@ -45,9 +49,9 @@
                             @endif
                         </td>
 
-                        <td class="cell-source text-center">{{ $example->source }}</td>
+                        <td class="cell-source">{{ $example->source }}</td>
 
-                        <td class="cell-links text-center">
+                        <td class="cell-links">
                             <span>
                                 @if ($example->link_1)
                                     <a href="{{ $example->link_1 }}">#1</a>

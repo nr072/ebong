@@ -79,14 +79,22 @@ td {
 
 
 
+.cell-term,
+.cell-source,
+.cell-links {
+    text-align: center;
+}
+
+
+
 /*
     Crowdin contexts can contain IDs which appear in this format:
         abcd.efgh.ijkl.mnop
 */
-td.cell-context > div {
+.cell-context > div {
     word-break: break-word;
 }
 
-td.cell-context > div:first-child {
+.cell-context > div:first-child {
     margin-bottom: 0.35rem;
 }
