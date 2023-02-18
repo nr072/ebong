@@ -17,6 +17,10 @@ class ExampleIndex extends Component
         'searchedEn' => ['except' => '', 'as' => 'en'],
     ];
 
+    protected $listeners = [
+        'exampleCreated' => 'render',
+    ];
+
 
 
     public $searchedEn = '';

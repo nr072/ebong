@@ -45,10 +45,16 @@ class TermAdder extends Component
         // Fields are cleared.
         $this->reset();
 
-        // Nice visual cue again.
         if ($newTerm) {
+
+            // Nice visual cue again.
             $this->status['type'] = 'success';
             $this->status['text'] = 'New term added';
+
+            // An event is emitted so that other Livewire components can
+            // detect this and update if needed.
+            $this->emit('termCreated');
+
         }
 
     }

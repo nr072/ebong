@@ -17,6 +17,10 @@ class TermIndex extends Component
         'searchedEn' => ['except' => '', 'as' => 'en'],
     ];
 
+    protected $listeners = [
+        'termCreated' => 'render',
+    ];
+
 
 
     public $searchedEn = '';
