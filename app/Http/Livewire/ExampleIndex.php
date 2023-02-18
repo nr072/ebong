@@ -35,10 +35,12 @@ class ExampleIndex extends Component
     {
         // If something was searched, results are filtered.
         if ($this->searchedEn != '') {
-            $this->examples = Example::where('en', 'like', '%'.$this->searchedEn.'%')
+            $this->examples = Example::orderBy('en')
+                ->where('en', 'like', '%'.$this->searchedEn.'%')
                 ->paginate($this->paginCount);
         } else {
-            $this->examples = Example::paginate($this->paginCount);
+            $this->examples = Example::orderBy('en')
+                ->paginate($this->paginCount);
         }
 
         return view('livewire.example-index', [
