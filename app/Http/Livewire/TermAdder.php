@@ -42,7 +42,7 @@ class TermAdder extends Component
             'en' => $this->newText
         ]);
 
-        // Fields are cleared.
+        // Input fields are cleared.
         $this->reset();
 
         if ($newTerm) {

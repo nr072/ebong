@@ -23,7 +23,7 @@ class ExampleAdder extends Component
     public $link3 = '';
 
     // Refers to the ID of the associated term.
-    public $termId = '';
+    public $termIds = [];
 
     // Visual cues to let the user know things are happening (or maybe
     // not happening).
@@ -41,7 +41,8 @@ class ExampleAdder extends Component
         'link1' => 'nullable|max:200',
         'link2' => 'nullable|max:200',
         'link3' => 'nullable|max:200',
-        'termId' => 'required|numeric',
+        'termIds' => 'required|array',
+        'termIds.*' => 'required|numeric',
     ];
 
 
@@ -70,14 +71,15 @@ class ExampleAdder extends Component
             'link_1' => trim( $validatedData['link1'] ),
             'link_2' => trim( $validatedData['link2'] ),
             'link_3' => trim( $validatedData['link3'] ),
-            'term_id' => $validatedData['termId']
         ]);
 
-        // Association to... associated term.
-        $term = Term::find($this->termId);
-        $term->examples()->save($newExample);
+        // For each associated term, a relation to the example is formed.
+        foreach ($validatedData['termIds'] as $key => $value) {
+            $term = Term::find($value);
+            $term->examples()->save($newExample);
+        }
 
-        // Fields are cleared.
+        // Input fields are cleared.
         $this->reset();
 
         if ($newExample) {

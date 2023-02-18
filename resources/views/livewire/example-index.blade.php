@@ -19,12 +19,12 @@
         <table class="alt-rows">
             <thead>
                 <tr>
-                    <th class="cell-term">Term</th>
-
                     <th class="cell-en">en</th>
                     <th class="cell-bn">bn</th>
 
                     <th class="cell-context">Context</th>
+
+                    <th class="cell-term">Terms</th>
 
                     <th class="cell-source">Source</th>
 
@@ -35,8 +35,6 @@
 
                 @foreach ($examples as $example)
                     <tr>
-                        <td class="cell-term">{{ $example->term->en }}</td>
-
                         <td class="cell-en">{{ $example->en }}</td>
                         <td class="cell-bn">{{ $example->bn }}</td>
 
@@ -47,6 +45,12 @@
                             @if ($example->subcontext)
                                 <div>{{ $example->subcontext }}</div>
                             @endif
+                        </td>
+
+                        <td class="cell-term">
+                            @foreach ($example->terms as $term)
+                                {{ $term->en }}
+                            @endforeach
                         </td>
 
                         <td class="cell-source">{{ $example->source }}</td>

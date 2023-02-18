@@ -20,20 +20,20 @@
             @error ('newTextBn')
                 <span class="error">{{ $message }}</span>
             @enderror
-
-            {{-- A custom Laravel component is used for showing options
-                alphabetically in groups. --}}
-            <span>Associated with: </span>
-            <x-alphabetical-optgroup livewire-model="termId"
-                :options="$terms"
-                opt-id-key="id" opt-value-key="en"
-                default-opt-value="Select a term"
-            />
-            @error ('termId')
-                <span class="error">{{ $message }}</span>
-            @enderror
-
         </p>
+
+        {{-- A custom Laravel component is used for showing options
+            alphabetically sorted and grouped together. --}}
+        <span>Associated with: </span>
+        <x-checkboxes-grouped-alphabetical
+            livewire-model="termIds"
+            :options="$terms"
+            opt-id-key="id" opt-value-key="en"
+            ckbx-name-value="term-ids"
+        />
+        @error ('termIds.*')
+            <span class="error">{{ $message }}</span>
+        @enderror
 
         <p>
             <input type="text"

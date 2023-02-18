@@ -24,9 +24,9 @@ class Example extends Model
 
 
 
-    public function term()
+    public function terms()
     {
-        return $this->belongsTo(Term::class);
+        return $this->belongsToMany(Term::class);
     }
 
 }
