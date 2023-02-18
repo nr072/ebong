@@ -98,3 +98,27 @@ td {
 .cell-context > div:first-child {
     margin-bottom: 0.35rem;
 }
+
+
+
+.assoc-term-sets-wrap {
+    max-height: 50vh;
+    overflow: auto;
+    resize: vertical;
+    min-height: 10vh;
+    height: 30vh;
+    border: 1px solid #ddd;
+    padding: 0.25em;
+}
+
+/*
+    While creating new examples, all terms are shown as grouped together
+    in alphabetical sets. Some spacing among the sets help them stand out.
+*/
+.assoc-term-set-wrap {
+    margin-bottom: 0.5em;
+}
+
+.assoc-term-set-wrap input[type=checkbox] {
+    vertical-align: middle;
+}
