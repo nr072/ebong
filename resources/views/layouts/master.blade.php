@@ -6,7 +6,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>@yield('tab-title')</title>
 
         @livewireStyles
 
@@ -16,9 +16,7 @@
 
     <body>
 
-        <a style="margin: 1rem; padding: 0.5rem 0.75rem; border: 1px solid #333;" href="/terms">terms</a>
-
-        <a style="margin: 1rem; padding: 0.5rem 0.75rem; border: 1px solid #333;" href="/examples">examples</a>
+        @yield('main')
 
         @livewireScripts
 

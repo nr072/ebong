@@ -35,10 +35,12 @@ class TermIndex extends Component
     {
         // If something was searched, results are filtered.
         if ($this->searchedEn != '') {
-            $this->terms = Term::where('en', 'like', '%'.$this->searchedEn.'%')
+            $this->terms = Term::orderBy('en')
+                ->where('en', 'like', '%'.$this->searchedEn.'%')
                 ->paginate($this->paginCount);
         } else {
-            $this->terms = Term::paginate($this->paginCount);
+            $this->terms = Term::orderBy('en')
+                ->paginate($this->paginCount);
         }
 
         return view('livewire.term-index', [
