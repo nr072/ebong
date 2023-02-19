@@ -107,6 +107,7 @@ td {
     resize: vertical;
     min-height: 10vh;
     height: 30vh;
+    width: 70%;
     border: 1px solid #ddd;
     padding: 0.25em;
 }
