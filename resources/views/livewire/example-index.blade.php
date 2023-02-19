@@ -2,36 +2,97 @@
 
     <h1>Examples</h1>
 
-    <div>
-        <input type="text" wire:model="searchedEn" placeholder="Type to search en examples">
-        @if ($searchedEn)
-            <button wire:click="resetSearchedEn">&times;</button>
-        @endif
-    </div>
+    <table class="alt-rows">
+        <thead>
+            <tr>
+                <th class="cell-en">en</th>
+                <th class="cell-bn">bn</th>
 
-    @if ($examples->count() < 1)
+                <th class="cell-context">Context</th>
 
-        <p>Status: No examples found</p>
+                <th class="cell-term">Terms</th>
 
-    @else
+                <th class="cell-source">Source</th>
 
+                <th class="cell-links">Links</th>
+            </tr>
+        </thead>
+        <tbody>
 
-        <table class="alt-rows">
-            <thead>
-                <tr>
-                    <th class="cell-en">en</th>
-                    <th class="cell-bn">bn</th>
+            <tr class="search-fields-row">
+                <td>
+                    <div>
+                        <input type="text"
+                            wire:model="searchedEn"
+                            placeholder="Type to search"
+                        >
+                        @if ($searchedEn)
+                            <button wire:click="resetSearched('en')"
+                                title="Click to clear searched string"
+                            >&times;</button>
+                        @endif
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <input type="text"
+                            wire:model="searchedBn"
+                            placeholder="Type to search"
+                        >
+                        @if ($searchedBn)
+                            <button wire:click="resetSearched('bn')"
+                                title="Click to clear searched string"
+                            >&times;</button>
+                        @endif
+                    </div>
+                </td>
 
-                    <th class="cell-context">Context</th>
+                <td>
+                    <div>
+                        <input type="text"
+                            wire:model="searchedContext"
+                            placeholder="Type to search"
+                        >
+                        @if ($searchedContext)
+                            <button wire:click="resetSearched('context')"
+                                title="Click to clear searched string"
+                            >&times;</button>
+                        @endif
+                    </div>
+                </td>
 
-                    <th class="cell-term">Terms</th>
+                <td>
+                    <div>
+                        <input type="text"
+                            wire:model="searchedTerm"
+                            placeholder="Type to search"
+                        >
+                        @if ($searchedTerm)
+                            <button wire:click="resetSearched('term')"
+                                title="Click to clear searched string"
+                            >&times;</button>
+                        @endif
+                    </div>
+                </td>
 
-                    <th class="cell-source">Source</th>
+                <td>
+                    <div>
+                        <input type="text"
+                            wire:model="searchedSource"
+                            placeholder="Type to search"
+                        >
+                        @if ($searchedSource)
+                            <button wire:click="resetSearched('source')"
+                                title="Click to clear searched string"
+                            >&times;</button>
+                        @endif
+                    </div>
+                </td>
 
-                    <th class="cell-links">Links</th>
-                </tr>
-            </thead>
-            <tbody>
+                <td></td>
+            </tr>
+
+            @if ($examples->count() > 0)
 
                 @foreach ($examples as $example)
                     <tr>
@@ -49,7 +110,7 @@
 
                         <td class="cell-term">
                             @foreach ($example->terms as $term)
-                                {{ $term->en }}
+                                <span>{{ $term->en }}</span>
                             @endforeach
                         </td>
 
@@ -75,11 +136,17 @@
                     </tr>
                 @endforeach
 
-            </tbody>
-        </table>
+            @endif
 
-        {{ $examples->links() }}
+        </tbody>
+    </table>
 
+    {{ $examples->links() }}
+
+
+
+    @if ($examples->count() < 1)
+        <p>Status: No examples found</p>
     @endif
 
 </section>
