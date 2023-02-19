@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class checkboxes-grouped-alphabetical extends Component
+class AlphabeticalOptgroup extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class checkboxes-grouped-alphabetical extends Component
      */
     public function render()
     {
-        return view('components.checkboxes-grouped-alphabetical');
+        return view('components.alphabetical-optgroup');
     }
 }
