@@ -9,6 +9,12 @@
 
 
 
+/* ==================================================================
+
+                              COMMON STYLES
+
+   ================================================================== */
+
 section {
     border: 1px solid #ccc;
     padding: 1rem;
@@ -18,9 +24,33 @@ section {
 button {
     font-family: sans-serif;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 
+
+table {
+    width: 100%;
+}
+
+th {
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    font-size: 0.8em;
+    font-family: sans-serif;
+}
+
+td {
+    padding: 0.25rem 0.35rem;
+}
+
+
+
+/* ==================================================================
+
+                              UTILITY CLASSES
+
+   ================================================================== */
 
 .error {
     color: rgb(243 37 76);
@@ -42,17 +72,7 @@ button {
 
 
 
-/* Pagination arrow icons are super big for some reason. This resizes them. */
-svg.w-5.h-5 {
-    width: 10px;
-    height: 10px;
-}
-
-
-
-table {
-    width: 100%;
-}
+/* Alternate rows in tables are differently colored for visual comfort. */
 
 .alt-rows thead tr {
     background: #aaa;
@@ -66,15 +86,49 @@ table {
     background: #ddd;
 }
 
-th {
-    text-transform: uppercase;
-    padding: 0.5rem 1rem;
-    font-size: 0.8em;
-    font-family: sans-serif;
+
+
+/* ==================================================================
+
+                                PAGINATION
+
+   ================================================================== */
+
+/* Pagination arrow icons are super big for some reason. This resizes them. */
+svg.w-5.h-5 {
+    width: 10px;
+    height: 10px;
 }
 
-td {
-    padding: 0.25rem 0.35rem;
+
+
+/* ==================================================================
+
+                              EXAMPLE INDEX
+
+   ================================================================== */
+
+/* Input fields just below the header row are fitted with the cells. */
+.search-fields-row td {
+    padding: 0;
+}
+
+.search-fields-row td > div {
+    display: flex;
+}
+
+.search-fields-row input {
+    width: 100%;
+}
+
+.search-fields-row input,
+.search-fields-row input + button {
+    border: 1px solid #aaa;
+    border-radius: 0;
+}
+
+.search-fields-row input + button {
+    border-left: none;
 }
 
 
@@ -83,6 +137,15 @@ td {
 .cell-source,
 .cell-links {
     text-align: center;
+}
+
+
+
+/* In the example list, associated terms are separated with a symbol so
+    that they're easier to differentiate. */
+.cell-term > span + span::before {
+    content: '|';
+    margin-right: 0.2em;
 }
 
 
@@ -101,6 +164,12 @@ td {
 
 
 
+/* ==================================================================
+
+                              EXAMPLE ADDER
+
+   ================================================================== */
+
 .assoc-term-sets-wrap {
     max-height: 50vh;
     overflow: auto;
@@ -112,10 +181,8 @@ td {
     padding: 0.25em;
 }
 
-/*
-    While creating new examples, all terms are shown as grouped together
-    in alphabetical sets. Some spacing among the sets help them stand out.
-*/
+/* While creating new examples, all terms are shown as grouped together
+    in alphabetical sets. Some spacing among the sets help them stand out. */
 .assoc-term-set-wrap {
     margin-bottom: 0.5em;
 }
