@@ -108,6 +108,7 @@ class ExampleAdder extends Component
     public function associateTerm($id)
     {
         array_push($this->chosenAssocTermIds, $id);
+        $this->reset('searchedAssocTerm');
     }
 
 
