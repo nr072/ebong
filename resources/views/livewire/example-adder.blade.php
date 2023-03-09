@@ -22,18 +22,51 @@
             @enderror
         </p>
 
-        {{-- A custom Laravel component is used for showing options
-            alphabetically sorted and grouped together. --}}
+
+
         <span>Associated with: </span>
-        <x-checkboxes-grouped-alphabetical
-            livewire-model="termIds"
-            :options="$terms"
-            opt-id-key="id" opt-value-key="en"
-            ckbx-name-value="term-ids"
-        />
+        <div>
+            <input type="text"
+                wire:model="searchedAssocTerm"
+            >
+
+            <div style="border: 1px solid gray; max-height: 20vh; overflow: auto;">
+                @if (sizeof($filteredAssocTerms) > 0)
+                    total: {{ sizeof($filteredAssocTerms) }}
+                @endif
+                @foreach ($filteredAssocTerms as $id => $en)
+                    @if (!in_array($id, $chosenAssocTermIds, true))
+                        <button wire:click="associateTerm({{ $id }})">{{ $id }} -- {{ $en }}</button>
+                    @endif
+                @endforeach
+            </div>
+
+            @if (sizeof($chosenAssocTermIds) > 0)
+                @foreach ($chosenAssocTermIds as $id)
+                    <span>{{ $id }}</span>
+                @endforeach
+            @endif
+        </div>
         @error ('termIds.*')
             <span class="error">{{ $message }}</span>
         @enderror
+
+
+
+        {{-- A custom Laravel component is used for showing options
+            alphabetically sorted and grouped together. --}}
+        {{-- <span>Associated with: </span> --}}
+        {{-- <livewire:example-assoc-term-chooser --}}
+            {{-- livewire-model="termIds" --}}
+            {{-- :options="$terms" --}}
+            {{-- opt-id-key="id" opt-value-key="en" --}}
+            {{-- ckbx-name-value="term-ids" --}}
+        {{-- /> --}}
+        {{-- @error ('termIds.*') --}}
+            {{-- <span class="error">{{ $message }}</span> --}}
+        {{-- @enderror --}}
+
+
 
         <p>
             <input type="text"

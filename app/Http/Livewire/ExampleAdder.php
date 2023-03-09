@@ -22,8 +22,16 @@ class ExampleAdder extends Component
     public $link2 = '';
     public $link3 = '';
 
+    public $searchedAssocTerm;
+
+    protected $queryString = [
+        'searchedAssocTerm' => ['except' => '', 'as' => 'assoc'],
+    ];
+
+    private $filteredAssocTerms;
+
     // Refers to the ID of the associated term.
-    public $termIds = [];
+    public $chosenAssocTermIds = [];
 
     // Visual cues to let the user know things are happening (or maybe
     // not happening).
@@ -41,8 +49,8 @@ class ExampleAdder extends Component
         'link1' => 'nullable|max:200',
         'link2' => 'nullable|max:200',
         'link3' => 'nullable|max:200',
-        'termIds' => 'required|array',
-        'termIds.*' => 'required|numeric',
+        'chosenAssocTermIds' => 'required|array',
+        'chosenAssocTermIds.*' => 'required|numeric',
     ];
 
 
@@ -74,7 +82,7 @@ class ExampleAdder extends Component
         ]);
 
         // For each associated term, a relation to the example is formed.
-        foreach ($validatedData['termIds'] as $key => $value) {
+        foreach ($validatedData['chosenAssocTermIds'] as $key => $value) {
             $term = Term::find($value);
             $term->examples()->save($newExample);
         }
@@ -97,13 +105,30 @@ class ExampleAdder extends Component
 
 
 
+    public function associateTerm($id)
+    {
+        array_push($this->chosenAssocTermIds, $id);
+    }
+
+
+
     public function render()
     {
+
+        if ($this->searchedAssocTerm) {
+            $this->filteredAssocTerms = Term::orderBy('en')
+                                ->where('en', 'like', $this->searchedAssocTerm.'%');
+        } else {
+            $this->filteredAssocTerms = Term::orderBy('en');
+        }
+
+        $this->filteredAssocTerms = $this->filteredAssocTerms->pluck('en', 'id');
 
         // Terms are returned alphabetically sorted so that they can be
         // shown in groups using the HTML <optgroup> element.
         return view('livewire.example-adder', [
-            'terms' => Term::orderBy('en')->get()
+            'terms' => Term::orderBy('en')->get(),
+            'filteredAssocTerms' => $this->filteredAssocTerms,
         ]);
 
     }
