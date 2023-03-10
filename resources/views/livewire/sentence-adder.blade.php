@@ -49,6 +49,7 @@
         </div>
         @error ('wordIds.*')
             <span class="error">{{ $message }}</span>
+        @enderror
 
 
 
