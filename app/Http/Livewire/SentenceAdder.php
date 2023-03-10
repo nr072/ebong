@@ -109,6 +109,9 @@ class SentenceAdder extends Component
     {
         array_push($this->chosenAssocWordIds, $id);
         $this->reset('searchedAssocWord');
+
+        // Used for focusing the assoc word input field.
+        $this->emit('word-associated');
     }
 
 
@@ -118,6 +121,9 @@ class SentenceAdder extends Component
         if (in_array($id, $this->chosenAssocWordIds)) {
             unset($this->chosenAssocWordIds[ array_search($id, $this->chosenAssocWordIds) ]);
         }
+
+        // Used for focusing the assoc word input field.
+        $this->emit('word-dissociated');
     }
 
 

@@ -26,7 +26,7 @@
 
         <span>Associated with: </span>
         <div>
-            <input type="text"
+            <input type="text" id="searchedAssocWord"
                 wire:model="searchedAssocWord"
             >
 
@@ -115,5 +115,24 @@
         <p>Status: <span class="{{ $status['type'] }}">{{ $status['text'] }}<span></p>
 
     </section>
+
+
+
+    <script type="text/javascript">
+
+        "use strict";
+
+        document.addEventListener("livewire:load", () => {
+
+            const focusAssocWordField = () => {
+                document.getElementById("searchedAssocWord")?.focus();
+            };
+
+            Livewire.on("word-associated", focusAssocWordField);
+            Livewire.on("word-dissociated", focusAssocWordField);
+
+        });
+
+    </script>
 
 @endif
