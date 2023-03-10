@@ -10,7 +10,10 @@ class Word extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['en'];
+    protected $fillable = [
+        'en',
+        'pos'
+    ];
 
     public function sentences()
     {

@@ -133,7 +133,7 @@ svg.w-5.h-5 {
 
 
 
-.cell-term,
+.cell-word,
 .cell-source,
 .cell-links {
     text-align: center;
@@ -141,9 +141,9 @@ svg.w-5.h-5 {
 
 
 
-/* In the example list, associated terms are separated with a symbol so
+/* In the sentence list, associated words are separated with a symbol so
     that they're easier to differentiate. */
-.cell-term > span + span::before {
+.cell-word > span + span::before {
     content: '|';
     margin-right: 0.2em;
 }
@@ -170,7 +170,7 @@ svg.w-5.h-5 {
 
    ================================================================== */
 
-.assoc-term-sets-wrap {
+.assoc-word-sets-wrap {
     max-height: 50vh;
     overflow: auto;
     resize: vertical;
@@ -181,12 +181,12 @@ svg.w-5.h-5 {
     padding: 0.25em;
 }
 
-/* While creating new examples, all terms are shown as grouped together
+/* While creating new sentences, all words are shown as grouped together
     in alphabetical sets. Some spacing among the sets help them stand out. */
-.assoc-term-set-wrap {
+.assoc-word-set-wrap {
     margin-bottom: 0.5em;
 }
 
-.assoc-term-set-wrap input[type=checkbox] {
+.assoc-word-set-wrap input[type=checkbox] {
     vertical-align: middle;
 }

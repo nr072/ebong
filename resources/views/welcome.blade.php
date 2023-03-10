@@ -12,17 +12,26 @@
 
         <link rel="stylesheet" type="text/css" href="css/app.css">
 
+        <style type="text/css">
+            a.temp-nav {
+                margin: 1rem;
+                padding: 0.5rem 0.75rem;
+                border: 1px solid #333;
+            }
+        </style>
+
     </head>
 
     <body>
 
-        <a style="margin: 1rem; padding: 0.5rem 0.75rem; border: 1px solid #333;" href="/terms">terms</a>
+        <div>
+            <a class="temp-nav" href="/terms">terms</a>
+            <a class="temp-nav" href="/examples">examples</a>
+        </div>
 
-        <a style="margin: 1rem; padding: 0.5rem 0.75rem; border: 1px solid #333;" href="/examples">examples</a>
-
-        <div style="margin: 5em 0;">
-            <a style="margin: 1rem; padding: 0.5rem 0.75rem; border: 1px solid #333;" href="/words">words</a>
-            <a style="margin: 1rem; padding: 0.5rem 0.75rem; border: 1px solid #333;" href="/sentences">sentences</a>
+        <div style="margin: 5rem 0;">
+            <a class="temp-nav" href="{{ route('words-page') }}">words</a>
+            <a class="temp-nav" href="{{ route('sentences-page') }}">sentences</a>
         </div>
 
         @livewireScripts

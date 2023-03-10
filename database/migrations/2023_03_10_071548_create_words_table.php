@@ -17,6 +17,8 @@ class CreateWordsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('en', 50);
+            $table->string('bn', 50)->nullable();
+            $table->string('pos', 50)->nullable();
         });
     }
 
