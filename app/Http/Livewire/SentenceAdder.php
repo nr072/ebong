@@ -113,6 +113,15 @@ class SentenceAdder extends Component
 
 
 
+    public function dissociateWord($id)
+    {
+        if (in_array($id, $this->chosenAssocWordIds)) {
+            unset($this->chosenAssocWordIds[ array_search($id, $this->chosenAssocWordIds) ]);
+        }
+    }
+
+
+
     public function render()
     {
 
@@ -120,7 +129,7 @@ class SentenceAdder extends Component
             $this->filteredAssocWords = Word::orderBy('en')
                                 ->where('en', 'like', $this->searchedAssocWord.'%');
         } else {
-            $this->filteredAssocWords = Word::orderBy('en');
+            $this->filteredAssocWords = Word::where('id', 0);
         }
 
         $this->filteredAssocWords = $this->filteredAssocWords->pluck('en', 'id');

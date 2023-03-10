@@ -31,9 +31,9 @@
             >
 
             <div style="border: 1px solid gray; max-height: 20vh; overflow: auto;">
-                @if (sizeof($filteredAssocWords) > 0)
-                    total: {{ sizeof($filteredAssocWords) }}
-                @endif
+                @unless (sizeof($filteredAssocWords) > 0)
+                    No words found
+                @endunless
                 @foreach ($filteredAssocWords as $id => $en)
                     @if (!in_array($id, $chosenAssocWordIds, true))
                         <button wire:click="associateWord({{ $id }})">{{ $id }} -- {{ $en }}</button>
@@ -43,7 +43,10 @@
 
             @if (sizeof($chosenAssocWordIds) > 0)
                 @foreach ($chosenAssocWordIds as $id)
-                    <span>{{ $id }}</span>
+                    <span class="chosen-assoc-word">
+                        {{ $words[$id]->en }}
+                        <button wire:click="dissociateWord({{ $id }})">&times;</button>
+                    </span>
                 @endforeach
             @endif
         </div>

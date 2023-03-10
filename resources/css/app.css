@@ -104,7 +104,7 @@ svg.w-5.h-5 {
 
 /* ==================================================================
 
-                              EXAMPLE INDEX
+                              SENTENCE INDEX
 
    ================================================================== */
 
@@ -166,7 +166,7 @@ svg.w-5.h-5 {
 
 /* ==================================================================
 
-                              EXAMPLE ADDER
+                              SENTENCE ADDER
 
    ================================================================== */
 
@@ -189,4 +189,12 @@ svg.w-5.h-5 {
 
 .assoc-word-set-wrap input[type=checkbox] {
     vertical-align: middle;
+}
+
+.chosen-assoc-word {
+    border: 1px solid #aaa;
+    padding: 0.15em 0.35em;
+    margin: 0.25em;
+    display: inline-block;
+    border-radius: 0.5em;
 }
