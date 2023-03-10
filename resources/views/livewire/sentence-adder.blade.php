@@ -2,7 +2,7 @@
 
     <section>
 
-        <h1>Add an sentence</h1>
+        <h1 class="text-3xl font-bold underline">Add a sentence</h1>
 
         <p>
             <input type="text"

@@ -1,6 +1,6 @@
 <section>
 
-    <h1>Sentences</h1>
+    <h1 class="text-3xl font-bold underline">Sentences</h1>
 
     <table class="alt-rows">
         <thead>

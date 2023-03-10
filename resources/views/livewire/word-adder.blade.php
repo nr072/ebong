@@ -2,7 +2,7 @@
 
     <div style="display: inline-block; width: 49%; vertical-align: top;">
 
-        <h1>Add a word</h1>
+        <h1 class="text-3xl font-bold underline">Add a word</h1>
 
         <div>
             <input type="text"

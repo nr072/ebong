@@ -216,3 +216,15 @@ svg.w-5.h-5 {
     display: inline-block;
     border-radius: 0.5em;
 }
+
+
+
+/* ==================================================================
+
+                            TAILWIND DIRECTIVES
+
+   ================================================================== */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
