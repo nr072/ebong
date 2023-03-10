@@ -6,6 +6,6 @@
 
 @section('main')
 
-    <livewire:word-index />
+    <livewire:word-adder />
 
 @endsection

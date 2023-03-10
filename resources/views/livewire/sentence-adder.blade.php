@@ -30,21 +30,20 @@
                 wire:model="searchedAssocWord"
             >
 
-            <div style="border: 1px solid gray; max-height: 20vh; overflow: auto;">
-                @unless (sizeof($filteredAssocWords) > 0)
-                    No words found
-                @endunless
-                @foreach ($filteredAssocWords as $id => $en)
-                    @if (!in_array($id, $chosenAssocWordIds, true))
-                        <button wire:click="associateWord({{ $id }})">{{ $id }} -- {{ $en }}</button>
-                    @endif
-                @endforeach
-            </div>
+            @if (sizeof($filteredAssocWords) > 0)
+                <div style="border: 1px solid gray; max-height: 20vh; overflow: auto;">
+                    @foreach ($filteredAssocWords as $id => $en)
+                        @if (!in_array($id, $chosenAssocWordIds, true))
+                            <button wire:click="associateWord({{ $id }})">{{ $id }} -- {{ $en }}</button>
+                        @endif
+                    @endforeach
+                </div>
+            @endif
 
             @if (sizeof($chosenAssocWordIds) > 0)
                 @foreach ($chosenAssocWordIds as $id)
                     <span class="chosen-assoc-word">
-                        {{ $words[$id]->en }}
+                        {{ $words->find($id)->en }}
                         <button wire:click="dissociateWord({{ $id }})">&times;</button>
                     </span>
                 @endforeach
