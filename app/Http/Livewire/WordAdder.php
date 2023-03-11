@@ -4,21 +4,21 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Word;
+use App\Models\Pos;
 
 use Illuminate\Support\Facades\Log;
 
 class WordAdder extends Component
 {
 
-    // Word (or parts of it) that the user will type in the adder for adding
-    // new words.
-    public $newText = '';
+    public $newWordEn = '';
+    public $newWordPos = '';
 
     // String typed in the index to see matching words.
     public $searchedEn = '';
 
     protected $queryString = [
-        'newText' => ['except' => '', 'as' => 'typed'],
+        'newWordEn' => ['except' => '', 'as' => 'typed'],
         'searchedEn' => ['except' => '', 'as' => 'en'],
     ];
 
@@ -28,7 +28,8 @@ class WordAdder extends Component
     ];
 
     protected $rules = [
-        'newText' => 'required|string|max:50',
+        'newWordEn' => 'required|string|max:50',
+        'newWordPos' => 'nullable|exists:poses,id',
     ];
 
     protected $listeners = [
@@ -54,13 +55,13 @@ class WordAdder extends Component
 
     public function addWord()
     {
-        $this->validate();
+        $validatedData = $this->validate();
 
         // Nice visual cue that things are starting.
         $this->status['type'] = 'warning';
         $this->status['text'] = 'Adding new word...';
 
-        if (empty($this->newText)) {
+        if (empty($this->newWordEn)) {
             $this->status['type'] = 'error';
             $this->status['text'] = 'Empty word entered!';
             return;
@@ -68,7 +69,8 @@ class WordAdder extends Component
 
         // Word creation.
         $newWord = Word::create([
-            'en' => $this->newText
+            'en' => $validatedData['newWordEn'],
+            'pos_id' => $validatedData['newWordPos'],
         ]);
 
         // Input fields are cleared.
@@ -101,9 +103,9 @@ class WordAdder extends Component
         }
 
         // Results for the word adder are filtered.
-        if ($this->newText != '') {
+        if ($this->newWordEn != '') {
             $this->matchedForNew = Word::orderBy('en')
-                                    ->where('en', 'like', '%'.$this->newText.'%');
+                                    ->where('en', 'like', '%'.$this->newWordEn.'%');
         } else {
             $this->matchedForNew = Word::where('id', 0);
         }
@@ -111,6 +113,7 @@ class WordAdder extends Component
 
         return view('livewire.word-adder', [
             'words' => $this->words,
+            'poses' => Pos::pluck('en', 'id'),
             'matchedForNew' => $this->matchedForNew,
         ]);
     }

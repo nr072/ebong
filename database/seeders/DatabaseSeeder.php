@@ -16,5 +16,9 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         // \App\Models\Line::factory(18)->create();
         // \App\Models\Example::factory(28)->create();
+        $this->call([
+            PosSeeder::class,
+            // WordSeeder::class,
+        ]);
     }
 }

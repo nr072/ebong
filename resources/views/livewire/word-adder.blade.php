@@ -5,20 +5,34 @@
         <h1>Add a word</h1>
 
         <div>
-            <input type="text"
-                wire:model="newText" wire:keydown.enter="addWord"
-                placeholder="Enter a new word here"
-            >
-            @error ('newText')
-                <span class="error">{{ $message }}</span>
-            @enderror
+            <div style="margin-bottom: 0.5em;">
+                <input type="text"
+                    wire:model="newWordEn" wire:keydown.enter="addWord"
+                    placeholder="Enter a new word here"
+                >
+                @error ('newWordEn')
+                    <span class="error">{{ $message }}</span>
+                @enderror
+            </div>
 
-            <button wire:click="addWord" @empty($newText) disabled @endempty>Add</button>
+            <div style="margin-bottom: 0.5em;">
+                <select wire:model="newWordPos">
+                    <option value="0">Select POS</option>
+                    @foreach ($poses as $id => $en)
+                        <option value="{{ $id }}">{{ $en }}</option>
+                    @endforeach
+                </select>
+                @error ('newWordPos')
+                    <span class="error">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <button wire:click="addWord" @empty($newWordEn) disabled @endempty>Add</button>
         </div>
 
         @if ($matchedForNew->count() > 0)
             <div style="padding-top: 0.5em;">
-                <span>Matches found:</span>
+                <span>Matches found among existing words:</span>
                 <ul class="matched-list">
                     @foreach ($matchedForNew as $id => $en)
                         <li>{{ $en }}</li>
@@ -48,7 +62,10 @@
             <ul>
                 @foreach ($words as $word)
                     <li class="single-word">
-                        <span>{{ $word->en }}</span>
+                        <span>
+                            {{ $word->en }}
+                            @if ($word->pos) ({{ $word->pos->en }}) @endif
+                        </span>
                     </li>
                 @endforeach
             </ul>
