@@ -24,11 +24,6 @@
 
     <body>
 
-        <div>
-            <a class="temp-nav" href="/terms">terms</a>
-            <a class="temp-nav" href="/examples">examples</a>
-        </div>
-
         <div style="margin: 5rem 0;">
             <a class="temp-nav" href="{{ route('words-page') }}">words</a>
             <a class="temp-nav" href="{{ route('sentences-page') }}">sentences</a>
