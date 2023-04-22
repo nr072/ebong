@@ -78,6 +78,7 @@ class SentenceAdder extends Component
 
         // A sentence is created for each set of sentence-related inputs.
         foreach ($validatedData['inputs'] as $validInput) {
+
             $newSentence = Sentence::create([
                 'en' => trim( $validInput['en'] ),
                 'bn' => trim( $validInput['bn'] ),
@@ -88,12 +89,13 @@ class SentenceAdder extends Component
                 'link_2' => trim( $validInput['link2'] ),
                 'link_3' => trim( $validInput['link3'] ),
             ]);
-        }
 
-        // For each associated word, a relation to the sentence is formed.
-        foreach ($validatedData['chosenAssocWordIds'] as $key => $value) {
-            $word = Word::find($value);
-            $word->sentences()->save($newSentence);
+            // For each associated word, a relation to the sentence is formed.
+            foreach ($validatedData['chosenAssocWordIds'] as $key => $value) {
+                $word = Word::find($value);
+                $word->sentences()->save($newSentence);
+            }
+
         }
 
         // Input fields are cleared.
