@@ -27,7 +27,8 @@
                             placeholder="Type to search"
                         >
                         @if ($searchedEn)
-                            <button wire:click="resetSearched('en')"
+                            <button class="button"
+                                wire:click="resetSearched('en')"
                                 title="Click to clear searched string"
                             >&times;</button>
                         @endif
@@ -40,7 +41,8 @@
                             placeholder="Type to search"
                         >
                         @if ($searchedBn)
-                            <button wire:click="resetSearched('bn')"
+                            <button class="button"
+                                wire:click="resetSearched('bn')"
                                 title="Click to clear searched string"
                             >&times;</button>
                         @endif
@@ -54,7 +56,8 @@
                             placeholder="Type to search"
                         >
                         @if ($searchedContext)
-                            <button wire:click="resetSearched('context')"
+                            <button class="button"
+                                wire:click="resetSearched('context')"
                                 title="Click to clear searched string"
                             >&times;</button>
                         @endif
@@ -68,7 +71,8 @@
                             placeholder="Type to search"
                         >
                         @if ($searchedWord)
-                            <button wire:click="resetSearched('word')"
+                            <button class="button"
+                                wire:click="resetSearched('word')"
                                 title="Click to clear searched string"
                             >&times;</button>
                         @endif
@@ -82,7 +86,8 @@
                             placeholder="Type to search"
                         >
                         @if ($searchedSource)
-                            <button wire:click="resetSearched('source')"
+                            <button class="button"
+                                wire:click="resetSearched('source')"
                                 title="Click to clear searched string"
                             >&times;</button>
                         @endif

@@ -13,16 +13,22 @@ class SentenceAdder extends Component
 
     public $inputs = [];
 
+
+
     public $searchedAssocWord;
 
     protected $queryString = [
         'searchedAssocWord' => ['except' => '', 'as' => 'assoc'],
     ];
 
+
+
     private $filteredAssocWords;
 
     // Refers to the ID of the associated word.
     public $chosenAssocWordIds = [];
+
+
 
     // Visual cues to let the user know things are happening (or maybe
     // not happening).
@@ -31,12 +37,22 @@ class SentenceAdder extends Component
         'text' => 'Clean'
     ];
 
+
+
+    // List of sources to show in a dropdown.
+    public $sources;
+
+    public $canShowSourceDropdown = true;
+
+
+
+    // Validation rules.
     protected $rules = [
         'inputs.*.en' => 'required|string',
         'inputs.*.bn' => 'nullable|string',
         'inputs.*.context' => 'nullable|max:200',
         'inputs.*.subcontext' => 'nullable|max:200',
-        'inputs.*.source' => 'nullable|max:100',
+        'inputs.*.source' => 'required|nullable|max:100',
         'inputs.*.link1' => 'nullable|max:200',
         'inputs.*.link2' => 'nullable|max:200',
         'inputs.*.link3' => 'nullable|max:200',
@@ -128,6 +144,7 @@ class SentenceAdder extends Component
     public function addAnotherSentence()
     {
         $this->insertArrayForNewSentece();
+        $this->toggleSourceDropdown(1);
     }
 
 
@@ -154,6 +171,22 @@ class SentenceAdder extends Component
 
 
 
+    // An existing source is selected from a dropdown.
+    public function selectSource($index, $source)
+    {
+        $this->inputs[$index]['source'] = $source;
+        $this->toggleSourceDropdown(0);
+    }
+
+
+
+    public function toggleSourceDropdown($canShow)
+    {
+        $this->canShowSourceDropdown = $canShow === 1 ? true : false;
+    }
+
+
+
     public function mount()
     {
         // The array for sentence-related inputs needs at least one item
@@ -165,6 +198,8 @@ class SentenceAdder extends Component
 
     public function render()
     {
+
+        $this->sources = Sentence::groupBy('source')->pluck('source');
 
         if ($this->searchedAssocWord) {
             $this->filteredAssocWords = Word::orderBy('en')
@@ -180,6 +215,7 @@ class SentenceAdder extends Component
         return view('livewire.sentence-adder', [
             'words' => Word::orderBy('en')->get(),
             'filteredAssocWords' => $this->filteredAssocWords,
+            'sources' => $this->sources,
         ]);
 
     }

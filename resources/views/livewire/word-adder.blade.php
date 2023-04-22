@@ -27,7 +27,7 @@
                 @enderror
             </div>
 
-            <button wire:click="addWord" @empty($newWordEn) disabled @endempty>Add</button>
+            <button class="button" wire:click="addWord" @empty($newWordEn) disabled @endempty>Add</button>
         </div>
 
         @if ($matchedForNew->count() > 0)
@@ -53,7 +53,7 @@
 
         <input type="text" wire:model="searchedEn" placeholder="Type to search en words">
         @if ($searchedEn)
-            <button wire:click="resetSearchedEn">&times;</button>
+            <button class="button" wire:click="resetSearchedEn">&times;</button>
         @endif
 
         @if ($words->count() < 1)

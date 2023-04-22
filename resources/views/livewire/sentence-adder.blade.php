@@ -14,7 +14,7 @@
                 <div style="border: 1px solid gray; max-height: 20vh; overflow: auto;">
                     @foreach ($filteredAssocWords as $id => $en)
                         @if (!in_array($id, $chosenAssocWordIds, true))
-                            <button wire:click="associateWord({{ $id }})">{{ $id }} -- {{ $en }}</button>
+                            <button class="button" wire:click="associateWord({{ $id }})">{{ $id }} -- {{ $en }}</button>
                         @endif
                     @endforeach
                 </div>
@@ -24,7 +24,7 @@
                 @foreach ($chosenAssocWordIds as $id)
                     <span class="chosen-assoc-word">
                         {{ $words->find($id)->en }}
-                        <button wire:click="dissociateWord({{ $id }})">&times;</button>
+                        <button class="button" wire:click="dissociateWord({{ $id }})">&times;</button>
                     </span>
                 @endforeach
             @endif
@@ -77,6 +77,23 @@
                         wire:model.lazy="inputs.{{ $key }}.source" wire:keydown.enter="addSentence"
                         placeholder="Enter source name here"
                     >
+                    @if ($canShowSourceDropdown && $sources && sizeof($sources) > 0)
+                        <div class="dropdown" style="margin-top: -1.05rem;">
+
+                            <button class="button" style="float: right;"
+                                wire:click="toggleSourceDropdown(0)"
+                            >&times;</button>
+
+                            @foreach ($sources as $source)
+                                @if ($source)
+                                    <button class="dropdown-option"
+                                        wire:click="selectSource({{ $key }}, '{{ $source }}')"
+                                    >{{ $source }}</button>
+                                @endif
+                            @endforeach
+
+                        </div>
+                    @endif
                     @error ('inputs.' . $key . '.source')
                         <span class="error">{{ $message }}</span>
                     @enderror
@@ -110,11 +127,11 @@
         @endforeach
 
         <p>
-            <button wire:click="addAnotherSentence">Add another sentence</button>
+            <button class="button" wire:click="addAnotherSentence">Add another sentence</button>
         </p>
 
         <p>
-            <button wire:click="addSentence" @empty($inputs[0]['en']) disabled @endempty>Confirm</button>
+            <button class="button" wire:click="addSentence" @empty($inputs[0]['en']) disabled @endempty>Confirm</button>
         </p>
 
         <p>Status: <span class="{{ $status['type'] }}">{{ $status['text'] }}<span></p>
