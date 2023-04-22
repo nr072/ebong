@@ -32,9 +32,17 @@ class SentenceIndex extends Component
 
 
 
+    // When a sentence is being edited, all the edi buttons are hidden.
+    public $isEditing = false;
+
+
+
     // Certain functions are executed when certian events have been emitted.
     protected $listeners = [
         'sentenceCreated' => 'render',
+        'editorOpened' => 'hideEditButtons',
+        'editorClosed' => 'showEditButtons',
+        'sentenceUpdated' => 'render',
     ];
 
 
@@ -54,6 +62,35 @@ class SentenceIndex extends Component
         } else if ($column === 'source') {
             $this->reset('searchedSource');
         }
+    }
+
+
+
+    // When a sentence is being edited, all the edit buttons are hidden.
+    // When the editor is closed, they are shown again.
+    private function toggleEditButtons($canShow = 0)
+    {
+        $this->isEditing = $canShow === 1 ? false : true;
+    }
+
+    public function showEditButtons()
+    {
+        $this->toggleEditButtons(1);
+    }
+
+    public function hideEditButtons()
+    {
+        $this->toggleEditButtons(0);
+    }
+
+
+
+    // Clicking on an edit button hides all edit buttons and shows the
+    // sentence editor.
+    public function editSentence($id)
+    {
+        $this->toggleEditButtons(0);
+        $this->emitTo('sentence-editor', 'editButtonClicked', $id);
     }
 
 

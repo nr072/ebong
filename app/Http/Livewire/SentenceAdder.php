@@ -182,7 +182,7 @@ class SentenceAdder extends Component
 
 
 
-    public function toggleSourceDropdown($canShow)
+    public function toggleSourceDropdown($canShow = 0)
     {
         $this->canShowSourceDropdown = $canShow === 1 ? true : false;
     }

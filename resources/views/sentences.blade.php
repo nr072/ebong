@@ -8,6 +8,8 @@
 
     <livewire:sentence-adder />
 
+    <livewire:sentence-editor />
+
     <livewire:sentence-index />
 
 @endsection

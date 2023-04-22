@@ -5,6 +5,7 @@
     <table class="alt-rows">
         <thead>
             <tr>
+                <th></th>
                 <th>Text</th>
                 <th class="cell-word">Words</th>
                 <th class="cell-source">Source</th>
@@ -13,6 +14,7 @@
         <tbody>
 
             <tr class="search-fields-row">
+                <td></td>
                 <td class="cell-text">
                     <div>
                         <input type="text"
@@ -81,14 +83,18 @@
                         @endif
                     </div>
                 </td>
-
-                <td></td>
             </tr>
 
             @if ($sentences->count() > 0)
 
                 @foreach ($sentences as $sentence)
                     <tr>
+                        <td class="cell-buttons">
+                            @unless ($isEditing)
+                                <button class="button" wire:click="editSentence({{ $sentence->id }})">Edit</button>
+                            @endunless
+                        </td>
+
                         <td>
 
                             <div>{{ $sentence->en }}</div>

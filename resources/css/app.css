@@ -1,7 +1,9 @@
 :root {
     font-size: 15px;
     font-family: serif;
-    --dropdown-z-index: 999;
+    --panel-z-index: 1000;
+    --dropdown-z-index: 900;
+    --body-bg: #fff;
 }
 
 * {
@@ -51,6 +53,12 @@ td {
     font-family: sans-serif;
     text-transform: uppercase;
     cursor: pointer;
+}
+
+
+
+.hidden {
+    display: none;
 }
 
 
@@ -110,7 +118,7 @@ td {
     max-height: 25vh;
     overflow-y: auto;
     box-shadow: 1px 1px 5px #ccc;
-    background: #fff;
+    background: var(--body-bg);
     position: absolute;
     z-index: var(--dropdown-z-index);
 }
@@ -199,6 +207,7 @@ svg.w-5.h-5 {
     display: inline-flex;
 }
 
+.cell-buttons,
 .cell-text,
 .cell-word,
 .cell-source {
@@ -217,6 +226,21 @@ svg.w-5.h-5 {
 
 .cell-context > div:first-child {
     margin-bottom: 0.35rem;
+}
+
+
+
+.sentence-editor {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--body-bg);
+    box-shadow: 0 -2px 3px -1px #ccc;
+    margin: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    z-index: var(--panel-z-index);
 }
 
 
