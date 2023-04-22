@@ -93,7 +93,7 @@
 
                             <div>{{ $sentence->en }}</div>
 
-                            <div><i>{{ $sentence->bn }}</i></div>
+                            <div style="font-size: 0.9em;">{{ $sentence->bn }}</div>
 
                             @if ($sentence->context)
                                 <div class="text-indented text-gray">

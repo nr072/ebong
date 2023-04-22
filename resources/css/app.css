@@ -1,6 +1,7 @@
 :root {
     font-size: 15px;
     font-family: serif;
+    --dropdown-z-index: 999;
 }
 
 * {
@@ -19,12 +20,6 @@ section {
     border: 1px solid #ccc;
     padding: 1rem;
     margin: 1rem;
-}
-
-button {
-    font-family: sans-serif;
-    text-transform: uppercase;
-    cursor: pointer;
 }
 
 
@@ -51,6 +46,14 @@ td {
                               UTILITY CLASSES
 
    ================================================================== */
+
+.button {
+    font-family: sans-serif;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+
 
 .error {
     color: rgb(243 37 76);
@@ -95,6 +98,32 @@ td {
 }
 
 .alt-rows tbody tr:nth-child(2n) {
+    background: #ddd;
+}
+
+
+
+.dropdown {
+    margin-bottom: 0.5rem;
+    padding: 0.25rem;
+    border: 1px solid #ccc;
+    max-height: 25vh;
+    overflow-y: auto;
+    box-shadow: 1px 1px 5px #ccc;
+    background: #fff;
+    position: absolute;
+    z-index: var(--dropdown-z-index);
+}
+
+.dropdown-option {
+    padding: 0.25rem 0.5rem;
+    background: none;
+    border: none;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+}
+.dropdown-option:hover {
     background: #ddd;
 }
 
