@@ -4,26 +4,6 @@
 
         <h1>Add an sentence</h1>
 
-        <p>
-            <input type="text"
-                wire:model="newTextEn" wire:keydown.enter="addSentence"
-                placeholder="Enter a new en sentence here"
-            >
-            @error ('newTextEn')
-                <span class="error">{{ $message }}</span>
-            @enderror
-
-            <input type="text"
-                wire:model.lazy="newTextBn" wire:keydown.enter="addSentence"
-                placeholder="Enter its bn here"
-            >
-            @error ('newTextBn')
-                <span class="error">{{ $message }}</span>
-            @enderror
-        </p>
-
-
-
         <span>Associated with: </span>
         <div>
             <input type="text" id="searchedAssocWord"
@@ -49,66 +29,92 @@
                 @endforeach
             @endif
         </div>
-        @error ('wordIds.*')
+        @error ('chosenAssocWordIds.*')
             <span class="error">{{ $message }}</span>
         @enderror
 
+        @foreach ($inputs as $key => $value)
+            <fieldset class="new-sentence-fields-wrap">
 
+                <p>
+                    <input type="text"
+                        wire:model="inputs.{{ $key }}.en" wire:keydown.enter="addSentence"
+                        placeholder="Enter a new en sentence here"
+                    >
+                    @error ('inputs.' . $key . '.en')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+
+                    <input type="text"
+                        wire:model.lazy="inputs.{{ $key }}.bn" wire:keydown.enter="addSentence"
+                        placeholder="Enter its bn here"
+                    >
+                    @error ('inputs.' . $key . '.bn')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+                </p>
+
+                <p>
+                    <input type="text"
+                        wire:model="inputs.{{ $key }}.context" wire:keydown.enter="addSentence"
+                        placeholder="Enter context here"
+                    >
+                    @error ('inputs.' . $key . '.context')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+
+                    <input type="text"
+                        wire:model.lazy="inputs.{{ $key }}.subcontext" wire:keydown.enter="addSentence"
+                        placeholder="Enter subcontext here"
+                    >
+                    @error ('inputs.' . $key . '.subcontext')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+                </p>
+
+                <p>
+                    <input type="text"
+                        wire:model.lazy="inputs.{{ $key }}.source" wire:keydown.enter="addSentence"
+                        placeholder="Enter source name here"
+                    >
+                    @error ('inputs.' . $key . '.source')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+
+                    <input type="text"
+                        wire:model.lazy="inputs.{{ $key }}.link1" wire:keydown.enter="addSentence"
+                        placeholder="Enter a link here"
+                    >
+                    @error ('inputs.' . $key . '.link1')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+
+                    <input type="text"
+                        wire:model.lazy="inputs.{{ $key }}.link2" wire:keydown.enter="addSentence"
+                        placeholder="Enter another link here"
+                    >
+                    @error ('inputs.' . $key . '.link2')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+
+                    <input type="text"
+                        wire:model.lazy="inputs.{{ $key }}.link3" wire:keydown.enter="addSentence"
+                        placeholder="Enter one more link here"
+                    >
+                    @error ('inputs.' . $key . '.link3')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+                </p>
+
+            </fieldset>
+        @endforeach
 
         <p>
-            <input type="text"
-                wire:model="context" wire:keydown.enter="addSentence"
-                placeholder="Enter context here"
-            >
-            @error ('context')
-                <span class="error">{{ $message }}</span>
-            @enderror
-
-            <input type="text"
-                wire:model.lazy="subcontext" wire:keydown.enter="addSentence"
-                placeholder="Enter subcontext here"
-            >
-            @error ('subcontext')
-                <span class="error">{{ $message }}</span>
-            @enderror
+            <button wire:click="addAnotherSentence">Add another sentence</button>
         </p>
 
         <p>
-            <input type="text"
-                wire:model.lazy="source" wire:keydown.enter="addSentence"
-                placeholder="Enter source name here"
-            >
-            @error ('source')
-                <span class="error">{{ $message }}</span>
-            @enderror
-
-            <input type="text"
-                wire:model.lazy="link1" wire:keydown.enter="addSentence"
-                placeholder="Enter a link here"
-            >
-            @error ('link1')
-                <span class="error">{{ $message }}</span>
-            @enderror
-
-            <input type="text"
-                wire:model.lazy="link2" wire:keydown.enter="addSentence"
-                placeholder="Enter another link here"
-            >
-            @error ('link2')
-                <span class="error">{{ $message }}</span>
-            @enderror
-
-            <input type="text"
-                wire:model.lazy="link3" wire:keydown.enter="addSentence"
-                placeholder="Enter one more link here"
-            >
-            @error ('link3')
-                <span class="error">{{ $message }}</span>
-            @enderror
-        </p>
-
-        <p>
-            <button wire:click="addSentence" @empty($newTextEn) disabled @endempty>Add</button>
+            <button wire:click="addSentence" @empty($inputs[0]['en']) disabled @endempty>Confirm</button>
         </p>
 
         <p>Status: <span class="{{ $status['type'] }}">{{ $status['text'] }}<span></p>

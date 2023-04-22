@@ -11,16 +11,7 @@ use Illuminate\Support\Facades\Log;
 class SentenceAdder extends Component
 {
 
-    public $newTextEn = '';
-    public $newTextBn = '';
-    
-    public $context = '';
-    public $subcontext = '';
-
-    public $source = '';
-    public $link1 = '';
-    public $link2 = '';
-    public $link3 = '';
+    public $inputs = [];
 
     public $searchedAssocWord;
 
@@ -41,14 +32,14 @@ class SentenceAdder extends Component
     ];
 
     protected $rules = [
-        'newTextEn' => 'required|string',
-        'newTextBn' => 'nullable|string',
-        'context' => 'nullable|max:200',
-        'subcontext' => 'nullable|max:200',
-        'source' => 'nullable|max:100',
-        'link1' => 'nullable|max:200',
-        'link2' => 'nullable|max:200',
-        'link3' => 'nullable|max:200',
+        'inputs.*.en' => 'required|string',
+        'inputs.*.bn' => 'nullable|string',
+        'inputs.*.context' => 'nullable|max:200',
+        'inputs.*.subcontext' => 'nullable|max:200',
+        'inputs.*.source' => 'nullable|max:100',
+        'inputs.*.link1' => 'nullable|max:200',
+        'inputs.*.link2' => 'nullable|max:200',
+        'inputs.*.link3' => 'nullable|max:200',
         'chosenAssocWordIds' => 'required|array',
         'chosenAssocWordIds.*' => 'required|numeric',
     ];
@@ -63,23 +54,25 @@ class SentenceAdder extends Component
         $this->status['type'] = 'warning';
         $this->status['text'] = 'Adding new sentence...';
 
-        if (empty($this->newTextEn)) {
+        if (empty($this->inputs[0]['en'])) {
             $this->status['type'] = 'error';
             $this->status['text'] = 'Empty sentence entered!';
             return;
         }
 
-        // Sentence creation.
-        $newSentence = Sentence::create([
-            'en' => trim( $validatedData['newTextEn'] ),
-            'bn' => trim( $validatedData['newTextBn'] ),
-            'context' => trim( $validatedData['context'] ),
-            'subcontext' => trim( $validatedData['subcontext'] ),
-            'source' => trim( $validatedData['source'] ),
-            'link_1' => trim( $validatedData['link1'] ),
-            'link_2' => trim( $validatedData['link2'] ),
-            'link_3' => trim( $validatedData['link3'] ),
-        ]);
+        // A sentence is created for each set of sentence-related inputs.
+        foreach ($validatedData['inputs'] as $validInput) {
+            $newSentence = Sentence::create([
+                'en' => trim( $validInput['en'] ),
+                'bn' => trim( $validInput['bn'] ),
+                'context' => trim( $validInput['context'] ),
+                'subcontext' => trim( $validInput['subcontext'] ),
+                'source' => trim( $validInput['source'] ),
+                'link_1' => trim( $validInput['link1'] ),
+                'link_2' => trim( $validInput['link2'] ),
+                'link_3' => trim( $validInput['link3'] ),
+            ]);
+        }
 
         // For each associated word, a relation to the sentence is formed.
         foreach ($validatedData['chosenAssocWordIds'] as $key => $value) {
@@ -101,6 +94,10 @@ class SentenceAdder extends Component
             $this->emit('sentenceCreated');
 
         }
+
+        // The array for sentence-related inputs needs at least one item
+        // for the input fields on the page to show up.
+        $this->insertArrayForNewSentece();
     }
 
 
@@ -124,6 +121,44 @@ class SentenceAdder extends Component
 
         // Used for focusing the assoc word input field.
         $this->emit('word-dissociated');
+    }
+
+
+
+    public function addAnotherSentence()
+    {
+        $this->insertArrayForNewSentece();
+    }
+
+
+
+    // An array full of inputs for a sentence is inserted into the main
+    // array (for all the inputs) so that a/another set of (empty) input
+    // fields can show up on the page.
+    private function insertArrayForNewSentece()
+    {
+        array_push(
+            $this->inputs, 
+            [
+                'en' => '',
+                'bn' => '',
+                'context' => '',
+                'subcontext' => '',
+                'source' => '',
+                'link1' => '',
+                'link2' => '',
+                'link3' => '',
+            ]
+        );
+    }
+
+
+
+    public function mount()
+    {
+        // The array for sentence-related inputs needs at least one item
+        // for the input fields on the page to show up.
+        $this->insertArrayForNewSentece();
     }
 
 
