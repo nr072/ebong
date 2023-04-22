@@ -30,6 +30,9 @@ class SentenceIndex extends Component
         'searchedSource' => ['except' => '', 'as' => 'source'],
     ];
 
+
+
+    // Certain functions are executed when certian events have been emitted.
     protected $listeners = [
         'sentenceCreated' => 'render',
     ];

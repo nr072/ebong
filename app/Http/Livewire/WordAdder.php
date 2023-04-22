@@ -32,9 +32,14 @@ class WordAdder extends Component
         'newWordPos' => 'nullable|exists:poses,id',
     ];
 
+
+
+    // Certain functions are executed when certian events have been emitted.
     protected $listeners = [
         'wordCreated' => 'render',
     ];
+
+
 
     private $words;
     private $paginCount = 20;

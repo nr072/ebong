@@ -63,7 +63,11 @@
                 @foreach ($words as $word)
                     <li class="single-word">
                         <span>
-                            {{ $word->en }}
+                            @if ($word->pos && $word->pos->en === 'proper noun')
+                                {{ ucwords($word->en) }}
+                            @else
+                                {{ $word->en }}
+                            @endif
                             @if ($word->pos) ({{ $word->pos->en }}) @endif
                         </span>
                     </li>

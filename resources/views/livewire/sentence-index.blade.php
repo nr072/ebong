@@ -131,7 +131,13 @@
 
                         <td class="cell-word">
                             @foreach ($sentence->words as $word)
-                                <div>{{ $word->en }}</div>
+                                <div>
+                                    @if ($word->pos && $word->pos->en === 'proper noun')
+                                        {{ ucwords($word->en) }}
+                                    @else
+                                        {{ $word->en }}
+                                    @endif
+                                </div>
                             @endforeach
                         </td>
 
