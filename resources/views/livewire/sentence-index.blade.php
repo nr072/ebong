@@ -5,26 +5,19 @@
     <table class="alt-rows">
         <thead>
             <tr>
-                <th class="cell-en">en</th>
-                <th class="cell-bn">bn</th>
-
-                <th class="cell-context">Context</th>
-
+                <th>Text</th>
                 <th class="cell-word">Words</th>
-
                 <th class="cell-source">Source</th>
-
-                <th class="cell-links">Links</th>
             </tr>
         </thead>
         <tbody>
 
             <tr class="search-fields-row">
-                <td>
+                <td class="cell-text">
                     <div>
                         <input type="text"
                             wire:model="searchedEn"
-                            placeholder="Type to search"
+                            placeholder="Type to search en"
                         >
                         @if ($searchedEn)
                             <button class="button"
@@ -33,12 +26,10 @@
                             >&times;</button>
                         @endif
                     </div>
-                </td>
-                <td>
                     <div>
                         <input type="text"
                             wire:model="searchedBn"
-                            placeholder="Type to search"
+                            placeholder="Type to search bn"
                         >
                         @if ($searchedBn)
                             <button class="button"
@@ -47,13 +38,10 @@
                             >&times;</button>
                         @endif
                     </div>
-                </td>
-
-                <td>
                     <div>
                         <input type="text"
                             wire:model="searchedContext"
-                            placeholder="Type to search"
+                            placeholder="Type to search context"
                         >
                         @if ($searchedContext)
                             <button class="button"
@@ -101,43 +89,53 @@
 
                 @foreach ($sentences as $sentence)
                     <tr>
-                        <td class="cell-en">{{ $sentence->en }}</td>
-                        <td class="cell-bn">{{ $sentence->bn }}</td>
+                        <td>
 
-                        <td class="cell-context">
+                            <div>{{ $sentence->en }}</div>
+
+                            <div><i>{{ $sentence->bn }}</i></div>
+
                             @if ($sentence->context)
-                                <div>{{ $sentence->context }}</div>
+                                <div class="text-indented text-gray">
+                                    <small>Context:</small> {{ $sentence->context }}
+                                </div>
                             @endif
                             @if ($sentence->subcontext)
-                                <div>{{ $sentence->subcontext }}</div>
+                                <div class="text-indented text-gray">
+                                    <small>Subcontext:</small> {{ $sentence->subcontext }}
+                                </div>
                             @endif
+
+                            @if ($sentence->link_1 || $sentence->link_2 || $sentence->link_3)
+                                <div class="text-indented text-gray">
+                                    <small>Links: </small>
+                                    <span>
+                                        @if ($sentence->link_1)
+                                            <a href="{{ $sentence->link_1 }}">#1</a>
+                                        @endif
+                                    </span>
+                                    <span>
+                                        @if ($sentence->link_2)
+                                            <a href="{{ $sentence->link_2 }}">#2</a>
+                                        @endif
+                                    </span>
+                                    <span>
+                                        @if ($sentence->link_3)
+                                            <a href="{{ $sentence->link_3 }}">#3</a>
+                                        @endif
+                                    </span>
+                                </div>
+                            @endif
+
                         </td>
 
                         <td class="cell-word">
                             @foreach ($sentence->words as $word)
-                                <span>{{ $word->en }}</span>
+                                <div>{{ $word->en }}</div>
                             @endforeach
                         </td>
 
                         <td class="cell-source">{{ $sentence->source }}</td>
-
-                        <td class="cell-links">
-                            <span>
-                                @if ($sentence->link_1)
-                                    <a href="{{ $sentence->link_1 }}">#1</a>
-                                @endif
-                            </span>
-                            <span>
-                                @if ($sentence->link_2)
-                                    <a href="{{ $sentence->link_2 }}">#2</a>
-                                @endif
-                            </span>
-                            <span>
-                                @if ($sentence->link_3)
-                                    <a href="{{ $sentence->link_3 }}">#3</a>
-                                @endif
-                            </span>
-                        </td>
                     </tr>
                 @endforeach
 
