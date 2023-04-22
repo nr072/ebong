@@ -16,16 +16,17 @@ class PosSeeder extends Seeder
     {
         // Needs to be run before deployment on production.
         DB::table('poses')->insert([
+            ['en' => 'verb'],
             ['en' => 'noun'],
             ['en' => 'proper noun'],
-            ['en' => 'pronoun'],
             ['en' => 'adjective'],
-            ['en' => 'verb'],
             ['en' => 'adverb'],
+            ['en' => 'pronoun'],
+            ['en' => 'determiner'],
+            ['en' => 'onomatopoeia'],
             ['en' => 'preposition'],
             ['en' => 'conjunction'],
             ['en' => 'interjection'],
-            ['en' => 'determiner'],
         ]);
     }
 }
