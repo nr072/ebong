@@ -90,9 +90,10 @@
                 @foreach ($sentences as $sentence)
                     <tr>
                         <td class="cell-buttons">
-                            @unless ($isEditing)
-                                <button class="button" wire:click="editSentence({{ $sentence->id }})">Edit</button>
-                            @endunless
+                            <button class="button"
+                                @if ($isEditing) disabled @endif
+                                wire:click="editSentence({{ $sentence->id }})"
+                            >Edit</button>
                         </td>
 
                         <td>
