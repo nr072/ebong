@@ -2,6 +2,35 @@
 
     <button class="button" style="float: right;" wire:click="closeEditor">&times;</button>
 
+    <div>
+    <span>Associated with: </span>
+        <input type="text" class="searchedAssocWord"
+            wire:model="searchedAssocWord"
+        >
+
+        @if (sizeof($filteredAssocWords) > 0)
+            <div style="border: 1px solid gray; max-height: 20vh; overflow: auto;">
+                @foreach ($filteredAssocWords as $id => $en)
+                    @if (!in_array($id, $chosenAssocWordIds, true))
+                        <button class="button" wire:click="associateWord({{ $id }})">{{ $id }} -- {{ $en }}</button>
+                    @endif
+                @endforeach
+            </div>
+        @endif
+
+        @if (sizeof($chosenAssocWordIds) > 0)
+            @foreach ($chosenAssocWordIds as $id)
+                <span class="chosen-assoc-word">
+                    {{ $words->find($id)->en }}
+                    <button class="button" wire:click="dissociateWord({{ $id }})">&times;</button>
+                </span>
+            @endforeach
+        @endif
+    </div>
+    @error ('chosenAssocWordIds.*')
+        <span class="error">{{ $message }}</span>
+    @enderror
+
     <p>
         <input type="text"
             wire:model.lazy="sentence.bn" wire:keydown.enter="saveUpdates"
@@ -67,5 +96,26 @@
     <p>
         <button class="button" wire:click="saveUpdates">Update</button>
     </p>
+
+
+
+    @section('js')
+        <script type="text/javascript">
+
+            "use strict";
+
+            document.addEventListener("livewire:load", () => {
+
+                const focusAssocWordField = () => {
+                    document.querySelector(".sentence-editor .searchedAssocWord")?.focus();
+                };
+
+                Livewire.on("sentence-editor-word-associated", focusAssocWordField);
+                Livewire.on("sentence-editor-word-dissociated", focusAssocWordField);
+
+            });
+
+        </script>
+    @endsection
 
 </section>

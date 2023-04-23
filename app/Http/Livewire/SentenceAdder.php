@@ -23,7 +23,7 @@ class SentenceAdder extends Component
 
 
 
-    private $filteredAssocWords;
+    public $filteredAssocWords;
 
     // Refers to the ID of the associated word.
     public $chosenAssocWordIds = [];
@@ -52,7 +52,7 @@ class SentenceAdder extends Component
         'inputs.*.bn' => 'nullable|string',
         'inputs.*.context' => 'nullable|max:200',
         'inputs.*.subcontext' => 'nullable|max:200',
-        'inputs.*.source' => 'required|nullable|max:100',
+        'inputs.*.source' => 'nullable|max:100',
         'inputs.*.link1' => 'nullable|max:200',
         'inputs.*.link2' => 'nullable|max:200',
         'inputs.*.link3' => 'nullable|max:200',
@@ -126,10 +126,8 @@ class SentenceAdder extends Component
         $this->reset('searchedAssocWord');
 
         // Used for focusing the assoc word input field.
-        $this->emit('word-associated');
+        $this->emit('sentence-adder-word-associated');
     }
-
-
 
     public function dissociateWord($id)
     {
@@ -138,7 +136,7 @@ class SentenceAdder extends Component
         }
 
         // Used for focusing the assoc word input field.
-        $this->emit('word-dissociated');
+        $this->emit('sentence-adder-word-dissociated');
     }
 
 
@@ -201,6 +199,7 @@ class SentenceAdder extends Component
     public function render()
     {
 
+        // Existing sources are shown in a dropdown to easily choose from.
         $this->sources = Sentence::groupBy('source')->pluck('source');
 
         if ($this->searchedAssocWord) {
@@ -216,8 +215,6 @@ class SentenceAdder extends Component
         // preferrably be shown in groups.
         return view('livewire.sentence-adder', [
             'words' => Word::orderBy('en')->get(),
-            'filteredAssocWords' => $this->filteredAssocWords,
-            'sources' => $this->sources,
         ]);
 
     }

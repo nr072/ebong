@@ -1,12 +1,12 @@
 @if ($words->count() > 0)
 
-    <section>
+    <section class="sentence-adder">
 
         <h1>Add an sentence</h1>
 
         <span>Associated with: </span>
         <div>
-            <input type="text" id="searchedAssocWord"
+            <input type="text" class="searched-assoc-word"
                 wire:model="searchedAssocWord"
             >
 
@@ -136,25 +136,25 @@
 
         <p>Status: <span class="{{ $status['type'] }}">{{ $status['text'] }}<span></p>
 
+
+
+        <script type="text/javascript">
+
+            "use strict";
+
+            document.addEventListener("livewire:load", () => {
+
+                const focusAssocWordField = () => {
+                    document.querySelector(".sentence-adder .searched-assoc-word")?.focus();
+                };
+
+                Livewire.on("sentence-adder-word-associated", focusAssocWordField);
+                Livewire.on("sentence-adder-word-dissociated", focusAssocWordField);
+
+            });
+
+        </script>
+
     </section>
-
-
-
-    <script type="text/javascript">
-
-        "use strict";
-
-        document.addEventListener("livewire:load", () => {
-
-            const focusAssocWordField = () => {
-                document.getElementById("searchedAssocWord")?.focus();
-            };
-
-            Livewire.on("word-associated", focusAssocWordField);
-            Livewire.on("word-dissociated", focusAssocWordField);
-
-        });
-
-    </script>
 
 @endif

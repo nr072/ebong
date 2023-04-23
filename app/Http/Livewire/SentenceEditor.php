@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Sentence;
+use App\Models\Word;
 
 use Illuminate\Support\Facades\Log;
 
@@ -17,6 +18,21 @@ class SentenceEditor extends Component
 
 
 
+    public $searchedAssocWord;
+
+    protected $queryString = [
+        'searchedAssocWord' => ['except' => '', 'as' => 'assoc'],
+    ];
+
+
+
+    public $filteredAssocWords;
+
+    // Refers to the ID of the associated word.
+    public $chosenAssocWordIds = [];
+
+
+
     // Validation rules.
     protected $rules = [
         'sentence.bn' => 'nullable|string',
@@ -26,6 +42,8 @@ class SentenceEditor extends Component
         'sentence.link_1' => 'nullable|max:200',
         'sentence.link_2' => 'nullable|max:200',
         'sentence.link_3' => 'nullable|max:200',
+        'chosenAssocWordIds' => 'required|array',
+        'chosenAssocWordIds.*' => 'required|numeric',
     ];
 
 
@@ -72,6 +90,12 @@ class SentenceEditor extends Component
         $validatedData = $this->validate();
         $this->sentence->update( $validatedData['sentence'] );
 
+        // For each associated word, a relation to the sentence is formed.
+        foreach ($validatedData['chosenAssocWordIds'] as $key => $value) {
+            $word = Word::find($value);
+            $word->sentences()->save($this->sentence);
+        }
+
         $this->reset();
 
         $this->emitTo('sentence-index', 'sentenceUpdated');
@@ -80,9 +104,43 @@ class SentenceEditor extends Component
 
 
 
+    public function associateWord($id)
+    {
+        array_push($this->chosenAssocWordIds, $id);
+        $this->reset('searchedAssocWord');
+
+        // Used for focusing the assoc word input field.
+        $this->emit('sentence-editor-word-associated');
+    }
+
+    public function dissociateWord($id)
+    {
+        if (in_array($id, $this->chosenAssocWordIds)) {
+            unset($this->chosenAssocWordIds[ array_search($id, $this->chosenAssocWordIds) ]);
+        }
+
+        // Used for focusing the assoc word input field.
+        $this->emit('sentence-editor-word-dissociated');
+    }
+
+
+
     public function render()
     {
-        return view('livewire.sentence-editor');
+
+        if ($this->searchedAssocWord) {
+            $this->filteredAssocWords = Word::orderBy('en')
+                                ->where('en', 'like', $this->searchedAssocWord.'%');
+        } else {
+            $this->filteredAssocWords = Word::where('id', 0);
+        }
+
+        $this->filteredAssocWords = $this->filteredAssocWords->pluck('en', 'id');
+
+        return view('livewire.sentence-editor', [
+            'words' => Word::orderBy('en')->get(),
+        ]);
+
     }
 
 }
