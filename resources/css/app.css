@@ -58,7 +58,7 @@ td {
 
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 
@@ -232,15 +232,25 @@ svg.w-5.h-5 {
 
 .sentence-editor {
     position: fixed;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
-    background: var(--body-bg);
-    box-shadow: 0 -2px 3px -1px #ccc;
+    height: 100%;
+    background: rgb(0 0 0 / 50%);
     margin: 0;
-    border-left-width: 0;
-    border-right-width: 0;
     z-index: var(--panel-z-index);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sentence-editor > div {
+    background: var(--body-bg);
+    padding: 1rem;
+    box-shadow: 0 0 7px #555;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 
