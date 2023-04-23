@@ -39,7 +39,7 @@
 
                 <p>
                     <input type="text"
-                        wire:model="inputs.{{ $key }}.en" wire:keydown.enter="addSentence"
+                        wire:model.lazy="inputs.{{ $key }}.en" wire:keydown.enter="addSentence"
                         placeholder="Enter a new en sentence here"
                     >
                     @error ('inputs.' . $key . '.en')
