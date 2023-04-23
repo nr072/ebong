@@ -25,7 +25,7 @@ class SentenceAdder extends Component
 
     public $filteredAssocWords;
 
-    // Refers to the ID of the associated word.
+    // Refers to the IDs of the associated word.
     public $chosenAssocWordIds = [];
 
 

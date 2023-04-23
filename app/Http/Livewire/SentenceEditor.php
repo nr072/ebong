@@ -28,7 +28,7 @@ class SentenceEditor extends Component
 
     public $filteredAssocWords;
 
-    // Refers to the ID of the associated word.
+    // IDs of existing + suggested assoc words.
     public $chosenAssocWordIds = [];
 
 
@@ -74,12 +74,37 @@ class SentenceEditor extends Component
 
 
 
+    // Potential, existing words are suggested to be associated. This only
+    // works for identical matches though.
+    public function autosuggestAssocWords($existingAssocWordIds)
+    {
+        $wordsInSentence = explode(' ', strtolower($this->sentence->en));
+        $suggestedAssocWordIds = Word::whereIn('en', $wordsInSentence)
+                                    ->whereNotIn('id', $existingAssocWordIds)
+                                    ->pluck('id')
+                                    ->toArray();
+
+        $this->chosenAssocWordIds = array_merge(
+            $this->chosenAssocWordIds,
+            $suggestedAssocWordIds
+        );
+    }
+
+
+
     // The editor is displayed with the selected sentence's data in its
     // input fields.
     public function editSentence(Sentence $sentenceToEdit)
     {
         $this->sentence = $sentenceToEdit;
-        $this->chosenAssocWordIds = $this->sentence->words->pluck('id')->toArray();
+
+        $existingAssocWordIds = $this->sentence->words->pluck('id')->toArray();
+        $this->chosenAssocWordIds = array_merge(
+            $this->chosenAssocWordIds,
+            $existingAssocWordIds
+        );
+
+        $this->autosuggestAssocWords($existingAssocWordIds);
 
         $this->showEditor();
         $this->emit('editor-opened');
