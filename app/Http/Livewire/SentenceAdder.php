@@ -90,11 +90,8 @@ class SentenceAdder extends Component
                 'link_3' => trim( $validInput['link3'] ),
             ]);
 
-            // For each associated word, a relation to the sentence is formed.
-            foreach ($validatedData['chosenAssocWordIds'] as $key => $value) {
-                $word = Word::find($value);
-                $word->sentences()->save($newSentence);
-            }
+            // Words are associated.
+            $newSentence->words()->attach( $validatedData['chosenAssocWordIds'] );
 
         }
 

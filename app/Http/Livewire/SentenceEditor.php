@@ -38,7 +38,7 @@ class SentenceEditor extends Component
         'sentence.bn' => 'nullable|string',
         'sentence.context' => 'nullable|max:2',
         'sentence.subcontext' => 'nullable|max:200',
-        'sentence.source' => 'required|nullable|max:100',
+        'sentence.source' => 'nullable|max:100',
         'sentence.link_1' => 'nullable|max:200',
         'sentence.link_2' => 'nullable|max:200',
         'sentence.link_3' => 'nullable|max:200',
@@ -79,6 +79,8 @@ class SentenceEditor extends Component
     public function editSentence(Sentence $sentenceToEdit)
     {
         $this->sentence = $sentenceToEdit;
+        $this->chosenAssocWordIds = $this->sentence->words->pluck('id')->toArray();
+
         $this->showEditor();
     }
 
@@ -90,11 +92,8 @@ class SentenceEditor extends Component
         $validatedData = $this->validate();
         $this->sentence->update( $validatedData['sentence'] );
 
-        // For each associated word, a relation to the sentence is formed.
-        foreach ($validatedData['chosenAssocWordIds'] as $key => $value) {
-            $word = Word::find($value);
-            $word->sentences()->save($this->sentence);
-        }
+        // Asssoc words are updated.
+        $this->sentence->words()->sync($this->chosenAssocWordIds);
 
         $this->reset();
 
