@@ -184,6 +184,35 @@ class SentenceAdder extends Component
 
 
 
+    // Potential, existing words are suggested to be associated. This only
+    // works for identical matches though.
+    public function autosuggestAssocWords()
+    {
+        foreach ($this->inputs as $sentence) {
+
+            $wordsInSentence = explode(' ', strtolower($sentence['en']));
+            $suggestedAssocWordIds = Word::whereIn('en', $wordsInSentence)
+                                        ->whereNotIn('id', $this->chosenAssocWordIds)
+                                        ->pluck('id')
+                                        ->toArray();
+
+            $this->chosenAssocWordIds = array_merge(
+                $this->chosenAssocWordIds,
+                $suggestedAssocWordIds
+            );
+
+        }
+    }
+
+
+
+    public function updatedInputs()
+    {
+        $this->autosuggestAssocWords();
+    }
+
+
+
     public function mount()
     {
         // The array for sentence-related inputs needs at least one item
