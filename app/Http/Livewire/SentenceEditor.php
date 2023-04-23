@@ -82,6 +82,7 @@ class SentenceEditor extends Component
         $this->chosenAssocWordIds = $this->sentence->words->pluck('id')->toArray();
 
         $this->showEditor();
+        $this->emit('editor-opened');
     }
 
 

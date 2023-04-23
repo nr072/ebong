@@ -121,6 +121,7 @@
 
                 Livewire.on("sentence-editor-word-associated", focusAssocWordField);
                 Livewire.on("sentence-editor-word-dissociated", focusAssocWordField);
+                Livewire.on("editor-opened", focusAssocWordField);
 
             });
 
