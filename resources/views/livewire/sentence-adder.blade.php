@@ -8,6 +8,7 @@
         <div>
             <input type="text" class="searched-assoc-word"
                 wire:model="searchedAssocWord"
+                wire:keydown.enter="addSentence"
             >
 
             @if (sizeof($filteredAssocWords) > 0)

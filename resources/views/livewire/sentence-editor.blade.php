@@ -12,6 +12,7 @@
         <span>Associated with: </span>
             <input type="text" class="searchedAssocWord"
                 wire:model="searchedAssocWord"
+                wire:keydown.enter="saveUpdates"
             >
 
             @if (sizeof($filteredAssocWords) > 0)
