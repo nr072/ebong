@@ -27,7 +27,10 @@
                 @enderror
             </div>
 
-            <button class="button" wire:click="addWord" @empty($newWordEn) disabled @endempty>Add</button>
+            <button class="button"
+                wire:click="addWord"
+                @empty($newWordEn) disabled @endempty
+            >Add</button>
         </div>
 
         @if ($matchedForNew->count() > 0)

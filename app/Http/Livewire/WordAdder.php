@@ -34,7 +34,7 @@ class WordAdder extends Component
 
 
 
-    // Certain functions are executed when certian events have been emitted.
+    // Certain functions are executed when certian events are emitted.
     protected $listeners = [
         'wordCreated' => 'render',
     ];

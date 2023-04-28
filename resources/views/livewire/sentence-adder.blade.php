@@ -2,7 +2,7 @@
 
     <section class="sentence-adder">
 
-        <h1>Add an sentence</h1>
+        <h1>Add a sentence</h1>
 
         <span>Associated with: </span>
         <div>

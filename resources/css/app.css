@@ -137,6 +137,24 @@ td {
 
 
 
+section.half-width-section {
+    width: 45%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+
+.mt-0 {
+    margin-top: 0;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+
+
 /* ==================================================================
 
                                 PAGINATION
@@ -285,7 +303,7 @@ svg.w-5.h-5 {
 .chosen-assoc-word {
     border: 1px solid #aaa;
     padding: 0.15em 0.35em;
-    margin: 0.25em;
+    margin: 0 0.25em;
     display: inline-block;
     border-radius: 0.5em;
 }
