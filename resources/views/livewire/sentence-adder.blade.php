@@ -1,8 +1,8 @@
-@if ($words->count() > 0)
+<section class="sentence-adder">
 
-    <section class="sentence-adder">
+    <h1>Add a sentence</h1>
 
-        <h1>Add a sentence</h1>
+    @if ($words->count() > 0)
 
         <span>Associated with: </span>
         <div>
@@ -139,23 +139,29 @@
 
 
 
-        <script type="text/javascript">
+        @section('js')
+            <script type="text/javascript">
 
-            "use strict";
+                "use strict";
 
-            document.addEventListener("livewire:load", () => {
+                document.addEventListener("livewire:load", () => {
 
-                const focusAssocWordField = () => {
-                    document.querySelector(".sentence-adder .searched-assoc-word")?.focus();
-                };
+                    const focusAssocWordField = () => {
+                        document.querySelector(".sentence-adder .searched-assoc-word")?.focus();
+                    };
 
-                Livewire.on("sentence-adder-word-associated", focusAssocWordField);
-                Livewire.on("sentence-adder-word-dissociated", focusAssocWordField);
+                    Livewire.on("sentence-adder-word-associated", focusAssocWordField);
+                    Livewire.on("sentence-adder-word-dissociated", focusAssocWordField);
 
-            });
+                });
 
-        </script>
+            </script>
+        @endsection
 
-    </section>
+    @else
 
-@endif
+        <p>Status: No words found</p>
+
+    @endif
+
+</section>
