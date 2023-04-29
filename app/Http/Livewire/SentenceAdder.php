@@ -64,16 +64,8 @@ class SentenceAdder extends Component
         Warning: The allowed values of 'noteType' must be updated when
         values in the relevant migration file change.
 
-        Warning: 'needsRevision' isn't really 'nullable'. But because
-        there's no simple way to set its value from HTML for all sentences
-        (all but the first of which are created dynamically), it won't be
-        checked by the validation rule if unchecked. If uncheckced, its
-        value will be manually set later.
-
-        Warning: Something similar happens with `noteType`. Though this
-        wasn't looked into enough by the developer.
-        
-        TODO: Use validation rules to check 'noteType' and 'needsRevision'.
+        Warning: The initial values of 'noteType' and 'needsRevision' are
+        manually set somewhere below.
     */
     protected $rules = [
         'inputs.*.en' => 'required|string',
@@ -85,15 +77,15 @@ class SentenceAdder extends Component
         'inputs.*.link2' => 'nullable|max:200',
         'inputs.*.link3' => 'nullable|max:200',
         'inputs.*.note' => 'nullable|string',
-        'inputs.*.noteType' => 'numeric|gte:1|lte:2',
-        'inputs.*.needsRevision' => 'boolean',
+        'inputs.*.noteType' => 'required|in:Note,Reference',
+        'inputs.*.needsRevision' => 'required|boolean',
         'chosenGroupIds' => 'required|array',
         'chosenGroupIds.*' => 'numeric',
     ];
 
 
 
-    public function addSentence()
+    public function createSentence()
     {
         $validatedData = $this->validate();
 
@@ -127,9 +119,9 @@ class SentenceAdder extends Component
                 'link_1' => trim( $input['link1'] ),
                 'link_2' => trim( $input['link2'] ),
                 'link_3' => trim( $input['link3'] ),
-                'note_type' => trim( $input['noteType'] ) || 'Note',
+                'note_type' => trim( $input['noteType'] ),
                 'note' => trim( $input['note'] ),
-                'needs_revision' => trim( $input['needsRevision'] ) || false,
+                'needs_revision' => $input['needsRevision'],
             ]);
 
             // Groups are associated.
@@ -197,6 +189,11 @@ class SentenceAdder extends Component
         array (for all the inputs) so that a/another set of (empty) input
         fields can show up on the page.
 
+        Some initial values need to be manually set whenever a new sentence
+        is going to be created because the relevant columns have default
+        values in the database and the validation rules at the top of this
+        file reflect the mandatory (required) state of those fields (columns).
+
         Warning: These keys correspond to the validation rules listed
         somewhere above.
     */
@@ -213,9 +210,9 @@ class SentenceAdder extends Component
                 'link1' => '',
                 'link2' => '',
                 'link3' => '',
-                'noteType' => '',
+                'noteType' => 'Note',
                 'note' => '',
-                'needsRevision' => '',
+                'needsRevision' => false,
             ]
         );
     }

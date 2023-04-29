@@ -116,6 +116,45 @@
             @enderror
         </p>
 
+        {{--
+            Warning: The <option> values below are hardcoded. They
+            must be updated when values in the relevant migration
+            file change.
+        --}}
+        <p>
+            <label>
+                Select note type:
+                <select wire:model="sentence.note_type">
+                    <option value="Note">Note</option>
+                    <option value="Reference">Reference</option>
+                </select>
+            </label>
+            @error ('sentence.note_type')
+                <span class="error">{{ $message }}</span>
+            @enderror
+
+            <textarea class="disp-b mt-2" style="width: 30rem; height: 5rem; font-family: sans-serif; padding: 0.5rem;" 
+                wire:model="sentence.note"
+                placeholder="Enter note here"
+            ></textarea>
+            @error ('sentence.note')
+                <span class="error">{{ $message }}</span>
+            @enderror
+        </p>
+
+        <p>
+            <label>
+                <input type="checkbox"
+                    style="vertical-align: bottom;" 
+                    wire:model="sentence.needs_revision"
+                >
+                Needs revision
+            </label>
+            @error ('sentence.needs_revision')
+                <span class="error">{{ $message }}</span>
+            @enderror
+        </p>
+
         <p>
             <button class="button" wire:click="saveUpdates">Update</button>
         </p>

@@ -8,7 +8,7 @@
         <div>
             <input type="text" class="searched-group"
                 wire:model="searchedGroup"
-                wire:keydown.enter="addSentence"
+                wire:keydown.enter="createSentence"
             >
 
             {{-- Dropdown that shows groups matching the typed input --}}
@@ -55,7 +55,7 @@
 
                 <p>
                     <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.en" wire:keydown.enter="addSentence"
+                        wire:model.lazy="inputs.{{ $key }}.en" wire:keydown.enter="createSentence"
                         placeholder="Enter a new en sentence here"
                     >
                     @error ('inputs.' . $key . '.en')
@@ -63,7 +63,7 @@
                     @enderror
 
                     <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.bn" wire:keydown.enter="addSentence"
+                        wire:model.lazy="inputs.{{ $key }}.bn" wire:keydown.enter="createSentence"
                         placeholder="Enter its bn here"
                     >
                     @error ('inputs.' . $key . '.bn')
@@ -73,7 +73,7 @@
 
                 <p>
                     <input type="text"
-                        wire:model="inputs.{{ $key }}.context" wire:keydown.enter="addSentence"
+                        wire:model="inputs.{{ $key }}.context" wire:keydown.enter="createSentence"
                         placeholder="Enter context here"
                     >
                     @error ('inputs.' . $key . '.context')
@@ -81,7 +81,7 @@
                     @enderror
 
                     <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.subcontext" wire:keydown.enter="addSentence"
+                        wire:model.lazy="inputs.{{ $key }}.subcontext" wire:keydown.enter="createSentence"
                         placeholder="Enter subcontext here"
                     >
                     @error ('inputs.' . $key . '.subcontext')
@@ -91,7 +91,7 @@
 
                 <p>
                     <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.source" wire:keydown.enter="addSentence"
+                        wire:model.lazy="inputs.{{ $key }}.source" wire:keydown.enter="createSentence"
                         placeholder="Enter source name here"
                     >
                     @if ($canShowSourceDropdown)
@@ -116,7 +116,7 @@
                     @enderror
 
                     <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.link1" wire:keydown.enter="addSentence"
+                        wire:model.lazy="inputs.{{ $key }}.link1" wire:keydown.enter="createSentence"
                         placeholder="Enter a link here"
                     >
                     @error ('inputs.' . $key . '.link1')
@@ -124,7 +124,7 @@
                     @enderror
 
                     <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.link2" wire:keydown.enter="addSentence"
+                        wire:model.lazy="inputs.{{ $key }}.link2" wire:keydown.enter="createSentence"
                         placeholder="Enter another link here"
                     >
                     @error ('inputs.' . $key . '.link2')
@@ -132,7 +132,7 @@
                     @enderror
 
                     <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.link3" wire:keydown.enter="addSentence"
+                        wire:model.lazy="inputs.{{ $key }}.link3" wire:keydown.enter="createSentence"
                         placeholder="Enter one more link here"
                     >
                     @error ('inputs.' . $key . '.link3')
@@ -150,8 +150,8 @@
                         Select note type:
                         <select wire:model="inputs.{{ $key }}.noteType">
                             <option value="0">Select note type</option>
-                            <option value="1">Note</option>
-                            <option value="2">Reference</option>
+                            <option value="Note">Note</option>
+                            <option value="Reference">Reference</option>
                         </select>
                     </label>
                     @error ('inputs.' . $key . '.noteType')
@@ -173,7 +173,7 @@
                             style="vertical-align: bottom;" 
                             wire:model="inputs.{{ $key }}.needsRevision"
                         >
-                        Needs verification
+                        Needs revision
                     </label>
                     @error ('inputs.' . $key . '.needsRevision')
                         <span class="error">{{ $message }}</span>
@@ -188,7 +188,7 @@
         </p>
 
         <p>
-            <button class="button" wire:click="addSentence" @empty($inputs[0]['en']) disabled @endempty>Confirm</button>
+            <button class="button" wire:click="createSentence" @empty($inputs[0]['en']) disabled @endempty>Confirm</button>
         </p>
 
         <p>Status: <span class="{{ $status['type'] }}">{{ $status['text'] }}<span></p>

@@ -102,11 +102,11 @@ td {
 }
 
 .alt-rows tbody tr:nth-child(2n+1) {
-    background: #eee;
+    background: rgb(240 240 240);
 }
 
 .alt-rows tbody tr:nth-child(2n) {
-    background: #ddd;
+    background: rgb(230 230 230);
 }
 
 

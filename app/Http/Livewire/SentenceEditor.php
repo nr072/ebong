@@ -48,7 +48,10 @@ class SentenceEditor extends Component
 
 
 
-    // Validation rules.
+    /*
+        Warning: The allowed values of 'note_type' must be updated when
+        values in the relevant migration file change.
+    */
     protected $rules = [
         'sentence.bn' => 'nullable|string',
         'sentence.context' => 'nullable|max:200',
@@ -57,6 +60,9 @@ class SentenceEditor extends Component
         'sentence.link_1' => 'nullable|max:200',
         'sentence.link_2' => 'nullable|max:200',
         'sentence.link_3' => 'nullable|max:200',
+        'sentence.note' => 'nullable|string',
+        'sentence.note_type' => 'required|in:Note,Reference',
+        'sentence.needs_revision' => 'required|boolean',
         'chosenGroupIds' => 'required|array',
         'chosenGroupIds.*' => 'required|numeric',
     ];
