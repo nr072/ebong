@@ -227,7 +227,7 @@ svg.w-5.h-5 {
 
 .cell-buttons,
 .cell-text,
-.cell-word,
+.cell-group,
 .cell-source {
     text-align: center;
 }

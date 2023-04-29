@@ -7,7 +7,7 @@
             <tr>
                 <th></th>
                 <th>Text</th>
-                <th class="cell-word">Words</th>
+                <th class="cell-group">Groups</th>
                 <th class="cell-source">Source</th>
             </tr>
         </thead>
@@ -57,12 +57,12 @@
                 <td>
                     <div>
                         <input type="text"
-                            wire:model="searchedWord"
+                            wire:model="searchedGroup"
                             placeholder="Type to search"
                         >
-                        @if ($searchedWord)
+                        @if ($searchedGroup)
                             <button class="button"
-                                wire:click="resetSearched('word')"
+                                wire:click="resetSearched('group')"
                                 title="Click to clear searched string"
                             >&times;</button>
                         @endif
@@ -136,15 +136,9 @@
 
                         </td>
 
-                        <td class="cell-word">
-                            @foreach ($sentence->words as $word)
-                                <div>
-                                    @if ($word->pos && $word->pos->en === 'proper noun')
-                                        {{ ucwords($word->en) }}
-                                    @else
-                                        {{ $word->en }}
-                                    @endif
-                                </div>
+                        <td class="cell-group">
+                            @foreach ($sentence->groups as $group)
+                                <div>{{ $group->title }}</div>
                             @endforeach
                         </td>
 
