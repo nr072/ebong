@@ -9,32 +9,48 @@
         @endisset
 
         <div>
-        <span>Associated with: </span>
-            <input type="text" class="searchedAssocWord"
-                wire:model="searchedAssocWord"
-                wire:keydown.enter="saveUpdates"
+        <span>Associate with: </span>
+        <div>
+            <input type="text" class="searched-group"
+                wire:model="searchedGroup"
+                wire:keydown.enter="addSentence"
             >
 
-            @if (sizeof($filteredAssocWords) > 0)
-                <div style="border: 1px solid gray; max-height: 20vh; overflow: auto;">
-                    @foreach ($filteredAssocWords as $id => $en)
-                        @if (!in_array($id, $chosenAssocWordIds, true))
-                            <button class="button" wire:click="associateWord({{ $id }})">{{ $id }} -- {{ $en }}</button>
+            {{-- Dropdown that shows groups matching the typed input --}}
+            @if ($filteredGroups->count() > 0 && $canShowGroupDropdown)
+                <div class="dropdown">
+
+                    <button class="button" style="float: right;"
+                        wire:click="toggleGroupDropdown(0)"
+                    >&times;</button>
+
+                    @foreach ($filteredGroups as $group)
+                        @if (!in_array($group->id, $chosenGroupIds, true))
+
+                            <button class="dropdown-option" wire:click="associateGroup({{ $group->id }})">
+                                <b>{{ $group->title }}:</b>
+                                @foreach ($group->words as $word)
+                                    <span>{{ $word->en }},</span>
+                                @endforeach
+                            </button>
+
                         @endif
                     @endforeach
+
                 </div>
             @endif
 
-            @if (sizeof($chosenAssocWordIds) > 0)
-                @foreach ($chosenAssocWordIds as $id)
-                    <span class="chosen-assoc-word">
-                        {{ $words->find($id)->en }}
-                        <button class="button" wire:click="dissociateWord({{ $id }})">&times;</button>
+            {{-- Groups chosen for this sentence so far --}}
+            @if (sizeof($chosenGroupIds) > 0)
+                @foreach ($chosenGroupIds as $id)
+                    <span class="chosen-assoc-group">
+                        {{ $allGroups[$id] }}
+                        <button class="button" wire:click="dissociateGroup({{ $id }})">&times;</button>
                     </span>
                 @endforeach
             @endif
         </div>
-        @error ('chosenAssocWordIds.*')
+        @error ('chosenGroupIds')
             <span class="error">{{ $message }}</span>
         @enderror
 
@@ -115,13 +131,13 @@
 
             document.addEventListener("livewire:load", () => {
 
-                const focusAssocWordField = () => {
-                    document.querySelector(".sentence-editor .searchedAssocWord")?.focus();
+                const focusGroupField = () => {
+                    document.querySelector(".sentence-editor .searched-group")?.focus();
                 };
 
-                Livewire.on("sentence-editor-word-associated", focusAssocWordField);
-                Livewire.on("sentence-editor-word-dissociated", focusAssocWordField);
-                Livewire.on("editor-opened", focusAssocWordField);
+                Livewire.on("sentence-editor-group-associated", focusGroupField);
+                Livewire.on("sentence-editor-group-dissociated", focusGroupField);
+                Livewire.on("editor-opened", focusGroupField);
 
             });
 
