@@ -17,6 +17,7 @@ class CreatePosesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('en', 50);
+            $table->string('short', 10);
         });
     }
 

@@ -59,7 +59,9 @@
                     @foreach ($wordsMatchingSearched as $word)
                         <li>
                             {{ $word->en }}
-                            @if ($word->pos) ({{ $word->pos->en }}) @endif
+                            @if ($word->pos)
+                                <small><i>{{ $word->pos->short }}</i></small>
+                            @endif
                         </li>
                     @endforeach
                 </ul>
@@ -93,7 +95,9 @@
                             @else
                                 {{ $word->en }}
                             @endif
-                            @if ($word->pos) ({{ $word->pos->en }}) @endif
+                            @if ($word->pos)
+                                <small><i>{{ $word->pos->short }}</i></small>
+                            @endif
                         </span>
                     </li>
                 @endforeach

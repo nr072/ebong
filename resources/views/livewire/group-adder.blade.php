@@ -32,7 +32,9 @@
                     @if (!in_array($word->id, $chosenWordIds, true))
                         <button class="dropdown-option" wire:click="addWordToGroup({{ $word->id }})">
                             {{ $word->en }}
-                            @if ($word->pos) ({{ $word->pos->en }}) @endif
+                            @if ($word->pos)
+                                <small><i>{{ $word->pos->short }}</i></small>
+                            @endif
                         </button>
                     @endif
                 @endforeach
