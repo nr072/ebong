@@ -207,25 +207,37 @@ class SentenceAdder extends Component
 
 
 
-    // // Potential, existing words are suggested to be associated. This only
-    // // works for identical matches though.
-    // public function autosuggestAssocWords()
-    // {
-    //     foreach ($this->inputs as $sentence) {
+    // Potential, existing groups are suggested to be associated. This
+    // works by matching words from the sentence and then displaying a
+    // list of groups that those words belong to.
+    public function autosuggestGroups()
+    {
+        foreach ($this->inputs as $sentence) {
 
-    //         $wordsInSentence = explode(' ', strtolower($sentence['en']));
-    //         $suggestedAssocWordIds = Word::whereIn('en', $wordsInSentence)
-    //                                     ->whereNotIn('id', $this->chosenGroupIds)
-    //                                     ->pluck('id')
-    //                                     ->toArray();
+            $wordsInSentence = explode(' ', strtolower($sentence['en']));
 
-    //         $this->chosenGroupIds = array_merge(
-    //             $this->chosenGroupIds,
-    //             $suggestedAssocWordIds
-    //         );
+            $suggestedGroupIds = [];
 
-    //     }
-    // }
+            // The group IDs for all the matching words are stored in an
+            // array.
+            $wordsinDb = Word::whereIn('en', $wordsInSentence)->get();
+            foreach ($wordsinDb as $word) {
+
+                // Some words may not exist in any group yet.
+                if ($word->group) {
+                    array_push($suggestedGroupIds, $word->group->id);
+                }
+
+            }
+
+            // IDs for manually chosen groups and autosuggestd groups are
+            // merged. Duplicated are removed.
+            $this->chosenGroupIds = array_unique(
+                array_merge($this->chosenGroupIds, $suggestedGroupIds)
+            );
+
+        }
+    }
 
 
 
@@ -306,7 +318,7 @@ class SentenceAdder extends Component
 
     public function updatedInputs()
     {
-        // $this->autosuggestAssocWords();
+        $this->autosuggestGroups();
     }
 
 
