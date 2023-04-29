@@ -102,7 +102,7 @@ class GroupAdder extends Component
             $query = Word::where('id', 0);
         }
 
-        $this->filteredWords = $query->pluck('en', 'id');
+        $this->filteredWords = $query->get();
     }
 
 

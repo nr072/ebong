@@ -25,31 +25,34 @@
                     placeholder="Type to search words"
                 >
             </label>
-            @if (sizeof($filteredWords) > 0)
-                <div style="border: 1px solid gray; max-height: 20vh; overflow: auto; margin-bottom: 0.5rem;">
-                    @foreach ($filteredWords as $id => $en)
-                        @if (!in_array($id, $chosenWordIds, true))
-                            <button class="button" wire:click="addWordToGroup({{ $id }})">{{ $en }}</button>
-                        @endif
-                    @endforeach
-                </div>
-            @endif
-
-            @if (sizeof($chosenWordIds) > 0)
-                <p class="mt-0">
-                    <span style="display: block;">Already added words:</span>
-                    @foreach ($chosenWordIds as $id)
-                        <span class="chosen-assoc-word">
-                            {{ $grouplessWords->find($id)->en }}
-                            <button class="button" wire:click="removeWordFromGroup({{ $id }})">&times;</button>
-                        </span>
-                    @endforeach
-                </p>
-            @endif
-            @error ('chosenWordIds')
-                <span class="error">{{ $message }}</span>
-            @enderror
         </p>
+        @if (sizeof($filteredWords) > 0)
+            <div class="dropdown" style="margin-left: 10rem;">
+                @foreach ($filteredWords as $word)
+                    @if (!in_array($word->id, $chosenWordIds, true))
+                        <button class="dropdown-option" wire:click="addWordToGroup({{ $word->id }})">
+                            {{ $word->en }}
+                            @if ($word->pos) ({{ $word->pos->en }}) @endif
+                        </button>
+                    @endif
+                @endforeach
+            </div>
+        @endif
+
+        @if (sizeof($chosenWordIds) > 0)
+            <p class="mt-0">
+                <span style="display: block;">Already added words:</span>
+                @foreach ($chosenWordIds as $id)
+                    <span class="chosen-assoc-word">
+                        {{ $grouplessWords->find($id)->en }}
+                        <button class="button" wire:click="removeWordFromGroup({{ $id }})">&times;</button>
+                    </span>
+                @endforeach
+            </p>
+        @endif
+        @error ('chosenWordIds')
+            <span class="error">{{ $message }}</span>
+        @enderror
 
         <button class="button"
             wire:click="createGroup"

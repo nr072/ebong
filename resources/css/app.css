@@ -283,7 +283,7 @@ svg.w-5.h-5 {
 .chosen-assoc-group {
     border: 1px solid #aaa;
     padding: 0.15em 0.35em;
-    margin: 0 0.25em;
+    margin: 0.15em;
     display: inline-block;
     border-radius: 0.5em;
 }
