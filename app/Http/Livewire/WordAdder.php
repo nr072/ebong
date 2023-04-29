@@ -66,7 +66,7 @@ class WordAdder extends Component
 
     public function addWord()
     {
-        $validatedData = $this->validate();
+        $vData = $this->validate();
 
         // Nice visual cue that things are starting.
         $this->status['type'] = 'warning';
@@ -80,9 +80,13 @@ class WordAdder extends Component
 
         // Word creation.
         $newWord = Word::create([
-            'en' => $validatedData['newWordEn'],
-            'pos_id' => $validatedData['newWordPos'],
-            'group_id' => $validatedData['newWordGroup'],
+            'en' => trim( $vData['newWordEn'] ),
+            'pos_id' => trim( $vData['newWordPos'] ),
+            'group_id' => (
+                $vData['newWordGroup'] === ''
+                    ? null
+                    : trim( $vData['newWordGroup'] )
+            ),
         ]);
 
         // Input fields are cleared.
