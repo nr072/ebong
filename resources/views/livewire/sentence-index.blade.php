@@ -118,25 +118,26 @@
                                     <small>Links: </small>
                                     <span>
                                         @if ($sentence->link_1)
-                                            <a href="{{ $sentence->link_1 }}" title="{{ $sentence->link_1 }}">
-                                                <small>URL</small>
-                                            </a>
+                                            <a href="{{ $sentence->link_1 }}" title="{{ $sentence->link_1 }}"><small>URL</small></a>
                                         @endif
                                     </span>
                                     <span>
                                         @if ($sentence->link_2)
-                                            <a href="{{ $sentence->link_2 }}" title="{{ $sentence->link_2 }}">
-                                                <small>URL</small>
-                                            </a>
+                                            <a href="{{ $sentence->link_2 }}" title="{{ $sentence->link_2 }}"><small>URL</small></a>
                                         @endif
                                     </span>
                                     <span>
                                         @if ($sentence->link_3)
-                                            <a href="{{ $sentence->link_3 }}" title="{{ $sentence->link_3 }}">
-                                                <small>URL</small>
-                                            </a>
+                                            <a href="{{ $sentence->link_3 }}" title="{{ $sentence->link_3 }}"><small>URL</small></a>
                                         @endif
                                     </span>
+                                </div>
+                            @endif
+
+                            @if ($sentence->note)
+                                <div class="text-indented text-gray">
+                                    <small>{{ $sentence->note_type }}:</small>
+                                    <span>{{ $sentence->note }}</span>
                                 </div>
                             @endif
 

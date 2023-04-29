@@ -49,6 +49,7 @@
             <span class="error">{{ $message }}</span>
         @enderror
 
+        {{-- Each sentence --}}
         @foreach ($inputs as $key => $value)
             <fieldset class="new-sentence-fields-wrap">
 
@@ -135,6 +136,33 @@
                         placeholder="Enter one more link here"
                     >
                     @error ('inputs.' . $key . '.link3')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+                </p>
+
+                {{--
+                    Warning: The <option> values below are hardcoded. They
+                    must be updated when values in the relevant migration
+                    file change.
+                --}}
+                <p>
+                    <label>
+                        Select note type:
+                        <select wire:model="inputs.{{ $key }}.noteType">
+                            <option value="0">Select note type</option>
+                            <option value="1">Note</option>
+                            <option value="2">Reference</option>
+                        </select>
+                    </label>
+                    @error ('inputs.' . $key . '.noteType')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+
+                    <textarea class="disp-b mt-2" style="width: 30rem; height: 5rem; font-family: sans-serif; padding: 0.5rem;" 
+                        wire:model="inputs.{{ $key }}.note"
+                        placeholder="Enter note here"
+                    ></textarea>
+                    @error ('inputs.' . $key . '.note')
                         <span class="error">{{ $message }}</span>
                     @enderror
                 </p>

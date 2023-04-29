@@ -151,8 +151,18 @@ section.half-width-section {
     margin-top: 0;
 }
 
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
 .mt-3 {
     margin-top: 1rem;
+}
+
+
+
+.disp-b {
+    display: block;
 }
 
 

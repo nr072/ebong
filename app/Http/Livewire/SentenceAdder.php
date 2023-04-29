@@ -60,7 +60,12 @@ class SentenceAdder extends Component
 
 
 
-    // Validation rules.
+    /*
+        Validation rules.
+
+        Warning: The allowed values of 'noteType' must be updated when
+        values in the relevant migration file change.
+    */
     protected $rules = [
         'inputs.*.en' => 'required|string',
         'inputs.*.bn' => 'nullable|string',
@@ -70,6 +75,8 @@ class SentenceAdder extends Component
         'inputs.*.link1' => 'nullable|max:200',
         'inputs.*.link2' => 'nullable|max:200',
         'inputs.*.link3' => 'nullable|max:200',
+        'inputs.*.note' => 'nullable|string',
+        'inputs.*.noteType' => 'nullable|numeric|gte:1|lte:2',
         'chosenGroupIds' => 'required|array',
         'chosenGroupIds.*' => 'numeric',
     ];
@@ -91,17 +98,21 @@ class SentenceAdder extends Component
         }
 
         // A sentence is created for each set of sentence-related inputs.
-        foreach ($validatedData['inputs'] as $validInput) {
+        foreach ($validatedData['inputs'] as $input) {
 
+            // Note to dev: Don't forget to add new column names to the
+            // model's 'fillable' property.
             $newSentence = Sentence::create([
-                'en' => trim( $validInput['en'] ),
-                'bn' => trim( $validInput['bn'] ),
-                'context' => trim( $validInput['context'] ),
-                'subcontext' => trim( $validInput['subcontext'] ),
-                'source' => trim( $validInput['source'] ),
-                'link_1' => trim( $validInput['link1'] ),
-                'link_2' => trim( $validInput['link2'] ),
-                'link_3' => trim( $validInput['link3'] ),
+                'en' => trim( $input['en'] ),
+                'bn' => trim( $input['bn'] ),
+                'context' => trim( $input['context'] ),
+                'subcontext' => trim( $input['subcontext'] ),
+                'source' => trim( $input['source'] ),
+                'link_1' => trim( $input['link1'] ),
+                'link_2' => trim( $input['link2'] ),
+                'link_3' => trim( $input['link3'] ),
+                'note_type' => trim( $input['noteType'] ),
+                'note' => trim( $input['note'] ),
             ]);
 
             // Groups are associated.
@@ -164,9 +175,14 @@ class SentenceAdder extends Component
 
 
 
-    // An array full of inputs for a sentence is inserted into the main
-    // array (for all the inputs) so that a/another set of (empty) input
-    // fields can show up on the page.
+    /*
+        An array full of inputs for a sentence is inserted into the main
+        array (for all the inputs) so that a/another set of (empty) input
+        fields can show up on the page.
+
+        Warning: These keys correspond to the validation rules listed
+        somewhere above.
+    */
     private function insertArrayForNewSentece()
     {
         array_push(
@@ -180,6 +196,8 @@ class SentenceAdder extends Component
                 'link1' => '',
                 'link2' => '',
                 'link3' => '',
+                'noteType' => '',
+                'note' => '',
             ]
         );
     }

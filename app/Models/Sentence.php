@@ -19,6 +19,8 @@ class Sentence extends Model
         'link_1',
         'link_2',
         'link_3',
+        'note_type',
+        'note',
     ];
 
     public function groups()
