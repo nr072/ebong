@@ -5,7 +5,7 @@
         <h1>Add a word</h1>
 
         <div>
-            <div style="margin-bottom: 0.5em;">
+            <p>
                 <input type="text"
                     wire:model="newWordEn" wire:keydown.enter="addWord"
                     placeholder="Enter a new word here"
@@ -13,9 +13,9 @@
                 @error ('newWordEn')
                     <span class="error">{{ $message }}</span>
                 @enderror
-            </div>
+            </p>
 
-            <div style="margin-bottom: 0.5em;">
+            <p>
                 <select wire:model="newWordPos">
                     <option value="0">Select POS</option>
                     @foreach ($poses as $id => $en)
@@ -25,7 +25,25 @@
                 @error ('newWordPos')
                     <span class="error">{{ $message }}</span>
                 @enderror
-            </div>
+            </p>
+
+            <p>
+                <label>
+                    Select a group:
+                    <select wire:model="newWordGroup">
+                        <option value="0">Select group</option>
+                        @foreach ($groups as $group)
+                            <option value="{{ $group->id }}">
+                                {{ $group->title }}
+                                ({{ $group->words->count() }} word{{ $group->words->count() > 1 ? 's' : '' }})
+                            </option>
+                        @endforeach
+                    </select>
+                </label>
+                @error ('newWordGroup')
+                    <span class="error">{{ $message }}</span>
+                @enderror
+            </p>
 
             <button class="button"
                 wire:click="addWord"
@@ -33,12 +51,16 @@
             >Add</button>
         </div>
 
-        @if ($matchedForNew->count() > 0)
+        {{-- A list of existing words that partially match the typed input --}}
+        @if ($wordsMatchingSearched->count() > 0)
             <div style="padding-top: 0.5em;">
                 <span>Matches found among existing words:</span>
                 <ul class="matched-list">
-                    @foreach ($matchedForNew as $id => $en)
-                        <li>{{ $en }}</li>
+                    @foreach ($wordsMatchingSearched as $word)
+                        <li>
+                            {{ $word->en }}
+                            @if ($word->pos) ({{ $word->pos->en }}) @endif
+                        </li>
                     @endforeach
                 </ul>
             </div>

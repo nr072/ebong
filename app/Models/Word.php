@@ -15,6 +15,7 @@ class Word extends Model
     protected $fillable = [
         'en',
         'pos_id',
+        'group_id',
     ];
 
     public function sentences()

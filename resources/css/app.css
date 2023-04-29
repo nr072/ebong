@@ -116,6 +116,8 @@ td {
     padding: 0.25rem;
     border: 1px solid #ccc;
     max-height: 25vh;
+    min-height: 10vh;
+    min-width: 10rem;
     overflow-y: auto;
     box-shadow: 1px 1px 5px #ccc;
     background: var(--body-bg);

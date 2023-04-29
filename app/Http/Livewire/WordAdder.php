@@ -3,8 +3,9 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Word;
+use App\Models\Group;
 use App\Models\Pos;
+use App\Models\Word;
 
 use Illuminate\Support\Facades\Log;
 
@@ -13,12 +14,16 @@ class WordAdder extends Component
 
     public $newWordEn = '';
     public $newWordPos = '';
+    public $newWordGroup = '';
+
+    // Used for showing a list of existing groups to add this new word to.
+    private $allGroups = [];
 
     // String typed in the index to see matching words.
     public $searchedEn = '';
 
     protected $queryString = [
-        'newWordEn' => ['except' => '', 'as' => 'typed'],
+        'newWordEn' => ['except' => '', 'as' => 'af-word'],
         'searchedEn' => ['except' => '', 'as' => 'en'],
     ];
 
@@ -29,7 +34,8 @@ class WordAdder extends Component
 
     protected $rules = [
         'newWordEn' => 'required|string|max:50',
-        'newWordPos' => 'nullable|exists:poses,id',
+        'newWordPos' => 'required|exists:poses,id',
+        'newWordGroup' => 'nullable|exists:groups,id',
     ];
 
 
@@ -44,9 +50,9 @@ class WordAdder extends Component
     private $words;
     private $paginCount = 20;
 
-    // Matching words are shown as the user types in the adder so that to
-    // help avoid adding existing words.
-    private $matchedForNew;
+    // As the user types in the adder, matching words are shown to help
+    // avoid adding existing words again.
+    private $wordsMatchingSearched;
 
 
 
@@ -76,6 +82,7 @@ class WordAdder extends Component
         $newWord = Word::create([
             'en' => $validatedData['newWordEn'],
             'pos_id' => $validatedData['newWordPos'],
+            'group_id' => $validatedData['newWordGroup'],
         ]);
 
         // Input fields are cleared.
@@ -95,8 +102,11 @@ class WordAdder extends Component
 
     }
 
-    public function render()
+
+
+    public function applySearchFilters()
     {
+
         // Results for the word index are filtered.
         if ($this->searchedEn != '') {
             $this->words = Word::orderBy('en')
@@ -109,17 +119,28 @@ class WordAdder extends Component
 
         // Results for the word adder are filtered.
         if ($this->newWordEn != '') {
-            $this->matchedForNew = Word::orderBy('en')
-                                    ->where('en', 'like', '%'.$this->newWordEn.'%');
+            $query = Word::orderBy('en')
+                            ->where('en', 'like', '%'.$this->newWordEn.'%');
         } else {
-            $this->matchedForNew = Word::where('id', 0);
+            $query = Word::where('id', 0);
         }
-        $this->matchedForNew = $this->matchedForNew->pluck('en', 'id');
+        $this->wordsMatchingSearched = $query->get();
+
+    }
+
+
+
+    public function render()
+    {
+        $this->allGroups = Group::orderBy('title')->get();
+
+        $this->applySearchFilters();
 
         return view('livewire.word-adder', [
             'words' => $this->words,
             'poses' => Pos::pluck('en', 'id'),
-            'matchedForNew' => $this->matchedForNew,
+            'wordsMatchingSearched' => $this->wordsMatchingSearched,
+            'groups' => $this->allGroups,
         ]);
     }
 
