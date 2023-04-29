@@ -61,10 +61,19 @@ class SentenceAdder extends Component
 
 
     /*
-        Validation rules.
-
         Warning: The allowed values of 'noteType' must be updated when
         values in the relevant migration file change.
+
+        Warning: 'needsRevision' isn't really 'nullable'. But because
+        there's no simple way to set its value from HTML for all sentences
+        (all but the first of which are created dynamically), it won't be
+        checked by the validation rule if unchecked. If uncheckced, its
+        value will be manually set later.
+
+        Warning: Something similar happens with `noteType`. Though this
+        wasn't looked into enough by the developer.
+        
+        TODO: Use validation rules to check 'noteType' and 'needsRevision'.
     */
     protected $rules = [
         'inputs.*.en' => 'required|string',
@@ -76,7 +85,8 @@ class SentenceAdder extends Component
         'inputs.*.link2' => 'nullable|max:200',
         'inputs.*.link3' => 'nullable|max:200',
         'inputs.*.note' => 'nullable|string',
-        'inputs.*.noteType' => 'nullable|numeric|gte:1|lte:2',
+        'inputs.*.noteType' => 'numeric|gte:1|lte:2',
+        'inputs.*.needsRevision' => 'boolean',
         'chosenGroupIds' => 'required|array',
         'chosenGroupIds.*' => 'numeric',
     ];
@@ -100,8 +110,14 @@ class SentenceAdder extends Component
         // A sentence is created for each set of sentence-related inputs.
         foreach ($validatedData['inputs'] as $input) {
 
-            // Note to dev: Don't forget to add new column names to the
-            // model's 'fillable' property.
+            /*
+                Note to dev: Don't forget to add new column names to the
+                model's 'fillable' property.
+
+                Warning: Some default values are manually set here. They
+                might need to be changed when relevant migration files are
+                updated.
+            */
             $newSentence = Sentence::create([
                 'en' => trim( $input['en'] ),
                 'bn' => trim( $input['bn'] ),
@@ -111,8 +127,9 @@ class SentenceAdder extends Component
                 'link_1' => trim( $input['link1'] ),
                 'link_2' => trim( $input['link2'] ),
                 'link_3' => trim( $input['link3'] ),
-                'note_type' => trim( $input['noteType'] ),
+                'note_type' => trim( $input['noteType'] ) || 'Note',
                 'note' => trim( $input['note'] ),
+                'needs_revision' => trim( $input['needsRevision'] ) || false,
             ]);
 
             // Groups are associated.
@@ -198,6 +215,7 @@ class SentenceAdder extends Component
                 'link3' => '',
                 'noteType' => '',
                 'note' => '',
+                'needsRevision' => '',
             ]
         );
     }

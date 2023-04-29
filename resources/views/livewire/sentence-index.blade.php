@@ -118,17 +118,17 @@
                                     <small>Links: </small>
                                     <span>
                                         @if ($sentence->link_1)
-                                            <a href="{{ $sentence->link_1 }}" title="{{ $sentence->link_1 }}"><small>URL</small></a>
+                                            <a href="{{ $sentence->link_1 }}" title="{{ $sentence->link_1 }}">URL</a>
                                         @endif
                                     </span>
                                     <span>
                                         @if ($sentence->link_2)
-                                            <a href="{{ $sentence->link_2 }}" title="{{ $sentence->link_2 }}"><small>URL</small></a>
+                                            <a href="{{ $sentence->link_2 }}" title="{{ $sentence->link_2 }}">URL</a>
                                         @endif
                                     </span>
                                     <span>
                                         @if ($sentence->link_3)
-                                            <a href="{{ $sentence->link_3 }}" title="{{ $sentence->link_3 }}"><small>URL</small></a>
+                                            <a href="{{ $sentence->link_3 }}" title="{{ $sentence->link_3 }}">URL</a>
                                         @endif
                                     </span>
                                 </div>
@@ -138,6 +138,12 @@
                                 <div class="text-indented text-gray">
                                     <small>{{ $sentence->note_type }}:</small>
                                     <span>{{ $sentence->note }}</span>
+                                </div>
+                            @endif
+
+                            @if ($sentence->needs_revision)
+                                <div class="text-indented text-gray">
+                                    <small><i style="color: rgb(202 127 50);">This sentence needs revision</i></small>
                                 </div>
                             @endif
 

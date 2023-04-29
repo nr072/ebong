@@ -167,6 +167,19 @@
                     @enderror
                 </p>
 
+                <p>
+                    <label>
+                        <input type="checkbox"
+                            style="vertical-align: bottom;" 
+                            wire:model="inputs.{{ $key }}.needsRevision"
+                        >
+                        Needs verification
+                    </label>
+                    @error ('inputs.' . $key . '.needsRevision')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+                </p>
+
             </fieldset>
         @endforeach
 

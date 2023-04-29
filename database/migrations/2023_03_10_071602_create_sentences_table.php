@@ -32,8 +32,9 @@ class CreateSentencesTable extends Migration
 
             $table->text('note')->nullable();
             $table->enum('note_type', ['Note', 'Reference'])
-                    ->nullable()
                     ->default('Note');
+
+            $table->boolean('needs_revision')->default(false);
 
         });
     }
