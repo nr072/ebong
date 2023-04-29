@@ -81,7 +81,7 @@
 
     @else
 
-        <p>Status: No suitable words found. Create some first.</p>
+        <p>No suitable words found. Create some first.</p>
 
     @endif
 

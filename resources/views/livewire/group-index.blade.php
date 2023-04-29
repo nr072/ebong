@@ -1,6 +1,6 @@
 <section class="half-width-section">
 
-    <h1>Group index</h1>
+    <h1>Groups</h1>
 
     <p>
         <input type="text" wire:model="searched" placeholder="Type to search groups">
@@ -20,7 +20,10 @@
 
                     <ul>
                         @foreach ($group->words as $word)
-                            <li>{{ $word->en }}</li>
+                            <li>
+                                {{ $word->en }}
+                                @if ($word->pos) ({{ $word->pos->en }}) @endif
+                            </li>
                         @endforeach
                     </ul>
 

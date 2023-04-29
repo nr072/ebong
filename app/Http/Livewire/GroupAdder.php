@@ -110,7 +110,6 @@ class GroupAdder extends Component
     public function addWordToGroup($id)
     {
         array_push($this->chosenWordIds, $id);
-        $this->reset('searchedWord');
 
         // Used for focusing the assoc word input field.
         $this->emit('word-added-to-group');

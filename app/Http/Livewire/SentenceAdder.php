@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Models\Group;
 use App\Models\Sentence;
 use App\Models\Word;
 
@@ -13,20 +14,33 @@ class SentenceAdder extends Component
 
     public $inputs = [];
 
+    // 
+    private $allGroups;
+
+    private $filteredGroups;
+
+    // private $associableGroups;
+
+    // The IDs of the associated groups.
+    public $chosenGroupIds = [];
 
 
-    public $searchedAssocWord;
+
+    // 
+    public $canShowGroupDropdown = false;
+
+
+
+    // This string is actually matched with both words and groups. So,
+    // this will help the user find relevant groups easily regardless of
+    // which from they search for. For example, the group 'die' would be
+    // shown regardless of which of these words the user searches: 'die',
+    // 'dying', 'death'.
+    public $searchedGroup;
 
     protected $queryString = [
-        'searchedAssocWord' => ['except' => '', 'as' => 'assoc'],
+        'searchedGroup' => ['except' => '', 'as' => 'af-group'],
     ];
-
-
-
-    public $filteredAssocWords;
-
-    // Refers to the IDs of the associated words.
-    public $chosenAssocWordIds = [];
 
 
 
@@ -40,7 +54,7 @@ class SentenceAdder extends Component
 
 
     // List of sources to show in a dropdown.
-    public $sources;
+    public $sources = [];
 
     public $canShowSourceDropdown = true;
 
@@ -56,8 +70,8 @@ class SentenceAdder extends Component
         'inputs.*.link1' => 'nullable|max:200',
         'inputs.*.link2' => 'nullable|max:200',
         'inputs.*.link3' => 'nullable|max:200',
-        'chosenAssocWordIds' => 'required|array',
-        'chosenAssocWordIds.*' => 'required|numeric',
+        'chosenGroupIds' => 'required|array',
+        'chosenGroupIds.*' => 'numeric',
     ];
 
 
@@ -90,8 +104,8 @@ class SentenceAdder extends Component
                 'link_3' => trim( $validInput['link3'] ),
             ]);
 
-            // Words are associated.
-            $newSentence->words()->attach( $validatedData['chosenAssocWordIds'] );
+            // Groups are associated.
+            $newSentence->groups()->attach( $validatedData['chosenGroupIds'] );
 
         }
 
@@ -117,23 +131,27 @@ class SentenceAdder extends Component
 
 
 
-    public function associateWord($id)
+    // The selected group's ID is stored in an array.
+    public function associateGroup($id)
     {
-        array_push($this->chosenAssocWordIds, $id);
-        $this->reset('searchedAssocWord');
+        array_push($this->chosenGroupIds, $id);
+        $this->reset('searchedGroup');
 
-        // Used for focusing the assoc word input field.
-        $this->emit('sentence-adder-word-associated');
+        // Used for focusing the group input field.
+        $this->emit('sentence-adder-group-associated');
     }
 
-    public function dissociateWord($id)
+    // The group's ID is removed from the array.
+    public function dissociateGroup($id)
     {
-        if (in_array($id, $this->chosenAssocWordIds)) {
-            unset($this->chosenAssocWordIds[ array_search($id, $this->chosenAssocWordIds) ]);
+        if (in_array($id, $this->chosenGroupIds)) {
+            unset(
+                $this->chosenGroupIds[ array_search($id, $this->chosenGroupIds) ]
+            );
         }
 
-        // Used for focusing the assoc word input field.
-        $this->emit('sentence-adder-word-dissociated');
+        // Used for focusing the group input field.
+        $this->emit('sentence-adder-group-dissociated');
     }
 
 
@@ -182,42 +200,135 @@ class SentenceAdder extends Component
         $this->canShowSourceDropdown = $canShow === 1 ? true : false;
     }
 
-
-
-    // Potential, existing words are suggested to be associated. This only
-    // works for identical matches though.
-    public function autosuggestAssocWords()
+    public function toggleGroupDropdown($canShow = 0)
     {
-        foreach ($this->inputs as $sentence) {
+        $this->canShowGroupDropdown = $canShow === 1 ? true : false;
+    }
 
-            $wordsInSentence = explode(' ', strtolower($sentence['en']));
-            $suggestedAssocWordIds = Word::whereIn('en', $wordsInSentence)
-                                        ->whereNotIn('id', $this->chosenAssocWordIds)
-                                        ->pluck('id')
-                                        ->toArray();
 
-            $this->chosenAssocWordIds = array_merge(
-                $this->chosenAssocWordIds,
-                $suggestedAssocWordIds
-            );
+
+    // // Potential, existing words are suggested to be associated. This only
+    // // works for identical matches though.
+    // public function autosuggestAssocWords()
+    // {
+    //     foreach ($this->inputs as $sentence) {
+
+    //         $wordsInSentence = explode(' ', strtolower($sentence['en']));
+    //         $suggestedAssocWordIds = Word::whereIn('en', $wordsInSentence)
+    //                                     ->whereNotIn('id', $this->chosenGroupIds)
+    //                                     ->pluck('id')
+    //                                     ->toArray();
+
+    //         $this->chosenGroupIds = array_merge(
+    //             $this->chosenGroupIds,
+    //             $suggestedAssocWordIds
+    //         );
+
+    //     }
+    // }
+
+
+
+    /*
+        When a string is typed, its match is searched in both word en and
+        group titles (as opposed to in group titles only) but the group is
+        what's shown in the dropdown in the end.
+
+        This is done for the sake of user convenience. This allows the
+        user to find both exact word matches and related group matches.
+        For example, let's assume that a sentence contains the word 'dying'
+        and that it exists in the 'die' group. Now, if the user didn't
+        already know which group to search for, they'd type 'dying' and
+        wouldn't find any group. The current implementation solves this
+        problem by showing the user a union of results obtained by combining
+        both word and group matches. So, if the user now types 'dying', its
+        group is fetched under the hood and 'die' is displayed to the user.
+    */
+    public function applySearchFilters()
+    {
+        if ($this->searchedGroup) {
+
+            // A list of groups whose own titles match the search string.
+            $groupsFromGroup = Group::orderBy('title')
+                            ->where('title', 'like', $this->searchedGroup.'%')
+                            ->get();
+
+            // A list of groups whose words match the search string.
+            $groupsFromWord = collect([]);
+            $matchedWords = Word::orderBy('en')
+                            ->where('en', 'like', $this->searchedGroup.'%')
+                            ->get();
+            foreach ($matchedWords as $word) {
+
+                // Some words may not exist in any group yet.
+                if ($word->group) {
+                    $groupsFromWord = $groupsFromWord->concat([$word->group]);
+                }
+
+            }
+
+        } else {
+
+            // These need to be (empty) collections so they don't throw errors
+            // when merged (or when properties are used in the view).
+            $groupsFromGroup = collect([]);
+            $groupsFromWord = collect([]);
 
         }
+
+        // Groups from both sides are merged. Duplicates are removed.
+        $this->filteredGroups = $groupsFromGroup->concat($groupsFromWord)
+                                                ->unique();
+    }
+
+
+
+    // Various values are checked in order to determine which dropdowns
+    // should be displayed/hidden when.
+    public function checkDropdownToggling($whichDropdown = 'all')
+    {
+
+        if ($whichDropdown === 'group' || $whichDropdown === 'all') {
+            $this->canShowGroupDropdown = $this->searchedGroup ? true : false;
+        }
+
+        if ($whichDropdown === 'source' || $whichDropdown === 'all') {
+            if (method_exists($this->sources, 'count')) {
+                $this->canShowSourceDropdown = $this->sources->count() > 0;
+            } else {
+                $this->canShowSourceDropdown = sizeof($this->sources) > 0;
+            }
+        }
+
     }
 
 
 
     public function updatedInputs()
     {
-        $this->autosuggestAssocWords();
+        // $this->autosuggestAssocWords();
+    }
+
+
+
+    // The dropdown's visibility needs to be checked every time the group
+    // search string is modified.
+    public function updatedsearchedGroup()
+    {
+        $this->checkDropdownToggling('group');
     }
 
 
 
     public function mount()
     {
+
         // The array for sentence-related inputs needs at least one item
         // for the input fields on the page to show up.
         $this->insertArrayForNewSentece();
+
+        $this->checkDropdownToggling();
+
     }
 
 
@@ -225,22 +336,17 @@ class SentenceAdder extends Component
     public function render()
     {
 
+        $this->allGroups = Group::orderBy('title')->pluck('title', 'id');
+
+        $this->applySearchFilters();
+
         // Existing sources are shown in a dropdown to easily choose from.
         $this->sources = Sentence::groupBy('source')->pluck('source');
 
-        if ($this->searchedAssocWord) {
-            $this->filteredAssocWords = Word::orderBy('en')
-                                ->where('en', 'like', $this->searchedAssocWord.'%');
-        } else {
-            $this->filteredAssocWords = Word::where('id', 0);
-        }
-
-        $this->filteredAssocWords = $this->filteredAssocWords->pluck('en', 'id');
-
-        // Words are returned alphabetically sorted so that they can
-        // preferrably be shown in groups.
         return view('livewire.sentence-adder', [
-            'words' => Word::orderBy('en')->get(),
+            'allGroups' => $this->allGroups,
+            'filteredGroups' => $this->filteredGroups,
+            // 'associableGroups' => $this->associableGroups,
         ]);
 
     }

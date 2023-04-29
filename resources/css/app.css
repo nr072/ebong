@@ -279,28 +279,8 @@ svg.w-5.h-5 {
 
    ================================================================== */
 
-.assoc-word-sets-wrap {
-    max-height: 50vh;
-    overflow: auto;
-    resize: vertical;
-    min-height: 10vh;
-    height: 30vh;
-    width: 70%;
-    border: 1px solid #ddd;
-    padding: 0.25em;
-}
-
-/* While creating new sentences, all words are shown as grouped together
-    in alphabetical sets. Some spacing among the sets help them stand out. */
-.assoc-word-set-wrap {
-    margin-bottom: 0.5em;
-}
-
-.assoc-word-set-wrap input[type=checkbox] {
-    vertical-align: middle;
-}
-
-.chosen-assoc-word {
+.chosen-assoc-word,
+.chosen-assoc-group {
     border: 1px solid #aaa;
     padding: 0.15em 0.35em;
     margin: 0 0.25em;
