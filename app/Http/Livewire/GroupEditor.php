@@ -34,9 +34,9 @@ class GroupEditor extends Component
 
     // Words that can be added to this group. These are the ones shown in
     // the dropdown.
-    // These won't be all words because some may already be included in
-    // the group and some may get filtered out based on the search string.
-    // So, basically:
+    // These won't be all words because some may already be associated with
+    // this group or other groups and some may get filtered out based on
+    // the search string. So, basically:
     //   filtered = all words - already associated - filtered out
     private $filteredWords = [];
 
@@ -125,11 +125,13 @@ class GroupEditor extends Component
 
 
     // When the user types in the search field, matching results are shown
-    // excluding words that are already associated with this group.
+    // excluding words that are already associated with this group or other
+    // groups.
     public function applySearchFilters()
     {
         $query = Word::orderBy('en')
-                        ->whereNotIn('id', $this->chosenWordIds);
+                        ->whereNotIn('id', $this->chosenWordIds)
+                        ->where('group_id', null);
 
         if ($this->searched) {
             $query = $query->where('en', 'like', $this->searched.'%');
