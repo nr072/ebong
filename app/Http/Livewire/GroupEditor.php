@@ -154,7 +154,6 @@ class GroupEditor extends Component
         array_push($this->chosenWordIds, $id);
         $this->chosenWordIds = array_unique($this->chosenWordIds);
 
-        $this->reset('searched');
         $this->checkDropdownToggling();
 
         $this->emitTo('group-index', 'wordAssociated');
