@@ -10,4 +10,6 @@
 
     <livewire:group-index />
 
+    <livewire:group-editor />
+
 @endsection

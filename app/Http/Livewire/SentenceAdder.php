@@ -19,8 +19,6 @@ class SentenceAdder extends Component
 
     private $filteredGroups;
 
-    // private $associableGroups;
-
     // The IDs of the associated groups.
     public $chosenGroupIds = [];
 
@@ -155,6 +153,8 @@ class SentenceAdder extends Component
     public function associateGroup($id)
     {
         array_push($this->chosenGroupIds, $id);
+        $this->chosenGroupIds = array_unique($this->chosenGroupIds);
+
         $this->reset('searchedGroup');
 
         // Used for focusing the group input field.
@@ -358,7 +358,7 @@ class SentenceAdder extends Component
 
     // The dropdown's visibility needs to be checked every time the group
     // search string is modified.
-    public function updatedsearchedGroup()
+    public function updatedSearchedGroup()
     {
         $this->checkDropdownToggling('group');
     }

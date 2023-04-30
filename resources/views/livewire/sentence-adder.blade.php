@@ -11,7 +11,7 @@
                 wire:keydown.enter="createSentence"
             >
 
-            {{-- Dropdown that shows groups matching the typed input --}}
+            {{-- Dropdown that shows groups matching the search string --}}
             @if ($filteredGroups->count() > 0 && $canShowGroupDropdown)
                 <div class="dropdown">
 

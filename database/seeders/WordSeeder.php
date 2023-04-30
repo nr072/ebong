@@ -51,6 +51,11 @@ class WordSeeder extends Seeder
             ['en' => 'abbeys', 'pos_id' => rand(1, 11)],
             ['en' => 'abbot', 'pos_id' => rand(1, 11)],
             ['en' => 'abbots', 'pos_id' => rand(1, 11)],
+            ['en' => 'employing', 'pos_id' => rand(1, 11)],
+            ['en' => 'employee', 'pos_id' => rand(1, 11)],
+            ['en' => 'employed', 'pos_id' => rand(1, 11)],
+            ['en' => 'employ', 'pos_id' => rand(1, 11)],
+            ['en' => 'employer', 'pos_id' => rand(1, 11)],
         ]);
     }
 }

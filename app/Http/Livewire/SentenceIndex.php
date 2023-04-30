@@ -32,7 +32,7 @@ class SentenceIndex extends Component
 
 
 
-    // When a sentence is being edited, all the edi buttons are hidden.
+    // When a sentence is being edited, all the edit buttons are hidden.
     public $isEditing = false;
 
 
@@ -89,7 +89,7 @@ class SentenceIndex extends Component
     // sentence editor.
     public function editSentence($id)
     {
-        $this->toggleEditButtons(0);
+        $this->hideEditButtons();
         $this->emitTo('sentence-editor', 'editButtonClicked', $id);
     }
 

@@ -151,12 +151,20 @@ section.half-width-section {
     margin-top: 0;
 }
 
+.mt-1 {
+    margin-top: 0.25rem;
+}
+
 .mt-2 {
     margin-top: 0.5rem;
 }
 
 .mt-3 {
     margin-top: 1rem;
+}
+
+.mb-1 {
+    margin-bottom: 0.25rem;
 }
 
 
@@ -260,7 +268,7 @@ svg.w-5.h-5 {
 
 
 
-.sentence-editor {
+.popup-wrap {
     position: fixed;
     top: 0;
     left: 0;
@@ -274,12 +282,12 @@ svg.w-5.h-5 {
     align-items: center;
 }
 
-.sentence-editor > div {
+.popup-wrap > .popup {
     background: var(--body-bg);
     padding: 1rem;
     box-shadow: 0 0 7px #555;
-    max-width: 90vw;
-    max-height: 90vh;
+    max-width: 80vw;
+    max-height: 80vh;
     overflow-y: auto;
 }
 

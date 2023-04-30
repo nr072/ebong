@@ -16,6 +16,11 @@ class GroupIndex extends Component
 
 
 
+    // When a group is being edited, all the edit buttons are hidden.
+    public $isEditing = false;
+
+
+
     // String typed in the index to see matching words.
     public $searched = '';
 
@@ -28,6 +33,8 @@ class GroupIndex extends Component
     // Certain functions are executed when certian events are emitted.
     protected $listeners = [
         'groupCreated' => 'render',
+        'editorClosed' => 'showEditButtons',
+        'groupUpdated' => 'render',
     ];
 
 
@@ -50,6 +57,33 @@ class GroupIndex extends Component
     public function resetSearched()
     {
         $this->reset('searched');
+    }
+
+
+
+    public function editGroup($id)
+    {
+        $this->toggleEditButtons(0);
+        $this->emitTo('group-editor', 'editButtonClicked', $id);
+    }
+
+
+
+    // When a group is being edited, all the edit buttons are hidden.
+    // When the editor is closed, they are shown again.
+    private function toggleEditButtons($canShow = 0)
+    {
+        $this->isEditing = $canShow === 1 ? false : true;
+    }
+
+    public function showEditButtons()
+    {
+        $this->toggleEditButtons(1);
+    }
+
+    public function hideEditButtons()
+    {
+        $this->toggleEditButtons(0);
     }
 
 

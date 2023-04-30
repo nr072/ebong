@@ -14,7 +14,14 @@
         <ul>
             @foreach ($groups as $group)
 
-                <li>{{ $group->title }}</li>
+                <li class="mt-2">
+                    <span>{{ $group->title }}</span>
+
+                    <button class="button"
+                        wire:click="editGroup({{ $group->id }})"
+                        @if ($isEditing) disabled @endif
+                    >Edit</button>
+                </li>
 
                 @if ($group->words()->count() > 0)
 

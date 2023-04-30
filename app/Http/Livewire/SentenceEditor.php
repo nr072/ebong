@@ -173,6 +173,8 @@ class SentenceEditor extends Component
     public function associateGroup($id)
     {
         array_push($this->chosenGroupIds, $id);
+        $this->chosenGroupIds = array_unique($this->chosenGroupIds);
+
         $this->reset('searchedGroup');
 
         // Used for focusing the group input field.

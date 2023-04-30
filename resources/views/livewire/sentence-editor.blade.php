@@ -1,6 +1,6 @@
-<section class="sentence-editor @unless ($canShowEditor) hidden @endunless">
+<section class="sentence-editor popup-wrap @unless ($canShowEditor) hidden @endunless">
 
-    <div>
+    <div class="popup">
 
         <button class="button" style="float: right;" wire:click="closeEditor">&times;</button>
 
