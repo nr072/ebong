@@ -86,6 +86,12 @@ class SentenceAdder extends Component
 
 
 
+    protected $listeners = [
+        'bAdderDataSent' => 'fillBulkData',
+    ];
+
+
+
     public function createSentence()
     {
         $validatedData = $this->validate();
@@ -348,6 +354,25 @@ class SentenceAdder extends Component
             }
         }
 
+    }
+
+
+
+    // Data received from the bulk adder is put into the adder's input
+    // fields.
+    public function fillBulkData($sentence)
+    {
+        foreach (array_keys($sentence) as $key) {
+
+            // If a key exists in the (regular) adder's property, the
+            // corresponding sentence data received from the bulk adder
+            // is saved there. This helps weed out property names that
+            // don't match.
+            if ( array_key_exists($key, $this->inputs[0]) ) {
+                $this->inputs[0][$key] = $sentence[$key];
+            }
+
+        }
     }
 
 

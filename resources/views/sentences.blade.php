@@ -6,6 +6,8 @@
 
 @section('main')
 
+    <livewire:sentence-bulk-adder />
+
     <livewire:sentence-adder />
 
     <livewire:sentence-editor />

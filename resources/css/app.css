@@ -53,6 +53,15 @@ input[type=checkbox] + label {
 
 
 
+pre {
+    background: #eee;
+    color: #555;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+}
+
+
+
 /* ==================================================================
 
                               UTILITY CLASSES
@@ -342,4 +351,17 @@ svg.w-5.h-5 {
 }
 .note-section-toggler:checked ~ p {
     display: inherit;
+}
+
+
+
+/* ==================================================================
+
+                        SENTENCE BULK ADDER
+
+   ================================================================== */
+
+.sentence-bulk-adder .json-preview {
+    max-height: 50vh;
+    overflow: auto;
 }

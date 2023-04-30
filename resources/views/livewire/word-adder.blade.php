@@ -5,7 +5,7 @@
         <h1>Add a word</h1>
 
         <div>
-            <p>
+            <p class="mb-2">
                 <input type="text"
                     wire:model="newWordEn" wire:keydown.enter="addWord"
                     placeholder="Enter a new word here"
@@ -15,7 +15,7 @@
                 @enderror
             </p>
 
-            <p>
+            <p class="mt-2">
                 <select wire:model="newWordPos">
                     <option value="0">Select POS</option>
                     @foreach ($poses as $id => $en)
