@@ -362,6 +362,7 @@ class SentenceAdder extends Component
     // fields.
     public function fillBulkData($sentence)
     {
+
         foreach (array_keys($sentence) as $key) {
 
             // If a key exists in the (regular) adder's property, the
@@ -373,6 +374,12 @@ class SentenceAdder extends Component
             }
 
         }
+
+        // Autosuggestion doesn't trigger automatically (probably because
+        // the values were set internally), so the function needs to be
+        // called..
+        $this->autosuggestGroups();
+
     }
 
 
