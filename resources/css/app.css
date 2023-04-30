@@ -43,6 +43,12 @@ td {
 
 
 
+input[type=checkbox] {
+    vertical-align: bottom;
+}
+
+
+
 /* ==================================================================
 
                               UTILITY CLASSES

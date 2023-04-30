@@ -49,6 +49,13 @@
             <span class="error">{{ $message }}</span>
         @enderror
 
+        <p class="mt-2">
+            <label title="Words are suggested for association based on the words all the sentences contain">
+                <input type="checkbox" wire:model="canEnableAutosuggestion">
+                <span>Autosuggestion enabled</span>
+            </label>
+        </p>
+
         {{-- Each sentence --}}
         @foreach ($inputs as $key => $value)
             <fieldset class="new-sentence-fields-wrap">
@@ -169,11 +176,8 @@
 
                 <p>
                     <label>
-                        <input type="checkbox"
-                            style="vertical-align: bottom;" 
-                            wire:model="inputs.{{ $key }}.needsRevision"
-                        >
-                        Needs revision
+                        <input type="checkbox" wire:model="inputs.{{ $key }}.needsRevision">
+                        <span>Needs revision</span>
                     </label>
                     @error ('inputs.' . $key . '.needsRevision')
                         <span class="error">{{ $message }}</span>

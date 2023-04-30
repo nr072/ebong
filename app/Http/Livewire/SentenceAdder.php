@@ -24,8 +24,11 @@ class SentenceAdder extends Component
 
 
 
-    // 
     public $canShowGroupDropdown = false;
+
+
+
+    public $canEnableAutosuggestion = true;
 
 
 
@@ -351,7 +354,9 @@ class SentenceAdder extends Component
 
     public function updatedInputs()
     {
-        $this->autosuggestGroups();
+        if ($this->canEnableAutosuggestion) {
+            $this->autosuggestGroups();
+        }
     }
 
 
