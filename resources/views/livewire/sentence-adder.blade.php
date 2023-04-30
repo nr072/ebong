@@ -50,8 +50,8 @@
         @enderror
 
         <p class="mt-2">
-            <label title="Words are suggested for association based on the words all the sentences contain">
-                <input type="checkbox" wire:model="canEnableAutosuggestion">
+            <label class="cursor-p" title="Words are suggested for association based on words from ALL sentences">
+                <input type="checkbox" style="margin-left: 0;" wire:model="canEnableAutosuggestion">
                 <span>Autosuggestion enabled</span>
             </label>
         </p>
@@ -60,7 +60,7 @@
         @foreach ($inputs as $key => $value)
             <fieldset class="new-sentence-fields-wrap">
 
-                <p>
+                <p class="mb-2">
                     <input type="text"
                         wire:model.lazy="inputs.{{ $key }}.en" wire:keydown.enter="createSentence"
                         placeholder="Enter a new en sentence here"
@@ -78,7 +78,7 @@
                     @enderror
                 </p>
 
-                <p>
+                <p class="mt-2 mb-2">
                     <input type="text"
                         wire:model="inputs.{{ $key }}.context" wire:keydown.enter="createSentence"
                         placeholder="Enter context here"
@@ -96,7 +96,7 @@
                     @enderror
                 </p>
 
-                <p>
+                <p class="mt-2">
                     <input type="text"
                         wire:model.lazy="inputs.{{ $key }}.source" wire:keydown.enter="createSentence"
                         placeholder="Enter source name here"
@@ -152,31 +152,39 @@
                     must be updated when values in the relevant migration
                     file change.
                 --}}
-                <p>
-                    <label>
-                        Select note type:
-                        <select wire:model="inputs.{{ $key }}.noteType">
-                            <option value="0">Select note type</option>
-                            <option value="Note">Note</option>
-                            <option value="Reference">Reference</option>
-                        </select>
-                    </label>
-                    @error ('inputs.' . $key . '.noteType')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
+                <div>
+                    <input type="checkbox"
+                        id="note-section-toggler-{{ $key }}" class="note-section-toggler"
+                        style="margin-left: 0;"
+                    >
+                    <label for="note-section-toggler-{{ $key }}"
+                        title="Click to toggle note-related fields" 
+                    >Notes</label>
+                    <p class="mt-2">
+                        <label>
+                            <span>Note type:</span>
+                            <select wire:model="inputs.{{ $key }}.noteType">
+                                <option value="Note">Note</option>
+                                <option value="Reference">Reference</option>
+                            </select>
+                        </label>
+                        @error ('inputs.' . $key . '.noteType')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
 
-                    <textarea class="disp-b mt-2" style="width: 30rem; height: 5rem; font-family: sans-serif; padding: 0.5rem;" 
-                        wire:model="inputs.{{ $key }}.note"
-                        placeholder="Enter note here"
-                    ></textarea>
-                    @error ('inputs.' . $key . '.note')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
-                </p>
+                        <textarea class="disp-b mt-2" style="width: 30rem; height: 5rem; font-family: sans-serif; padding: 0.5rem;" 
+                            wire:model="inputs.{{ $key }}.note"
+                            placeholder="Enter note here"
+                        ></textarea>
+                        @error ('inputs.' . $key . '.note')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
+                    </p>
+                </div>
 
                 <p>
-                    <label>
-                        <input type="checkbox" wire:model="inputs.{{ $key }}.needsRevision">
+                    <label class="cursor-p" title="Click to mark this sentence">
+                        <input type="checkbox" style="margin-left: 0;" wire:model="inputs.{{ $key }}.needsRevision">
                         <span>Needs revision</span>
                     </label>
                     @error ('inputs.' . $key . '.needsRevision')

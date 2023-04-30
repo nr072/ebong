@@ -47,6 +47,10 @@ input[type=checkbox] {
     vertical-align: bottom;
 }
 
+input[type=checkbox] + label {
+    cursor: pointer;
+}
+
 
 
 /* ==================================================================
@@ -173,10 +177,20 @@ section.half-width-section {
     margin-bottom: 0.25rem;
 }
 
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
 
 
 .disp-b {
     display: block;
+}
+
+
+
+.cursor-p {
+    cursor: pointer;
 }
 
 
@@ -318,4 +332,14 @@ svg.w-5.h-5 {
     padding: 0 1rem;
     border-width: 1px;
     margin: 0.5rem 0;
+}
+
+
+
+/* Note-related fields are hidden by default to save space. */
+.note-section-toggler ~ p {
+    display: none;
+}
+.note-section-toggler:checked ~ p {
+    display: inherit;
 }
