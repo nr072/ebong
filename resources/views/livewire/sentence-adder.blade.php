@@ -49,7 +49,7 @@
             <span class="error">{{ $message }}</span>
         @enderror
 
-        <p class="mt-2">
+        <p class="mt-1">
             <label class="cursor-p" title="Words are suggested for association based on words from ALL sentences">
                 <input type="checkbox" style="margin-left: 0;" wire:model="canEnableAutosuggestion">
                 <span>Autosuggestion enabled</span>

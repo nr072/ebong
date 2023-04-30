@@ -97,42 +97,44 @@ class SentenceIndex extends Component
 
     public function applySearchFilters()
     {
+
+        $query = Sentence::orderBy('en');
+
         if ($this->searchedEn !== '') {
-            $this->sentences = $this->sentences
-                ->where('en', 'like', '%'.$this->searchedEn.'%');
+            $query = $query->where('en', 'like', '%'.$this->searchedEn.'%');
         }
+
         if ($this->searchedBn !== '') {
-            $this->sentences = $this->sentences
-                ->where('bn', 'like', '%'.$this->searchedBn.'%');
+            $query = $query->where('bn', 'like', '%'.$this->searchedBn.'%');
         }
+
         // Context searching works on the subcontext column too.
         if ($this->searchedContext !== '') {
-            $this->sentences = $this->sentences
-                ->where(function($query) {
-                    $query->where('context', 'like', '%'.$this->searchedContext.'%')
-                        ->orWhere('subcontext', 'like', '%'.$this->searchedContext.'%');
-                });
+            $query = $query->where(function($query) {
+                        $query->where('context', 'like', '%'.$this->searchedContext.'%')
+                            ->orWhere('subcontext', 'like', '%'.$this->searchedContext.'%');
+            });
         }
+
         // The associated groups exist in another table.
         if ($this->searchedGroup !== '') {
-            $this->sentences = $this->sentences
-                ->whereHas('groups', function ($query){
-                    $query->where('en', 'like', '%'.$this->searchedGroup.'%');
-                });
+            $query = $query->whereHas('groups', function ($query){
+                        $query->where('en', 'like', '%'.$this->searchedGroup.'%');
+            });
         }
+
         if ($this->searchedSource !== '') {
-            $this->sentences = $this->sentences
-                ->where('source', 'like', '%'.$this->searchedSource.'%');
+            $query = $query->where('source', 'like', '%'.$this->searchedSource.'%');
         }
+
+        $this->sentences = $query->paginate($this->paginCount);
+
     }
 
 
 
     public function render()
     {
-        $this->sentences = Sentence::orderBy('en')
-                                    ->paginate($this->paginCount);
-
         $this->applySearchFilters();
 
         return view('livewire.sentence-index', [

@@ -143,7 +143,7 @@
 
                             @if ($sentence->needs_revision)
                                 <div class="text-indented text-gray">
-                                    <small><i style="color: rgb(202 127 50);">This sentence needs revision</i></small>
+                                    <small><i style="color: rgb(202 127 50);">Needs revision</i></small>
                                 </div>
                             @endif
 
