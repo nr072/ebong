@@ -111,7 +111,7 @@ class GroupEditor extends Component
     {
         $this->group = $groupToEdit;
 
-        // IDs of words already associated to the group are added to the
+        // IDs of words already associated with the group are added to the
         // ID array so that they can be updated if necessary.
         $alreadyAssocWordIds = $this->group->words->pluck('id')->toArray();
         $this->chosenWordIds = array_unique(
@@ -128,10 +128,8 @@ class GroupEditor extends Component
     // excluding words that are already associated with this group.
     public function applySearchFilters()
     {
-        $alreadyAssocWordIds = $this->group->words->pluck('id');
-
         $query = Word::orderBy('en')
-                        ->whereNotIn('id', $alreadyAssocWordIds);
+                        ->whereNotIn('id', $this->chosenWordIds);
 
         if ($this->searched) {
             $query = $query->where('en', 'like', $this->searched.'%');

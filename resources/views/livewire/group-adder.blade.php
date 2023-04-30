@@ -25,6 +25,9 @@
                     placeholder="Type to search words"
                 >
             </label>
+            @error ('chosenWordIds')
+                <span class="error">{{ $message }}</span>
+            @enderror
         </p>
         @if (sizeof($filteredWords) > 0)
             <div class="dropdown" style="margin-left: 10rem;">
@@ -52,14 +55,13 @@
                 @endforeach
             </p>
         @endif
-        @error ('chosenWordIds')
-            <span class="error">{{ $message }}</span>
-        @enderror
 
-        <button class="button"
-            wire:click="createGroup"
-            @empty($title) disabled @endempty
-        >Confirm</button>
+        <p>
+            <button class="button"
+                wire:click="createGroup"
+                @empty($title) disabled @endempty
+            >Confirm</button>
+        </p>
 
         <p>Status: <span class="{{ $status['type'] }}">{{ $status['text'] }}</span></p>
 

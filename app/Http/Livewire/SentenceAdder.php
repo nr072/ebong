@@ -391,7 +391,6 @@ class SentenceAdder extends Component
         return view('livewire.sentence-adder', [
             'allGroups' => $this->allGroups,
             'filteredGroups' => $this->filteredGroups,
-            // 'associableGroups' => $this->associableGroups,
         ]);
 
     }
