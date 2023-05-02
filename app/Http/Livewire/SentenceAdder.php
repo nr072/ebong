@@ -94,17 +94,11 @@ class SentenceAdder extends Component
 
     public function createSentence()
     {
-        $validatedData = $this->validate();
-
         // Nice visual cue that things are starting.
         $this->status['type'] = 'warning';
-        $this->status['text'] = 'Adding new sentence...';
+        $this->status['text'] = 'Trying to add...';
 
-        if (empty($this->inputs[0]['en'])) {
-            $this->status['type'] = 'error';
-            $this->status['text'] = 'Empty sentence entered!';
-            return;
-        }
+        $validatedData = $this->validate();
 
         // A sentence is created for each set of sentence-related inputs.
         foreach ($validatedData['inputs'] as $input) {

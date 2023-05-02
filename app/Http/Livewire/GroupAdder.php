@@ -56,11 +56,12 @@ class GroupAdder extends Component
 
     public function createGroup()
     {
-        $validatedData = $this->validate();
 
         // Nice visual cue that things are starting.
         $this->status['type'] = 'warning';
-        $this->status['text'] = 'Creating a new group...';
+        $this->status['text'] = 'Trying to add...';
+
+        $validatedData = $this->validate();
 
         // Group creation.
         $newGroup = Group::create([

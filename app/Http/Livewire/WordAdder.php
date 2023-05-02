@@ -66,17 +66,12 @@ class WordAdder extends Component
 
     public function addWord()
     {
-        $vData = $this->validate();
 
         // Nice visual cue that things are starting.
         $this->status['type'] = 'warning';
-        $this->status['text'] = 'Adding new word...';
+        $this->status['text'] = 'Trying to add...';
 
-        if (empty($this->newWordEn)) {
-            $this->status['type'] = 'error';
-            $this->status['text'] = 'Empty word entered!';
-            return;
-        }
+        $vData = $this->validate();
 
         // Word creation.
         $newWord = Word::create([
