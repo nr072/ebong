@@ -13,7 +13,7 @@ class SentenceIndex extends Component
     private $sentences;
 
     // The number of paginated entries to be returned.
-    private $paginCount = 20;
+    private $paginCount = 50;
 
     // A reset function depends on these properties.
     public $searchedEn = '';
