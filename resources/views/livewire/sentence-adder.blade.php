@@ -174,6 +174,7 @@
 
                         <textarea class="disp-b mt-2" style="width: 30rem; height: 5rem; font-family: sans-serif; padding: 0.5rem;" 
                             wire:model="inputs.{{ $key }}.note"
+                            wire:keydown.ctrl.enter="createSentence"
                             placeholder="Enter note here"
                         ></textarea>
                         @error ('inputs.' . $key . '.note')
