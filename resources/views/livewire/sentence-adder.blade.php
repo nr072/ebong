@@ -158,8 +158,8 @@
                         style="margin-left: 0;"
                     >
                     <label for="note-section-toggler-{{ $key }}"
-                        title="Click to toggle note-related fields" 
-                    >Notes</label>
+                        title="If the field below has a value when revealed, hiding it won't remove the value" 
+                    >Show/hide the note section</label>
                     <p class="mt-2">
                         <label>
                             <span>Note type:</span>

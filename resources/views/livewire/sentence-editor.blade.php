@@ -80,9 +80,7 @@
             @error ('sentence.subcontext')
                 <span class="error">{{ $message }}</span>
             @enderror
-        </p>
 
-        <p>
             <input type="text"
                 wire:model.lazy="sentence.source" wire:keydown.enter="saveUpdates"
                 placeholder="Enter source name here"
@@ -90,7 +88,9 @@
             @error ('sentence.source')
                 <span class="error">{{ $message }}</span>
             @enderror
+        </p>
 
+        <p>
             <input type="text"
                 wire:model.lazy="sentence.link_1" wire:keydown.enter="saveUpdates"
                 placeholder="Enter a link here"
