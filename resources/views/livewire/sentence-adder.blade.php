@@ -94,15 +94,16 @@
                     @error ('inputs.' . $key . '.subcontext')
                         <span class="error">{{ $message }}</span>
                     @enderror
-                </p>
 
-                <p class="mt-2">
                     <input type="text"
                         wire:model.lazy="inputs.{{ $key }}.source" wire:keydown.enter="createSentence"
                         placeholder="Enter source name here"
                     >
+                    @error ('inputs.' . $key . '.source')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
                     @if ($canShowSourceDropdown)
-                        <div class="dropdown" style="margin-top: -1.05rem;">
+                        <span class="dropdown" style="margin-top: 1.35rem; margin-left: -12.3rem;">
 
                             <button class="button" style="float: right;"
                                 wire:click="toggleSourceDropdown(0)"
@@ -116,12 +117,11 @@
                                 @endif
                             @endforeach
 
-                        </div>
+                        </span>
                     @endif
-                    @error ('inputs.' . $key . '.source')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
+                </p>
 
+                <p class="mt-2">
                     <input type="text"
                         wire:model.lazy="inputs.{{ $key }}.link1" wire:keydown.enter="createSentence"
                         placeholder="Enter a link here"
