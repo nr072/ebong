@@ -6,7 +6,10 @@
 
 @section('main')
 
-    {{-- <livewire:group-index /> --}}
-    [WIP]
+    <livewire:group-adder />
+
+    <livewire:group-index />
+
+    <livewire:group-editor />
 
 @endsection

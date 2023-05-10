@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Word;
+use App\Models\Group;
 
 class Sentence extends Model
 {
@@ -19,10 +19,13 @@ class Sentence extends Model
         'link_1',
         'link_2',
         'link_3',
+        'note_type',
+        'note',
+        'needs_revision',
     ];
 
-    public function words()
+    public function groups()
     {
-        return $this->belongsToMany(Word::class);
+        return $this->belongsToMany(Group::class);
     }
 }

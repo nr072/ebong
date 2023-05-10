@@ -5,20 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Term extends Model
+class Group extends Model
 {
-
     use HasFactory;
 
     protected $fillable = [
-        'en'
+        'title',
     ];
 
-
-
-    public function examples()
+    public function words()
     {
-        return $this->belongsToMany(Example::class);
+        return $this->hasMany(Word::class);
     }
-
 }

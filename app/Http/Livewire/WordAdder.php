@@ -3,6 +3,8 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Models\Group;
+use App\Models\Pos;
 use App\Models\Word;
 
 use Illuminate\Support\Facades\Log;
@@ -10,15 +12,18 @@ use Illuminate\Support\Facades\Log;
 class WordAdder extends Component
 {
 
-    // Word (or parts of it) that the user will type in the adder for adding
-    // new words.
-    public $newText = '';
+    public $newWordEn = '';
+    public $newWordPos = '';
+    public $newWordGroup = '';
+
+    // Used for showing a list of existing groups to add this new word to.
+    private $allGroups = [];
 
     // String typed in the index to see matching words.
     public $searchedEn = '';
 
     protected $queryString = [
-        'newText' => ['except' => '', 'as' => 'typed'],
+        'newWordEn' => ['except' => '', 'as' => 'af-word'],
         'searchedEn' => ['except' => '', 'as' => 'en'],
     ];
 
@@ -28,19 +33,26 @@ class WordAdder extends Component
     ];
 
     protected $rules = [
-        'newText' => 'required|string|max:50',
+        'newWordEn' => 'required|string|max:50',
+        'newWordPos' => 'required|exists:poses,id',
+        'newWordGroup' => 'nullable|exists:groups,id',
     ];
 
+
+
+    // Certain functions are executed when certian events are emitted.
     protected $listeners = [
         'wordCreated' => 'render',
     ];
 
+
+
     private $words;
     private $paginCount = 20;
 
-    // Matching words are shown as the user types in the adder so that to
-    // help avoid adding existing words.
-    private $matchedForNew;
+    // As the user types in the adder, matching words are shown to help
+    // avoid adding existing words again.
+    private $wordsMatchingSearched;
 
 
 
@@ -54,21 +66,22 @@ class WordAdder extends Component
 
     public function addWord()
     {
-        $this->validate();
 
         // Nice visual cue that things are starting.
         $this->status['type'] = 'warning';
-        $this->status['text'] = 'Adding new word...';
+        $this->status['text'] = 'Trying to add...';
 
-        if (empty($this->newText)) {
-            $this->status['type'] = 'error';
-            $this->status['text'] = 'Empty word entered!';
-            return;
-        }
+        $vData = $this->validate();
 
         // Word creation.
         $newWord = Word::create([
-            'en' => $this->newText
+            'en' => trim( $vData['newWordEn'] ),
+            'pos_id' => trim( $vData['newWordPos'] ),
+            'group_id' => (
+                $vData['newWordGroup'] === ''
+                    ? null
+                    : trim( $vData['newWordGroup'] )
+            ),
         ]);
 
         // Input fields are cleared.
@@ -88,8 +101,11 @@ class WordAdder extends Component
 
     }
 
-    public function render()
+
+
+    public function applySearchFilters()
     {
+
         // Results for the word index are filtered.
         if ($this->searchedEn != '') {
             $this->words = Word::orderBy('en')
@@ -101,17 +117,29 @@ class WordAdder extends Component
         }
 
         // Results for the word adder are filtered.
-        if ($this->newText != '') {
-            $this->matchedForNew = Word::orderBy('en')
-                                    ->where('en', 'like', '%'.$this->newText.'%');
+        if ($this->newWordEn != '') {
+            $query = Word::orderBy('en')
+                            ->where('en', 'like', '%'.$this->newWordEn.'%');
         } else {
-            $this->matchedForNew = Word::where('id', 0);
+            $query = Word::where('id', 0);
         }
-        $this->matchedForNew = $this->matchedForNew->pluck('en', 'id');
+        $this->wordsMatchingSearched = $query->get();
+
+    }
+
+
+
+    public function render()
+    {
+        $this->allGroups = Group::orderBy('title')->get();
+
+        $this->applySearchFilters();
 
         return view('livewire.word-adder', [
             'words' => $this->words,
-            'matchedForNew' => $this->matchedForNew,
+            'poses' => Pos::pluck('en', 'id'),
+            'wordsMatchingSearched' => $this->wordsMatchingSearched,
+            'groups' => $this->allGroups,
         ]);
     }
 

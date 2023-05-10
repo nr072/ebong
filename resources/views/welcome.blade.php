@@ -1,41 +1,24 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.app')
 
-    <head>
+@section('tab-title')
+    cat
+@endsection
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@section('more-css')
+    a.temp-nav {
+        margin: 1rem;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #333;
+    }
+@endsection
 
-        <title>Laravel</title>
 
-        @livewireStyles
+@section('main')
 
-        <link rel="stylesheet" type="text/css" href="css/app.css">
+    <div style="padding: 2em 0;">
+        <a class="temp-nav" href="{{ route('words-page') }}">words</a>
+        <a class="temp-nav" href="{{ route('groups-page') }}">groups</a>
+        <a class="temp-nav" href="{{ route('sentences-page') }}">sentences</a>
+    </div>
 
-        <style type="text/css">
-            a.temp-nav {
-                margin: 1rem;
-                padding: 0.5rem 0.75rem;
-                border: 1px solid #333;
-            }
-        </style>
-
-    </head>
-
-    <body>
-
-        <div>
-            <a class="temp-nav" href="/terms">terms</a>
-            <a class="temp-nav" href="/examples">examples</a>
-        </div>
-
-        <div style="margin: 5rem 0;">
-            <a class="temp-nav" href="{{ route('words-page') }}">words</a>
-            <a class="temp-nav" href="{{ route('sentences-page') }}">sentences</a>
-        </div>
-
-        @livewireScripts
-
-    </body>
-
-</html>
+@endsection

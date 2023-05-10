@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddContextAndSubcontextToExamples extends Migration
+class CreateGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddContextAndSubcontextToExamples extends Migration
      */
     public function up()
     {
-        Schema::table('examples', function (Blueprint $table) {
-            $table->string('context', 200)->nullable();
-            $table->string('subcontext', 200)->nullable();
+        Schema::create('groups', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('title', 50);
         });
     }
 
@@ -26,8 +27,6 @@ class AddContextAndSubcontextToExamples extends Migration
      */
     public function down()
     {
-        Schema::table('examples', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('groups');
     }
 }

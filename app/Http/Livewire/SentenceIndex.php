@@ -13,25 +13,36 @@ class SentenceIndex extends Component
     private $sentences;
 
     // The number of paginated entries to be returned.
-    private $paginCount = 20;
+    private $paginCount = 50;
 
     // A reset function depends on these properties.
     public $searchedEn = '';
     public $searchedBn = '';
     public $searchedContext = '';
-    public $searchedWord = '';
+    public $searchedGroup = '';
     public $searchedSource = '';
 
     protected $queryString = [
         'searchedEn' => ['except' => '', 'as' => 'en'],
         'searchedBn' => ['except' => '', 'as' => 'bn'],
         'searchedContext' => ['except' => '', 'as' => 'context'],
-        'searchedWord' => ['except' => '', 'as' => 'word'],
+        'searchedGroup' => ['except' => '', 'as' => 'group'],
         'searchedSource' => ['except' => '', 'as' => 'source'],
     ];
 
+
+
+    // When a sentence is being edited, all the edit buttons are hidden.
+    public $isEditing = false;
+
+
+
+    // Certain functions are executed when certian events have been emitted.
     protected $listeners = [
         'sentenceCreated' => 'render',
+        'editorOpened' => 'hideEditButtons',
+        'editorClosed' => 'showEditButtons',
+        'sentenceUpdated' => 'render',
     ];
 
 
@@ -46,8 +57,8 @@ class SentenceIndex extends Component
             $this->reset('searchedBn');
         } else if ($column === 'context') {
             $this->reset('searchedContext');
-        } else if ($column === 'word') {
-            $this->reset('searchedWord');
+        } else if ($column === 'group') {
+            $this->reset('searchedGroup');
         } else if ($column === 'source') {
             $this->reset('searchedSource');
         }
@@ -55,43 +66,79 @@ class SentenceIndex extends Component
 
 
 
-    public function render()
+    // When a sentence is being edited, all the edit buttons are hidden.
+    // When the editor is closed, they are shown again.
+    private function toggleEditButtons($canShow = 0)
     {
-        $this->sentences = Sentence::orderBy('en');
+        $this->isEditing = $canShow === 1 ? false : true;
+    }
 
-        /*
-            If something was searched, results are filtered.
-        */
+    public function showEditButtons()
+    {
+        $this->toggleEditButtons(1);
+    }
+
+    public function hideEditButtons()
+    {
+        $this->toggleEditButtons(0);
+    }
+
+
+
+    // Clicking on an edit button hides all edit buttons and shows the
+    // sentence editor.
+    public function editSentence($id)
+    {
+        $this->hideEditButtons();
+        $this->emitTo('sentence-editor', 'editButtonClicked', $id);
+    }
+
+
+
+    public function applySearchFilters()
+    {
+
+        $query = Sentence::orderBy('en');
+
         if ($this->searchedEn !== '') {
-            $this->sentences = $this->sentences
-                ->where('en', 'like', '%'.$this->searchedEn.'%');
+            $query = $query->where('en', 'like', '%'.$this->searchedEn.'%');
         }
+
         if ($this->searchedBn !== '') {
-            $this->sentences = $this->sentences
-                ->where('bn', 'like', '%'.$this->searchedBn.'%');
+            $query = $query->where('bn', 'like', '%'.$this->searchedBn.'%');
         }
+
         // Context searching works on the subcontext column too.
         if ($this->searchedContext !== '') {
-            $this->sentences = $this->sentences
-                ->where(function($query) {
-                    $query->where('context', 'like', '%'.$this->searchedContext.'%')
-                        ->orWhere('subcontext', 'like', '%'.$this->searchedContext.'%');
-                });
-        }
-        // The associated words exist in another table.
-        if ($this->searchedWord !== '') {
-            $this->sentences = $this->sentences
-                ->whereHas('words', function ($query){
-                    $query->where('en', 'like', '%'.$this->searchedWord.'%');
-                });
-        }
-        if ($this->searchedSource !== '') {
-            $this->sentences = $this->sentences
-                ->where('source', 'like', '%'.$this->searchedSource.'%');
+            $query = $query->where(function($query) {
+                        $query->where('context', 'like', '%'.$this->searchedContext.'%')
+                            ->orWhere('subcontext', 'like', '%'.$this->searchedContext.'%');
+            });
         }
 
+        // The associated groups exist in another table.
+        if ($this->searchedGroup !== '') {
+            $query = $query->whereHas('groups', function ($query){
+                        $query->where('en', 'like', '%'.$this->searchedGroup.'%');
+            });
+        }
+
+        if ($this->searchedSource !== '') {
+            $query = $query->where('source', 'like', '%'.$this->searchedSource.'%');
+        }
+
+        $this->sentences = $query->paginate($this->paginCount);
+
+    }
+
+
+
+    public function render()
+    {
+        $this->applySearchFilters();
+
         return view('livewire.sentence-index', [
-            'sentences' => $this->sentences->paginate($this->paginCount)
+            'sentences' => $this->sentences,
         ]);
     }
 

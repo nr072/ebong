@@ -5,56 +5,49 @@
     <table class="alt-rows">
         <thead>
             <tr>
-                <th class="cell-en">en</th>
-                <th class="cell-bn">bn</th>
-
-                <th class="cell-context">Context</th>
-
-                <th class="cell-word">Words</th>
-
+                <th></th>
+                <th>Text</th>
+                <th class="cell-group">Groups</th>
                 <th class="cell-source">Source</th>
-
-                <th class="cell-links">Links</th>
             </tr>
         </thead>
         <tbody>
 
             <tr class="search-fields-row">
-                <td>
+                <td></td>
+                <td class="cell-text">
                     <div>
                         <input type="text"
                             wire:model="searchedEn"
-                            placeholder="Type to search"
+                            placeholder="Type to search en"
                         >
                         @if ($searchedEn)
-                            <button wire:click="resetSearched('en')"
+                            <button class="button"
+                                wire:click="resetSearched('en')"
                                 title="Click to clear searched string"
                             >&times;</button>
                         @endif
                     </div>
-                </td>
-                <td>
                     <div>
                         <input type="text"
                             wire:model="searchedBn"
-                            placeholder="Type to search"
+                            placeholder="Type to search bn"
                         >
                         @if ($searchedBn)
-                            <button wire:click="resetSearched('bn')"
+                            <button class="button"
+                                wire:click="resetSearched('bn')"
                                 title="Click to clear searched string"
                             >&times;</button>
                         @endif
                     </div>
-                </td>
-
-                <td>
                     <div>
                         <input type="text"
                             wire:model="searchedContext"
-                            placeholder="Type to search"
+                            placeholder="Type to search context"
                         >
                         @if ($searchedContext)
-                            <button wire:click="resetSearched('context')"
+                            <button class="button"
+                                wire:click="resetSearched('context')"
                                 title="Click to clear searched string"
                             >&times;</button>
                         @endif
@@ -64,11 +57,12 @@
                 <td>
                     <div>
                         <input type="text"
-                            wire:model="searchedWord"
+                            wire:model="searchedGroup"
                             placeholder="Type to search"
                         >
-                        @if ($searchedWord)
-                            <button wire:click="resetSearched('word')"
+                        @if ($searchedGroup)
+                            <button class="button"
+                                wire:click="resetSearched('group')"
                                 title="Click to clear searched string"
                             >&times;</button>
                         @endif
@@ -82,57 +76,86 @@
                             placeholder="Type to search"
                         >
                         @if ($searchedSource)
-                            <button wire:click="resetSearched('source')"
+                            <button class="button"
+                                wire:click="resetSearched('source')"
                                 title="Click to clear searched string"
                             >&times;</button>
                         @endif
                     </div>
                 </td>
-
-                <td></td>
             </tr>
 
             @if ($sentences->count() > 0)
 
                 @foreach ($sentences as $sentence)
                     <tr>
-                        <td class="cell-en">{{ $sentence->en }}</td>
-                        <td class="cell-bn">{{ $sentence->bn }}</td>
-
-                        <td class="cell-context">
-                            @if ($sentence->context)
-                                <div>{{ $sentence->context }}</div>
-                            @endif
-                            @if ($sentence->subcontext)
-                                <div>{{ $sentence->subcontext }}</div>
-                            @endif
+                        <td class="cell-buttons">
+                            <button class="button"
+                                @if ($isEditing) disabled @endif
+                                wire:click="editSentence({{ $sentence->id }})"
+                            >Edit</button>
                         </td>
 
-                        <td class="cell-word">
-                            @foreach ($sentence->words as $word)
-                                <span>{{ $word->en }}</span>
+                        <td>
+
+                            <div>{{ $sentence->en }}</div>
+
+                            <div style="font-size: 0.9em;">{{ $sentence->bn }}</div>
+
+                            @if ($sentence->context)
+                                <div class="text-indented text-gray">
+                                    <small>Context:</small> {{ $sentence->context }}
+                                </div>
+                            @endif
+                            @if ($sentence->subcontext)
+                                <div class="text-indented text-gray">
+                                    <small>Subcontext:</small> {{ $sentence->subcontext }}
+                                </div>
+                            @endif
+
+                            @if ($sentence->link_1 || $sentence->link_2 || $sentence->link_3)
+                                <div class="text-indented text-gray">
+                                    <small>Links: </small>
+                                    <span>
+                                        @if ($sentence->link_1)
+                                            <a href="{{ $sentence->link_1 }}" title="{{ $sentence->link_1 }}">URL</a>
+                                        @endif
+                                    </span>
+                                    <span>
+                                        @if ($sentence->link_2)
+                                            <a href="{{ $sentence->link_2 }}" title="{{ $sentence->link_2 }}">URL</a>
+                                        @endif
+                                    </span>
+                                    <span>
+                                        @if ($sentence->link_3)
+                                            <a href="{{ $sentence->link_3 }}" title="{{ $sentence->link_3 }}">URL</a>
+                                        @endif
+                                    </span>
+                                </div>
+                            @endif
+
+                            @if ($sentence->note)
+                                <div class="text-indented text-gray">
+                                    <small>{{ $sentence->note_type }}:</small>
+                                    <span>{{ $sentence->note }}</span>
+                                </div>
+                            @endif
+
+                            @if ($sentence->needs_revision)
+                                <div class="text-indented text-gray">
+                                    <small><i style="color: rgb(202 127 50);">Needs revision</i></small>
+                                </div>
+                            @endif
+
+                        </td>
+
+                        <td class="cell-group">
+                            @foreach ($sentence->groups as $group)
+                                <div>{{ $group->title }}</div>
                             @endforeach
                         </td>
 
                         <td class="cell-source">{{ $sentence->source }}</td>
-
-                        <td class="cell-links">
-                            <span>
-                                @if ($sentence->link_1)
-                                    <a href="{{ $sentence->link_1 }}">#1</a>
-                                @endif
-                            </span>
-                            <span>
-                                @if ($sentence->link_2)
-                                    <a href="{{ $sentence->link_2 }}">#2</a>
-                                @endif
-                            </span>
-                            <span>
-                                @if ($sentence->link_3)
-                                    <a href="{{ $sentence->link_3 }}">#3</a>
-                                @endif
-                            </span>
-                        </td>
                     </tr>
                 @endforeach
 
