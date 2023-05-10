@@ -12,6 +12,33 @@
 
 /* ==================================================================
 
+                            TAILWIND OVERRIDES
+
+   ================================================================== */
+
+[type='text'],
+[type='email'],
+[type='url'],
+[type='password'],
+[type='number'],
+[type='date'],
+[type='datetime-local'],
+[type='month'],
+[type='search'],
+[type='tel'],
+[type='time'],
+[type='week'],
+[multiple],
+textarea,
+select {
+    padding-top: 0.15rem;
+    padding-bottom: 0.15rem;
+}
+
+
+
+/* ==================================================================
+
                               COMMON STYLES
 
    ================================================================== */
@@ -71,10 +98,14 @@ pre {
 
    ================================================================== */
 
-.button {
-    font-family: sans-serif;
-    text-transform: uppercase;
-    cursor: pointer;
+@layer base {
+    .button {
+        font-family: sans-serif;
+        @apply inline-block rounded bg-slate-200 px-3 pb-1 pt-1 my-1 text-xs;
+        @apply font-medium uppercase leading-normal text-slate-700 transition;
+        @apply duration-150 ease-in-out hover:bg-slate-300 focus:bg-slate-300;
+        @apply focus:outline-none focus:ring-0 active:bg-slate-400;
+    }
 }
 
 
