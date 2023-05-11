@@ -98,18 +98,6 @@ pre {
 
    ================================================================== */
 
-@layer base {
-    .button {
-        font-family: sans-serif;
-        @apply inline-block rounded bg-slate-200 px-3 pb-1 pt-1 my-1 text-xs;
-        @apply font-medium uppercase leading-normal text-slate-700 transition;
-        @apply duration-150 ease-in-out hover:bg-slate-300 focus:bg-slate-300;
-        @apply focus:outline-none focus:ring-0 active:bg-slate-400;
-    }
-}
-
-
-
 .hidden {
     display: none !important;
 }
@@ -208,6 +196,60 @@ section.half-width-section {
 
 .cursor-p {
     cursor: pointer;
+}
+
+
+
+@layer base {
+    .button {
+        font-family: sans-serif;
+        @apply inline-block rounded px-3 pb-1 pt-1 my-1
+                text-xs font-medium uppercase leading-normal
+                border border-gray-400
+                transition duration-150 ease-in-out
+                disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200
+                hover:bg-gray-300 
+                focus:outline-none focus:ring-0;
+    }
+}
+
+@layer base {
+    .button.generic {
+        @apply text-slate-500
+                bg-slate-200
+                border-none hover:bg-slate-300
+                focus:bg-slate-300
+                active:bg-slate-400;
+    }
+}
+
+@layer base {
+    .button.alert {
+        color: rgb(130, 92, 15);
+        background-color: rgb(251, 242, 222);
+        @apply
+                border-none
+                hover:bg-amber-200/50;
+        ;
+    }
+}
+
+@layer base {
+    a {
+        @apply text-cyan-700
+                hover:text-cyan-500;
+    }
+}
+
+@layer base {
+    .button.emerald {
+        @apply
+                text-emerald-900/70
+                bg-emerald-800/20
+                border-none
+                hover:bg-emerald-800/30
+        ;
+    }
 }
 
 
@@ -332,7 +374,7 @@ section.half-width-section {
 }
 
 .new-sentence-fields-wrap {
-    padding: 0 1rem;
+    padding: 1rem;
     border-width: 1px;
     margin: 0.5rem 0;
 }

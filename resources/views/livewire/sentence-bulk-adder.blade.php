@@ -23,7 +23,7 @@
     @endif
 
     <p class="mb-2">
-        <button class="button"
+        <button class="button generic"
             wire:click="sendOneSentenceDataToAdder()"
             title="Click to fill the (regular) adder with one sentence's data" 
         >Fill a sentence</button>

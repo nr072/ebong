@@ -58,7 +58,7 @@
 
         {{-- Each sentence --}}
         @foreach ($inputs as $key => $value)
-            <fieldset class="new-sentence-fields-wrap">
+            <fieldset class="new-sentence-fields-wrap bg-emerald-800/10">
 
                 <p class="mb-2">
                     <input type="text"
@@ -197,7 +197,7 @@
         @endforeach
 
         <p>
-            <button class="button" wire:click="addAnotherSentence">Add another sentence</button>
+            <button class="button emerald" wire:click="addAnotherSentence">Add another sentence</button>
         </p>
 
         <p>

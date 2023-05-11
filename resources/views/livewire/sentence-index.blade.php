@@ -90,7 +90,7 @@
                 @foreach ($sentences as $sentence)
                     <tr>
                         <td class="cell-buttons">
-                            <button class="button"
+                            <button class="button alert"
                                 @if ($isEditing) disabled @endif
                                 wire:click="editSentence({{ $sentence->id }})"
                             >Edit</button>

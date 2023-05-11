@@ -17,7 +17,7 @@
                 <li class="mt-2">
                     <span>{{ $group->title }}</span>
 
-                    <button class="button"
+                    <button class="button alert"
                         wire:click="editGroup({{ $group->id }})"
                         @if ($isEditing) disabled @endif
                     >Edit</button>
