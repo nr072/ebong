@@ -92,6 +92,27 @@ pre {
 
 
 
+ul {
+    padding-left: 2rem;
+}
+
+li {
+    list-style: disc;
+}
+
+
+
+@layer base {
+    
+    a {
+        @apply text-cyan-700
+                hover:text-cyan-500;
+    }
+
+}
+
+
+
 /* ==================================================================
 
                               UTILITY CLASSES
@@ -132,22 +153,6 @@ pre {
 
 .text-gray {
     color: #555;
-}
-
-
-
-/* Alternate rows in tables are differently colored for visual comfort. */
-
-.alt-rows thead tr {
-    background: #aaa;
-}
-
-.alt-rows tbody tr:nth-child(2n+1) {
-    background: rgb(240 240 240);
-}
-
-.alt-rows tbody tr:nth-child(2n) {
-    background: rgb(230 230 230);
 }
 
 
@@ -200,7 +205,20 @@ section.half-width-section {
 
 
 
+/* Alternate rows in tables are differently colored for visual comfort. */
+
+.alt-rows tbody tr:nth-child(2n+1):not(tr:first-child) {
+    background: rgb(41 137 153 / 10%);
+}
+
+.alt-rows tbody tr:nth-child(2n) {
+    background: rgb(9 73 82 / 13%);
+}
+
+
+
 @layer base {
+
     .button {
         font-family: sans-serif;
         @apply inline-block rounded px-3 pb-1 pt-1 my-1
@@ -211,9 +229,7 @@ section.half-width-section {
                 hover:bg-gray-300 
                 focus:outline-none focus:ring-0;
     }
-}
 
-@layer base {
     .button.generic {
         @apply text-slate-500
                 bg-slate-200
@@ -221,9 +237,7 @@ section.half-width-section {
                 focus:bg-slate-300
                 active:bg-slate-400;
     }
-}
 
-@layer base {
     .button.alert {
         color: rgb(130, 92, 15);
         background-color: rgb(251, 242, 222);
@@ -232,16 +246,7 @@ section.half-width-section {
                 hover:bg-amber-200/50;
         ;
     }
-}
 
-@layer base {
-    a {
-        @apply text-cyan-700
-                hover:text-cyan-500;
-    }
-}
-
-@layer base {
     .button.emerald {
         @apply
                 text-emerald-900/70
@@ -250,6 +255,7 @@ section.half-width-section {
                 hover:bg-emerald-800/30
         ;
     }
+
 }
 
 
@@ -289,6 +295,9 @@ section.half-width-section {
 
 .search-fields-row input {
     width: 100%;
+    padding: .25rem;
+    line-height: 1rem;
+    text-align: center;
 }
 
 .search-fields-row input,
@@ -299,6 +308,7 @@ section.half-width-section {
 
 .search-fields-row input + button {
     border-left: none;
+    margin: 0;
 }
 
 

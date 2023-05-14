@@ -15,28 +15,30 @@
             @foreach ($groups as $group)
 
                 <li class="mt-2">
+
                     <span>{{ $group->title }}</span>
 
-                    <button class="button alert"
+                    <button class="button alert mb-0"
                         wire:click="editGroup({{ $group->id }})"
                         @if ($isEditing) disabled @endif
                     >Edit</button>
+
+                    @if ($group->words()->count() > 0)
+                        <ul>
+
+                            @foreach ($group->words as $word)
+                                <li>
+                                    {{ $word->en }}
+                                    @if ($word->pos)
+                                        <small><i>{{ $word->pos->short }}</i></small>
+                                    @endif
+                                </li>
+                            @endforeach
+
+                        </ul>
+                    @endif
+
                 </li>
-
-                @if ($group->words()->count() > 0)
-
-                    <ul>
-                        @foreach ($group->words as $word)
-                            <li>
-                                {{ $word->en }}
-                                @if ($word->pos)
-                                    <small><i>{{ $word->pos->short }}</i></small>
-                                @endif
-                            </li>
-                        @endforeach
-                    </ul>
-
-                @endif
 
             @endforeach
         </ul>

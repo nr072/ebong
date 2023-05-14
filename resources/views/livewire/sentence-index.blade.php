@@ -2,9 +2,9 @@
 
     <h1 class="text-3xl font-bold underline">Sentences</h1>
 
-    <table class="alt-rows">
+    <table class="alt-rows border border-separate">
         <thead>
-            <tr>
+            <tr class="bg-sky-900/40 text-cyan-900">
                 <th></th>
                 <th>Text</th>
                 <th class="cell-group">Groups</th>
@@ -13,7 +13,7 @@
         </thead>
         <tbody>
 
-            <tr class="search-fields-row">
+            <tr class="search-fields-row bg-sky-900/30">
                 <td></td>
                 <td class="cell-text">
                     <div>
