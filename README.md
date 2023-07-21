@@ -1,64 +1,190 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Ebong
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## What is it?
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This is a translation memory (TM) tool.
+TM tools are software applications that contain translations of various phrases and sentences
+that can be used later in translating similar phrases and sentences.
+This greatly helps maintain consistency and
+reduce the workload of translators by providing them with potential suggestions.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Warning
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+This project is still under development. This is not a finished product.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+## Features
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- **Item categories**
 
-## Contributing
+  - Word
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    May be a single word or a compound noun.
+    Each spelling variation should be a separate Word.
+    Every Word must belong to at most one Group.
 
-## Code of Conduct
+  - Group
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    An association of similar Words.
+    This mainly includes various parts of speech of a word.
 
-## Security Vulnerabilities
+  - Sentence
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    Not necessarily a complete grammatical sentence.
+    May be an idiom or parts of a full sentence or a combnation of multiple sentences.
+    Must contain at least one Group.
+    On a technical level, Sentences are never associated to Words, only to Groups.
 
-## License
+- **Creating new Words**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+  - Fields: en, POS, associated Group (opt.)
+
+- **Seeing a list of Words**
+
+  - Has pagination
+
+  - Can be searched by: en
+
+- **Creating new Groups**
+
+  - Fields: title, associated word(s)
+
+- **Seeing a list of Words**
+
+  - Has pagination
+
+  - Can be searched by: en
+
+- **Creating new Sentences**
+
+  - Single Sentence creation and bulk creation
+    - Bulk creation takes JSON input
+
+  - Fields:
+    - en and its bn
+    - Associated Groups
+      - Has autosuggestion
+    - Context and subcontext
+    - Source and 3 relevant links
+    - Notes/references
+    - Flags
+      - Revision needed
+
+- **Seeing a list of examples**
+
+  - Has pagination
+
+  - Can be searched by: en, bn, context/subcontext, Words/Groups, source
+
+
+
+## Development setup
+
+- `cd` to the project root.
+
+- 
+
+
+
+## Dependency
+
+- Laravel
+- Livewire
+- Tailwind CSS
+
+
+
+## Conventions
+
+### Git commit messages
+
+#### General instructions
+
+- Commit message titles should be written in passive voice,
+  with certains verbs omitted for brevity as in news titles,
+  and in past tense.
+  Example:
+
+  ```
+  sentence index pagination increased to 50
+  ```
+
+- Contrary to the grammatical rules of the English language,
+  commit titles should neither start with capital letters
+  (unless the first word is a proper noun)
+  nor contain any ending punctuation.
+
+- Titles should be single sentences.
+  If more than one is needed,
+  either move the details to the commit message body, or
+  break the commit itself down to multiple commits
+  each of which works towards a single objective.
+
+- Do not use emoji characters in commit titles.
+
+#### Commit title prefixes
+
+The following inexhautive list contains prefixes that
+are used at the beginning of commit message titles.
+A prefix is followed by a colon and then by a space
+before the actual commit title continues.
+
+It is not mandatory for every title to have a prefix.
+
+- `feat`
+
+  Use this with commits that introduce a new, significant feature.
+  Such a commit may be an empty one (without any code changes) that only refers to
+  previous, regular commits (with their own, appropriate prefixes)
+  used to implement various parts of said feature.
+
+- `fix`
+
+  Use this with commits that fix bugs.
+
+- `maint`
+
+  Indicates commits related to refactoring and other maintenance tasks.
+
+- `ui`
+
+  Indicates commits that primarily affect the user interface.
+  Use this with all commits related to stylistic changes.
+
+- `ux`
+
+  Indicates commits that primarily affect the user experience.
+  Use this with commits on quality-of-life improvements and
+  small features that makes the application easier to use.
+
+- `wip`
+
+  Indicates commits that are work in progress.
+  Use this if multiple commits contribute to the same feature.
+  Such commits are usually incomplete on their own but
+  would be too big if combined into a single commit.
+  Also use this prefix if working on a commit has to be abandoned for some time
+  and using `git stash` is not an option.
+
+### Git branch naming
+
+- Branch names should be clear but not overly descriptive.
+
+- Words in branch names should be separated by hyphens.
+
+- Development branch names should be prefixed with `dev--`.
+
+- The `master` branch must not be directly worked on.
+  All development branches should be first merged into `dev`,
+  which in turn should be merged into `master`
+  after tests and other necessary steps have been completed.
+
+- A dedicated branch named `bugfixes` may be used for fixing bugs.
+
+- Similarly named branches with singular, overall objectives may also be created (e.g., `test`).
+  Or, if more than one branches are needed, prefixes such as `test--` may be used.
