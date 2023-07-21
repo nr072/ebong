@@ -187,4 +187,4 @@ It is not mandatory for every title to have a prefix.
 - A dedicated branch named `bugfixes` may be used for fixing bugs.
 
 - Similarly named branches with singular, overall objectives may also be created (e.g., `test`).
-  Or, if more than one branches are needed, prefixes such as `test--` may be used.
+  Or, if more than one branch is needed, prefixes such as `test--` may be used.

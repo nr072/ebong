@@ -7,6 +7,7 @@
     <div>
         <textarea wire:model.lazy="input"
             style="width: 100%; max-width: 100%; min-height: 40vh;"
+            placeholder="{{ $taPlaceholder }}"
         ></textarea>
         @error ('input')
             <span class="error">{{ $message }}</span>

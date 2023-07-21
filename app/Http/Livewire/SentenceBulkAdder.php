@@ -18,6 +18,21 @@ class SentenceBulkAdder extends Component
     // The PHP counterpart of the JSON will be saved here to be used..
     public $sentences = [];
 
+    // A sample JSON to be shown inside the <textarea> element.
+    private $taPlaceholder = '[' . "\n" .
+        "\t" . '{' . "\n" .
+            "\t\t" . '"en": "...",' . "\n" .
+            "\t\t" . '"bn": "...",' . "\n" .
+            "\t\t" . '"context": "...",' . "\n" .
+            "\t\t" . '"subcontext": "...",' . "\n" .
+            "\t\t" . '"source": "...",' . "\n" .
+            "\t\t" . '"link1": "...",' . "\n" .
+            "\t\t" . '"link2": "...",' . "\n" .
+            "\t\t" . '"link3": "..."' . "\n" .
+        "\t" . '},' . "\n" .
+        "\t" . '...' . "\n" .
+    ']';
+
 
 
     protected $rules = [
@@ -57,7 +72,9 @@ class SentenceBulkAdder extends Component
 
     public function render()
     {
-        return view('livewire.sentence-bulk-adder');
+        return view('livewire.sentence-bulk-adder', [
+            'taPlaceholder' => $this->taPlaceholder,
+        ]);
     }
 
 }
