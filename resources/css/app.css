@@ -33,6 +33,23 @@ textarea,
 select {
     padding-top: 0.15rem;
     padding-bottom: 0.15rem;
+    border-color: var(--theme-color-1-light);
+}
+
+textarea {
+    background: var(--theme-color-1-lightest);
+    box-shadow: 0 0 4px 1px var(--theme-color-1-dark) inset;
+}
+
+textarea:focus {
+    border-color: var(--theme-color-1-dark);
+}
+
+input[type='text'] {
+    line-height: 1em;
+    border: none;
+    border-bottom: 1px solid var(--theme-color-1-lighter);
+    background: transparent;
 }
 
 
@@ -48,7 +65,12 @@ select {
     font-family: serif;
     --popup-z-index: 9000;
     --dropdown-z-index: 900;
-    --body-bg: #fff;
+}
+
+
+
+body {
+    background: var(--body-bg);
 }
 
 
@@ -65,6 +87,13 @@ table {
     width: 100%;
 }
 
+tr {
+    background: var(--table-row-bg);
+}
+thead tr {
+    background: var(--table-header-bg);
+}
+
 th {
     text-transform: uppercase;
     padding: 0.5rem 1rem;
@@ -78,7 +107,7 @@ td {
 
 
 
-input[type=checkbox] {
+input[type='checkbox'] {
     cursor: pointer;
 }
 
@@ -102,13 +131,76 @@ li {
 
 
 
-@layer base {
-    
-    a {
-        @apply text-cyan-700
-                hover:text-cyan-500;
-    }
+a {
+    color: var(--theme-color-1-link);
+}
+a:hover {
+    color: var(--theme-color-1-link-hover);
+}
 
+
+
+*::placeholder {
+    font: 0.8rem sans-serif;
+}
+
+
+
+h1 {
+    font-size: 1.5em;
+/*    font-weight: lighter;*/
+    color: var(--theme-color-1-dark);
+    text-align: center;
+    margin: 0.5em auto;
+}
+
+
+
+/* ==================================================================
+
+                              THEME COLORS
+
+   ================================================================== */
+
+body.cream {
+    --body-bg: seashell;
+    --theme-color-1-dark: #746c70;
+    --theme-color-1: #c1b7b1;
+    --theme-color-1-light: #d4cac4;
+    --theme-color-1-lighter: #dcd2cc;
+    --theme-color-1-lightest: #ebe7e3;
+    --theme-color-1-link: indianred;
+    --theme-color-1-link-hover: var(--theme-color-1-dark);
+
+    --table-header-bg: var(--theme-color-1);
+    --table-subheader-bg: #e7d2cc;
+    --table-row-bg: var(--theme-color-1-lightest);
+/*    --topbar-bg: #b5b2b0;*/
+}
+body.blade {
+    --body-bg: #fffff5;
+    --theme-color-1-link: darkcyan;
+    --theme-color-1-link-hover: darkseagreen;
+/*    --color-teal-table-alt-row-bg-2: #eeede7;*/
+/*dark:  cadetblue darkslategrey mediumaquamarine*/
+/*light: darkseagreen honeydew*/
+}
+body.ripple {
+/*light: aliceblue azure mintcream steelblue slategray*/
+/*dark:  lightsteelblue lightslategray*/
+}
+body.candy {
+/*dark:  lightcoral indianred salmon rosybrown palevioletred*/
+}
+body.onion {
+/*light: ivory floralwhite cornsilk oldlace linen lightyellow seashell papayawhip antiquewhite*/
+}
+body.hail {
+/*light: ghostwhite whitesmoke snow*/
+}
+body.purple {
+/*dark:  #764476*/
+/*light: #ddcae5*/
 }
 
 
@@ -205,18 +297,6 @@ section.half-width-section {
 
 
 
-/* Alternate rows in tables are differently colored for visual comfort. */
-
-.alt-rows tbody tr:nth-child(2n+1):not(tr:first-child) {
-    background: rgb(41 137 153 / 10%);
-}
-
-.alt-rows tbody tr:nth-child(2n) {
-    background: rgb(9 73 82 / 13%);
-}
-
-
-
 @layer base {
 
     .button {
@@ -284,6 +364,10 @@ section.half-width-section {
 
    ================================================================== */
 
+.search-fields-row {
+    background: var(--theme-color-1-lighter);
+}
+
 /* Input fields just below the header row are fitted with the cells. */
 .search-fields-row td {
     padding: 0;
@@ -298,17 +382,26 @@ section.half-width-section {
     padding: .25rem;
     line-height: 1rem;
     text-align: center;
+    background: var(--theme-color-1-light);
+}
+.search-fields-row input::placeholder {
+    color: var(--theme-color-1-dark);
 }
 
 .search-fields-row input,
 .search-fields-row input + button {
-    border: 1px solid #aaa;
+    border: 1px solid var(--theme-color-1);
     border-radius: 0;
+    line-height: .5rem;
+    height: 1.5rem;
 }
 
 .search-fields-row input + button {
     border-left: none;
     margin: 0;
+}
+.search-fields-row input + button:hover {
+    background: var(--theme-color-1);
 }
 
 
@@ -383,20 +476,40 @@ section.half-width-section {
     border-radius: 0.5em;
 }
 
+
+
 .new-sentence-fields-wrap {
-    padding: 1rem;
+    padding: 1em 1.5rem 2rem;
     border-width: 1px;
     margin: 0.5rem 0;
+    border-color: var(--theme-color-1-lighter);
+    justify-content: space-around;
+}
+
+.new-sentence-fields-wrap > div {
+    width: 50%;
 }
 
 
 
-/* Note-related fields are hidden by default to save space. */
-.note-section-toggler ~ p {
-    display: none;
+.new-sentence-fields-wrap .input-label-set {
+    display: flex;
+    margin: 0.5em;
+    align-items: baseline;
 }
-.note-section-toggler:checked ~ p {
-    display: inherit;
+
+.input-label-set > span {
+    text-transform: uppercase;
+    font-size: 0.7em;
+    font-family: sans-serif;
+    margin-right: 0.5em;
+    width: 6rem;
+    white-space: nowrap;
+}
+
+.input-label-set > input[type='text'] {
+    padding: 0.15rem 0.5rem;
+    width: 100%;
 }
 
 

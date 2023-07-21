@@ -1,10 +1,10 @@
 <section>
 
-    <h1 class="text-3xl font-bold underline">Sentences</h1>
+    <h1>Sentences</h1>
 
-    <table class="alt-rows border border-separate">
+    <table class="border border-separate">
         <thead>
-            <tr class="bg-sky-900/40 text-cyan-900">
+            <tr>
                 <th></th>
                 <th>Text</th>
                 <th class="cell-group">Groups</th>
@@ -13,7 +13,7 @@
         </thead>
         <tbody>
 
-            <tr class="search-fields-row bg-sky-900/30">
+            <tr class="search-fields-row">
                 <td></td>
                 <td class="cell-text">
                     <div>

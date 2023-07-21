@@ -56,111 +56,124 @@
             </label>
         </p>
 
+
+
         {{-- Each sentence --}}
         @foreach ($inputs as $key => $value)
-            <fieldset class="new-sentence-fields-wrap bg-emerald-800/10">
+            <fieldset class="new-sentence-fields-wrap flex">
 
-                <p class="mb-2">
-                    <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.en" wire:keydown.enter="createSentence"
-                        placeholder="Enter a new en sentence here"
-                    >
-                    @error ('inputs.' . $key . '.en')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
+                <div class="mr-9">
+                    <div class="mb-5">
+                        <label class="input-label-set">
+                            <span>en (source)</span>
+                            <input type="text"
+                                wire:model.lazy="inputs.{{ $key }}.en" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.' . $key . '.en')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
 
-                    <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.bn" wire:keydown.enter="createSentence"
-                        placeholder="Enter its bn here"
-                    >
-                    @error ('inputs.' . $key . '.bn')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
-                </p>
+                        <label class="input-label-set">
+                            <span>bn (target)</span>
+                            <input type="text"
+                                wire:model.lazy="inputs.{{ $key }}.bn" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.' . $key . '.bn')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
+                    </div>
 
-                <p class="mt-2 mb-2">
-                    <input type="text"
-                        wire:model="inputs.{{ $key }}.context" wire:keydown.enter="createSentence"
-                        placeholder="Enter context here"
-                    >
-                    @error ('inputs.' . $key . '.context')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
+                    <div class="mb-5">
+                        <label class="input-label-set">
+                            <span>Context</span>
+                            <input type="text"
+                                wire:model="inputs.{{ $key }}.context" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.' . $key . '.context')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
 
-                    <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.subcontext" wire:keydown.enter="createSentence"
-                        placeholder="Enter subcontext here"
-                    >
-                    @error ('inputs.' . $key . '.subcontext')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
+                        <label class="input-label-set">
+                            <span>Subcontext</span>
+                            <input type="text"
+                                wire:model.lazy="inputs.{{ $key }}.subcontext" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.' . $key . '.subcontext')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
+                    </div>
 
-                    <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.source" wire:keydown.enter="createSentence"
-                        placeholder="Enter source name here"
-                    >
-                    @error ('inputs.' . $key . '.source')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
-                    @if ($canShowSourceDropdown)
-                        <span class="dropdown" style="margin-top: 1.35rem; margin-left: -12.3rem;">
+                    <div>
+                        <label class="input-label-set">
+                            <span>Source</span>
+                            <input type="text"
+                                wire:model.lazy="inputs.{{ $key }}.source" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.' . $key . '.source')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                            @if ($canShowSourceDropdown)
+                                <span class="dropdown" style="margin-top: 1.5rem; margin-left: 6rem;">
 
-                            <button class="button" style="float: right;"
-                                wire:click="toggleSourceDropdown(0)"
-                            >&times;</button>
+                                    <button class="button" style="float: right;"
+                                        wire:click="toggleSourceDropdown(0)"
+                                    >&times;</button>
 
-                            @foreach ($sources as $source)
-                                @if ($source)
-                                    <button class="dropdown-option"
-                                        wire:click="selectSource({{ $key }}, '{{ $source }}')"
-                                    >{{ $source }}</button>
-                                @endif
-                            @endforeach
+                                    @foreach ($sources as $source)
+                                        @if ($source)
+                                            <button class="dropdown-option"
+                                                wire:click="selectSource({{ $key }}, '{{ $source }}')"
+                                            >{{ $source }}</button>
+                                        @endif
+                                    @endforeach
 
-                        </span>
-                    @endif
-                </p>
+                                </span>
+                            @endif
+                        </label>
 
-                <p class="mt-2">
-                    <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.link1" wire:keydown.enter="createSentence"
-                        placeholder="Enter a link here"
-                    >
-                    @error ('inputs.' . $key . '.link1')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
+                        <label class="input-label-set">
+                            <span>Link 1</span>
+                            <input type="text"
+                                wire:model.lazy="inputs.{{ $key }}.link1" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.' . $key . '.link1')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
 
-                    <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.link2" wire:keydown.enter="createSentence"
-                        placeholder="Enter another link here"
-                    >
-                    @error ('inputs.' . $key . '.link2')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
+                        <label class="input-label-set">
+                            <span>Link 2</span>
+                            <input type="text"
+                                wire:model.lazy="inputs.{{ $key }}.link2" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.' . $key . '.link2')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
 
-                    <input type="text"
-                        wire:model.lazy="inputs.{{ $key }}.link3" wire:keydown.enter="createSentence"
-                        placeholder="Enter one more link here"
-                    >
-                    @error ('inputs.' . $key . '.link3')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
-                </p>
+                        <label class="input-label-set">
+                            <span>Link 3</span>
+                            <input type="text"
+                                wire:model.lazy="inputs.{{ $key }}.link3" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.' . $key . '.link3')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
+                    </div>
+                </div>
 
-                {{--
-                    Warning: The <option> values below are hardcoded. They
-                    must be updated when values in the relevant migration
-                    file change.
-                --}}
                 <div>
-                    <input type="checkbox"
-                        id="note-section-toggler-{{ $key }}" class="note-section-toggler"
-                        style="margin-left: 0;"
-                    >
-                    <label for="note-section-toggler-{{ $key }}"
-                        title="If the field below has a value when revealed, hiding it won't remove the value" 
-                    >Show/hide the note section</label>
-                    <p class="mt-2">
+                    {{--
+                        Warning: The <option> values below are hardcoded. They
+                        must be updated when values in the relevant migration
+                        file change.
+                    --}}
+                    <p class="my-2">
                         <label>
                             <span>Note type:</span>
                             <select wire:model="inputs.{{ $key }}.noteType">
@@ -172,33 +185,35 @@
                             <span class="error">{{ $message }}</span>
                         @enderror
 
-                        <textarea class="disp-b mt-2" style="width: 30rem; height: 5rem; font-family: sans-serif; padding: 0.5rem;" 
+                        <textarea class="disp-b mt-2" style="width: 100%; height: 5rem; font-family: sans-serif; padding: 0.5rem;" 
                             wire:model="inputs.{{ $key }}.note"
                             wire:keydown.ctrl.enter="createSentence"
-                            placeholder="Enter note here"
+                            placeholder="Enter optional note here"
                         ></textarea>
                         @error ('inputs.' . $key . '.note')
                             <span class="error">{{ $message }}</span>
                         @enderror
                     </p>
-                </div>
 
-                <p>
-                    <label class="cursor-p" title="Click to mark this sentence">
-                        <input type="checkbox" style="margin-left: 0;" wire:model="inputs.{{ $key }}.needsRevision">
-                        <span>Needs revision</span>
-                    </label>
-                    @error ('inputs.' . $key . '.needsRevision')
-                        <span class="error">{{ $message }}</span>
-                    @enderror
-                </p>
+                    <p class="mt-5">
+                        <label class="cursor-p" title="Click to mark this sentence">
+                            <input type="checkbox" style="margin-left: 0;" wire:model="inputs.{{ $key }}.needsRevision">
+                            <span>Revision needed</span>
+                        </label>
+                        @error ('inputs.' . $key . '.needsRevision')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
+                    </p>
+                </div>
 
             </fieldset>
         @endforeach
 
-        <p>
+        <p class="text-center">
             <button class="button emerald" wire:click="addAnotherSentence">Add another sentence</button>
         </p>
+
+
 
         <p>
             <button class="button" wire:click="createSentence" @empty($inputs[0]['en']) disabled @endempty>Confirm</button>
