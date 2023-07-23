@@ -87,77 +87,77 @@ This project is still under development. This is not a finished product.
 
 - Clone the project from the Git repository.
 
-```shell
-git clone https://github.com/nr072/ebong.git
+  ```shell
+  git clone https://github.com/nr072/ebong.git
 
-```
+  ```
 
 - Go inside the project's root directory.
 
-```shell
-cd ebong
+  ```shell
+  cd ebong
 
-```
+  ```
 
 - Switch to the `dev` branch.
 
-```shell
-git checkout dev
+  ```shell
+  git checkout dev
 
-```
+  ```
 
 - Copy the `.env.example` file, and rename the new file to `.env`.
 
-```shell
-cp .env.example .env
+  ```shell
+  cp .env.example .env
 
-```
+  ```
 
 - Create a database named `ebong`.
 
 - Set database credentials in the `.env` file.
 
-```
-DB_DATABASE=ebong
-DB_USERNAME=ebong_db_user
-DB_PASSWORD=a_reasonably_strong_password
+  ```
+  DB_DATABASE=ebong
+  DB_USERNAME=ebong_db_user
+  DB_PASSWORD=a_reasonably_strong_password
 
-```
+  ```
 
 - Install PHP dependencies.
 
-```shell
-composer install
+  ```shell
+  composer install
 
-```
+  ```
 
 - Generate the app key.
 
-```shell
-php artisan key:generate
+  ```shell
+  php artisan key:generate
 
-```
+  ```
 
 - Install front-end dependencies.
 
-```shell
-npm install
+  ```shell
+  npm install
 
-```
+  ```
 
 - Migrate, and seed the database.
 
-```shell
-php artisan migrate:fresh --seed
+  ```shell
+  php artisan migrate:fresh --seed
 
-```
+  ```
 
 - Serve.
 
-```shell
-php artisan serve
+  ```shell
+  php artisan serve
 
-```
+  ```
 
 - Visit `localhost:8000` in your favorite browser.
 
