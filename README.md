@@ -10,16 +10,16 @@ git clone https://github.com/nr072/ebong.git
 ~~~shell
 cd ebong
 ~~~
-- Switch to the master branch
+- Switch to the `dev` branch
 ~~~shell
-git checkout master
+git checkout dev
 ~~~
-- Copy .env.example file to .env file
+- Copy `.env.example` file to `.env` file
 ~~~shell
 cp .env.example .env
 ~~~
-- Create database "ebong" (you can change database name)
-- Set database credentials in the .env file
+- Create database `ebong` (you can change database name)
+- Set database credentials in the `.env` file
 ~~~shell
 DB_DATABASE = ebong (or the name of the database you have chosen)
 DB_USERNAME = root
@@ -45,4 +45,4 @@ php artisan migrate:fresh --seed
 ~~~shell
 php artisan serve
 ~~~
-- Visit localhost:8000 in your favorite browser
+- Visit `localhost:8000` in your favorite browser
