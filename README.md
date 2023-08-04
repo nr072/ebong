@@ -163,9 +163,10 @@ This project is still under development. This is not a finished product.
 
 
 
-## Dependency
+## Dependencies
 
 - Laravel
+- Node JS
 - Livewire
 - Tailwind CSS
 

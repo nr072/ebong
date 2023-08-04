@@ -17,4 +17,5 @@ Route::view('/', 'welcome');
 
 Route::view('/words', 'words')->name('words-page');
 Route::view('/groups', 'groups')->name('groups-page');
-Route::view('/sentences', 'sentences')->name('sentences-page');
+Route::view('/sentences', 'sentence-index')->name('sentence-index-page');
+Route::view('/sentences/add', 'sentence-add')->name('sentence-add-page');

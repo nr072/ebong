@@ -76,7 +76,6 @@ body {
 
 
 section {
-    border: 1px solid #ccc;
     padding: 1rem;
     margin: 1rem;
 }
@@ -87,22 +86,27 @@ table {
     width: 100%;
 }
 
-tr {
-    background: var(--table-row-bg);
+thead th:not(:first-child) {
+    border: 3px double var(--theme-color-1);
+    border-left-color: transparent;
+    border-right-color: transparent;
 }
-thead tr {
-    background: var(--table-header-bg);
+tbody tr:hover {
+    background: var(--theme-color-1-lightest);
 }
 
 th {
     text-transform: uppercase;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
     font-size: 0.8em;
     font-family: sans-serif;
 }
 
 td {
-    padding: 0.25rem 0.35rem;
+    padding: 0.75rem;
+}
+td:not(:first-child) {
+    border-bottom: 1px solid var(--theme-color-1-lightest);
 }
 
 
@@ -364,43 +368,36 @@ section.half-width-section {
 
    ================================================================== */
 
-.search-fields-row {
-    background: var(--theme-color-1-lighter);
+.sentence-index {
+    margin-bottom: 9rem;
 }
 
-/* Input fields just below the header row are fitted with the cells. */
-.search-fields-row td {
-    padding: 0;
-}
-
-.search-fields-row td:not(.cell-text) > div {
-    display: flex;
-}
-
-.search-fields-row input {
+.sentence-index .search-fields-wrap {
+    position: fixed;
+    background: var(--body-bg);
     width: 100%;
-    padding: .25rem;
-    line-height: 1rem;
-    text-align: center;
-    background: var(--theme-color-1-light);
-}
-.search-fields-row input::placeholder {
-    color: var(--theme-color-1-dark);
+    margin: 0;
+    left: 0;
+    bottom: 0;
+    padding: 1rem 0;
+    box-shadow: 0px 3px 11px 0px #777;
 }
 
-.search-fields-row input,
-.search-fields-row input + button {
+.sentence-index .search-fields-wrap input,
+.sentence-index .search-fields-wrap input + button {
     border: 1px solid var(--theme-color-1);
     border-radius: 0;
     line-height: .5rem;
     height: 1.5rem;
+    margin: 0.25rem 3rem 0.25rem 1rem;
 }
 
-.search-fields-row input + button {
+.sentence-index .search-fields-wrap input + button {
+    position: absolute;
+    margin: 0.25rem 0 0 -3rem;
     border-left: none;
-    margin: 0;
 }
-.search-fields-row input + button:hover {
+.sentence-index .search-fields-wrap input + button:hover {
     background: var(--theme-color-1);
 }
 
@@ -418,6 +415,11 @@ section.half-width-section {
 .cell-group,
 .cell-source {
     text-align: center;
+}
+
+.cell-group {
+    font-size: 0.95em;
+    font-variant: small-caps;
 }
 
 
