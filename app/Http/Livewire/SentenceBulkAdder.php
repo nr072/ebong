@@ -30,7 +30,6 @@ class SentenceBulkAdder extends Component
             "\t\t" . '"link2": "...",' . "\n" .
             "\t\t" . '"link3": "..."' . "\n" .
         "\t" . '},' . "\n" .
-        "\t" . '...' . "\n" .
     ']';
 
 

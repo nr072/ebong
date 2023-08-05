@@ -1,6 +1,6 @@
 <section class="sentence-index borderless">
 
-    <h1>Sentences</h1>
+    {{-- <h1>Sentences</h1> --}}
 
     <div class="search-fields-wrap flex justify-evenly mt-5">
         <div>
@@ -76,10 +76,11 @@
     <table class="mt-5">
         <thead>
             <tr>
-                <th></th>
+                <th class="cell-flags"></th>
                 <th class="cell-group">Groups</th>
                 <th>Text</th>
                 <th class="cell-source">Source</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -88,11 +89,12 @@
 
                 @foreach ($sentences as $sentence)
                     <tr>
-                        <td class="cell-buttons">
-                            <button class="button alert"
-                                @if ($isEditing) disabled @endif
-                                wire:click="editSentence({{ $sentence->id }})"
-                            >Edit</button>
+                        <td class="cell-flags">
+                            @if ($sentence->needs_revision)
+                                <span class="flag warning" title="Needs revision"></span>
+                                <span class="flag warning" title="Needs revision"></span>
+                                <span class="flag error" title="Needs revision"></span>
+                            @endif
                         </td>
 
                         <td class="cell-group">
@@ -105,7 +107,7 @@
 
                             <div>{{ $sentence->en }}</div>
 
-                            <div style="font-size: 0.9em;">{{ $sentence->bn }}</div>
+                            <div class="bn-text">{{ $sentence->bn }}</div>
 
                             {{-- @if ($sentence->context)
                                 <div class="text-indented text-gray">
@@ -145,16 +147,16 @@
                                     <span>{{ $sentence->note }}</span>
                                 </div>
                             @endif --}}
-
-                            @if ($sentence->needs_revision)
-                                <div class="text-indented text-gray">
-                                    <small><i style="color: rgb(202 127 50);">Needs revision</i></small>
-                                </div>
-                            @endif
-
                         </td>
 
                         <td class="cell-source">{{ $sentence->source }}</td>
+
+                        <td class="cell-buttons">
+                            <button class="button warning"
+                                @if ($isEditing) disabled @endif
+                                wire:click="editSentence({{ $sentence->id }})"
+                            >Edit</button>
+                        </td>
                     </tr>
                 @endforeach
 
