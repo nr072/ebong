@@ -100,11 +100,11 @@
                             <td class="cell-flags">
                                 @if ($sentence->needs_revision)
                                     <span class="flag warning" title="Needs revision"></span>
-                                    <span class="flag warning" title="Needs revision"></span>
+                                    {{-- <span class="flag warning" title="Needs revision"></span>
                                     <span class="flag error" title="Needs revision"></span>
                                     <span class="flag info" title="Needs revision"></span>
                                     <span class="flag error" title="Needs revision"></span>
-                                    <span class="flag error" title="Needs revision"></span>
+                                    <span class="flag error" title="Needs revision"></span> --}}
                                 @endif
                             </td>
 

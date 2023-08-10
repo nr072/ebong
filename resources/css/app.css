@@ -428,18 +428,19 @@ span.flag.info::before {
    ================================================================== */
 
 .sentence-index {
-    margin-bottom: 9rem;
+    margin-top: 3em;
+    margin-bottom: 9em;
 }
 
 .sentence-index .search-fields-wrap {
     position: fixed;
-    background: var(--body-bg);
+    background: var(--color-1-light);
     width: 100%;
     margin: 0;
     left: 0;
     bottom: 0;
     padding: 0.5rem 0;
-    box-shadow: 0px 3px 11px 0px #777;
+    box-shadow: 0px 0px 9px -1px #333;
     z-index: var(--topbar-z-index);
 }
 
@@ -454,7 +455,8 @@ span.flag.info::before {
 .sentence-index .search-fields-wrap input + button {
     position: absolute;
     margin: 0.25rem 0 0 -3rem;
-    border-color: var(--color-1-light);
+    border-color: transparent;
+    background: var(--color-1);
 }
 .sentence-index .search-fields-wrap input + button:hover {
     outline: 1px solid var(--color-1-dark);
