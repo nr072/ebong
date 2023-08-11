@@ -8,7 +8,7 @@
                 <input type="text"
                     wire:model="searchedEn"
                     class="w-96" 
-                    placeholder="Type to search en"
+                    placeholder="Type to filter en"
                 >
                 @if ($searchedEn)
                     <button class="button"
@@ -21,7 +21,7 @@
                 <input type="text"
                     wire:model="searchedBn"
                     class="w-96" 
-                    placeholder="Type to search bn"
+                    placeholder="Type to filter bn"
                 >
                 @if ($searchedBn)
                     <button class="button"
@@ -34,7 +34,7 @@
                 <input type="text"
                     wire:model="searchedContext"
                     class="w-96" 
-                    placeholder="Type to search context"
+                    placeholder="Type to filter context"
                 >
                 @if ($searchedContext)
                     <button class="button"
@@ -49,7 +49,7 @@
             <div>
                 <input type="text"
                     wire:model="searchedGroup"
-                    placeholder="Type to search associated group"
+                    placeholder="Type to filter associated group"
                 >
                 @if ($searchedGroup)
                     <button class="button"
@@ -61,7 +61,7 @@
             <div>
                 <input type="text"
                     wire:model="searchedSource"
-                    placeholder="Type to search source"
+                    placeholder="Type to filter source"
                 >
                 @if ($searchedSource)
                     <button class="button"
