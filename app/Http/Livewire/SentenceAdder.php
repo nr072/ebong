@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Group;
 use App\Models\Sentence;
+use App\Models\SentenceTranslation;
 use App\Models\Word;
 
 use Illuminate\Support\Facades\Log;
@@ -54,10 +55,10 @@ class SentenceAdder extends Component
 
 
 
-    // List of sources to show in a dropdown.
-    public $sources = [];
+    // List of projects to show in a dropdown.
+    public $projects = [];
 
-    public $canShowSourceDropdown = true;
+    public $canShowProjectDropdown = true;
 
 
 
@@ -69,11 +70,13 @@ class SentenceAdder extends Component
         manually set somewhere below.
     */
     protected $rules = [
-        'inputs.*.en' => 'required|string',
-        'inputs.*.bn' => 'nullable|string',
+        'inputs.*.sourceText' => 'required|string',
+        'inputs.*.sourceLang' => 'required|string|max:6',
+        'inputs.*.targetText' => 'nullable|string',
+        'inputs.*.targetLang' => 'nullable|string|max:6',
         'inputs.*.context' => 'nullable|max:200',
         'inputs.*.subcontext' => 'nullable|max:200',
-        'inputs.*.source' => 'nullable|max:100',
+        'inputs.*.project' => 'nullable|max:100',
         'inputs.*.link1' => 'nullable|max:200',
         'inputs.*.link2' => 'nullable|max:200',
         'inputs.*.link3' => 'nullable|max:200',
@@ -104,19 +107,15 @@ class SentenceAdder extends Component
         foreach ($validatedData['inputs'] as $input) {
 
             /*
-                Note to dev: Don't forget to add new column names to the
-                model's 'fillable' property.
-
-                Warning: Some default values are manually set here. They
-                might need to be changed when relevant migration files are
-                updated.
+                Note to developer: Don't forget to add new column names
+                to the model's 'fillable' property.
             */
             $newSentence = Sentence::create([
-                'en' => trim( $input['en'] ),
-                'bn' => trim( $input['bn'] ),
+                'text' => trim( $input['sourceText'] ),
+                'lang' => trim( $input['sourceLang'] ),
                 'context' => trim( $input['context'] ),
                 'subcontext' => trim( $input['subcontext'] ),
-                'source' => trim( $input['source'] ),
+                'project' => trim( $input['project'] ),
                 'link_1' => trim( $input['link1'] ),
                 'link_2' => trim( $input['link2'] ),
                 'link_3' => trim( $input['link3'] ),
@@ -127,6 +126,20 @@ class SentenceAdder extends Component
 
             // Groups are associated.
             $newSentence->groups()->attach( $validatedData['chosenGroupIds'] );
+
+            // A sentence translation is created and associated with the
+            // sentence.
+            /*
+                TODO
+                Note to developer: Multiple sentence translations will
+                probably be supported in the future. For now, a single
+                one is being created manually.
+            */
+            $newSenTrans = SentenceTranslation::create([
+                'text' => trim( $input['targetText'] ),
+                'lang' => trim( $input['targetLang'] ),
+                'sentence_id' => $newSentence->id,
+            ]);
 
         }
 
@@ -182,7 +195,7 @@ class SentenceAdder extends Component
     public function addAnotherSentence()
     {
         $this->insertArrayForNewSentece();
-        $this->toggleSourceDropdown(1);
+        $this->toggleProjectDropdown(1);
     }
 
 
@@ -205,11 +218,13 @@ class SentenceAdder extends Component
         array_push(
             $this->inputs, 
             [
-                'en' => '',
-                'bn' => '',
+                'sourceText' => '',
+                'sourceLang' => 'en',
+                'targetText' => '',
+                'targetLang' => 'bn',
                 'context' => '',
                 'subcontext' => '',
-                'source' => '',
+                'project' => '',
                 'link1' => '',
                 'link2' => '',
                 'link3' => '',
@@ -222,18 +237,18 @@ class SentenceAdder extends Component
 
 
 
-    // An existing source is selected from a dropdown.
-    public function selectSource($index, $source)
+    // An existing project is selected from a dropdown.
+    public function selectProject($index, $project)
     {
-        $this->inputs[$index]['source'] = $source;
-        $this->toggleSourceDropdown(0);
+        $this->inputs[$index]['project'] = $project;
+        $this->toggleProjectDropdown(0);
     }
 
 
 
-    public function toggleSourceDropdown($canShow = 0)
+    public function toggleProjectDropdown($canShow = 0)
     {
-        $this->canShowSourceDropdown = $canShow === 1 ? true : false;
+        $this->canShowProjectDropdown = $canShow === 1 ? true : false;
     }
 
     public function toggleGroupDropdown($canShow = 0)
@@ -250,7 +265,7 @@ class SentenceAdder extends Component
     {
         foreach ($this->inputs as $sentence) {
 
-            $wordsInSentence = explode(' ', strtolower($sentence['en']));
+            $wordsInSentence = explode(' ', strtolower($sentence['sourceText']));
 
             $suggestedGroupIds = [];
 
@@ -340,11 +355,11 @@ class SentenceAdder extends Component
             $this->canShowGroupDropdown = $this->searchedGroup ? true : false;
         }
 
-        if ($whichDropdown === 'source' || $whichDropdown === 'all') {
-            if (method_exists($this->sources, 'count')) {
-                $this->canShowSourceDropdown = $this->sources->count() > 0;
+        if ($whichDropdown === 'project' || $whichDropdown === 'all') {
+            if (method_exists($this->projects, 'count')) {
+                $this->canShowProjectDropdown = $this->projects->count() > 0;
             } else {
-                $this->canShowSourceDropdown = sizeof($this->sources) > 0;
+                $this->canShowProjectDropdown = sizeof($this->projects) > 0;
             }
         }
 
@@ -416,8 +431,8 @@ class SentenceAdder extends Component
 
         $this->applySearchFilters();
 
-        // Existing sources are shown in a dropdown to easily choose from.
-        $this->sources = Sentence::groupBy('source')->pluck('source');
+        // Existing projects are shown in a dropdown to easily choose from.
+        $this->projects = Sentence::groupBy('project')->pluck('project');
 
         return view('livewire.sentence-adder', [
             'allGroups' => $this->allGroups,

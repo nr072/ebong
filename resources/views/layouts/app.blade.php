@@ -33,7 +33,7 @@
             .topbar li > a {
                 font-family: sans-serif;
                 font-variant: small-caps;
-                padding: 1em 1.5em;
+                padding: 0.85em 1.5em;
                 display: inline-block;
                 color: var(--color-1-lightest);
                 letter-spacing: 0.1em;

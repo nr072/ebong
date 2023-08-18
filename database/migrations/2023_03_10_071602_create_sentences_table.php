@@ -18,13 +18,13 @@ class CreateSentencesTable extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->text('en');
-            $table->text('bn')->nullable();
+            $table->text('text');
+            $table->string('lang', 6)->default('en');
 
             $table->string('context', 200)->nullable();
             $table->string('subcontext', 200)->nullable();
 
-            $table->string('source', 100)->nullable();
+            $table->string('project', 100)->nullable();
 
             $table->string('link_1', 200)->nullable();
             $table->string('link_2', 200)->nullable();

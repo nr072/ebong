@@ -5,17 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Group;
+use App\Models\SentenceTranslation;
 
 class Sentence extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'en',
-        'bn',
+        'text',
+        'lang',
         'context',
         'subcontext',
-        'source',
+        'project',
         'link_1',
         'link_2',
         'link_3',
@@ -27,5 +28,10 @@ class Sentence extends Model
     public function groups()
     {
         return $this->belongsToMany(Group::class);
+    }
+
+    public function senTranses()
+    {
+        return $this->belongsToMany(SentenceTranslation::class);
     }
 }
