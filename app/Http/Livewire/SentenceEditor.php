@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Group;
 use App\Models\Sentence;
+use App\Models\SentenceTranslation;
 use App\Models\Word;
 
 use Illuminate\Support\Facades\Log;
@@ -19,7 +20,7 @@ class SentenceEditor extends Component
     public $canShowEditor = false;
 
     // The sentence that's being edited.
-    public $sentence = [];
+    public Sentence $sentence;
 
 
 
@@ -53,10 +54,10 @@ class SentenceEditor extends Component
         values in the relevant migration file change.
     */
     protected $rules = [
-        'sentence.bn' => 'nullable|string',
+        'sentence.translations.*.text' => 'nullable|string',
         'sentence.context' => 'nullable|max:200',
         'sentence.subcontext' => 'nullable|max:200',
-        'sentence.source' => 'nullable|max:100',
+        'sentence.project' => 'nullable|max:100',
         'sentence.link_1' => 'nullable|max:200',
         'sentence.link_2' => 'nullable|max:200',
         'sentence.link_3' => 'nullable|max:200',
@@ -88,7 +89,9 @@ class SentenceEditor extends Component
 
     public function closeEditor()
     {
-        $this->reset();
+        $this->resetExcept('sentence');
+        $this->sentence = new Sentence();
+
         $this->toggleEditor(0);
         $this->emitTo('sentence-index', 'editorClosed');
     }
@@ -107,7 +110,7 @@ class SentenceEditor extends Component
     // list of groups that those words belong to.
     public function autosuggestGroups()
     {
-        $wordsInSentence = explode(' ', strtolower($this->sentence['en']));
+        $wordsInSentence = explode(' ', strtolower($this->sentence['text']));
 
         $suggestedGroupIds = [];
 
@@ -161,7 +164,11 @@ class SentenceEditor extends Component
         // Associated groups are updated.
         $this->sentence->groups()->sync($this->chosenGroupIds);
 
-        $this->reset();
+        // All translations for this sentence are updated.
+        $this->sentence->translations->each->save();
+
+        $this->resetExcept('sentence');
+        $this->sentence = new Sentence();
 
         $this->emitTo('sentence-index', 'sentenceUpdated');
         $this->emitTo('sentence-index', 'editorClosed');
@@ -273,6 +280,9 @@ class SentenceEditor extends Component
     public function mount()
     {
         $this->checkDropdownToggling();
+
+        // Stop the Blade view from throwing the 'non-object' error.
+        $this->sentence = new Sentence();
     }
 
 

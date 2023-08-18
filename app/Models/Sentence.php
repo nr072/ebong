@@ -30,7 +30,7 @@ class Sentence extends Model
         return $this->belongsToMany(Group::class);
     }
 
-    public function senTranses()
+    public function translations()
     {
         return $this->hasMany(SentenceTranslation::class);
     }

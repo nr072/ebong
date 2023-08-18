@@ -2,10 +2,10 @@
 
     <div class="popup">
 
-        <button class="button" style="float: right;" wire:click="closeEditor">&times;</button>
+        <button class="button float-right" wire:click="closeEditor">&times;</button>
 
-        @isset ($sentence->en)
-            <p><i>{{ $sentence->en }}</i></p>
+        @isset ($sentence->text)
+            <p><i>{{ $sentence->text }}</i></p>
         @endisset
 
         <div>
@@ -13,14 +13,14 @@
         <div>
             <input type="text" class="searched-group"
                 wire:model="searchedGroup"
-                wire:keydown.enter="addSentence"
+                wire:keydown.enter="saveUpdates"
             >
 
             {{-- Dropdown that shows groups matching the typed input --}}
             @if ($filteredGroups->count() > 0 && $canShowGroupDropdown)
                 <div class="dropdown">
 
-                    <button class="button" style="float: right;"
+                    <button class="button float-right"
                         wire:click="toggleGroupDropdown(0)"
                     >&times;</button>
 
@@ -54,15 +54,17 @@
             <span class="error">{{ $message }}</span>
         @enderror
 
-        <p>
-            <input type="text"
-                wire:model.lazy="sentence.bn" wire:keydown.enter="saveUpdates"
-                placeholder="Enter bn here"
-            >
-            @error ('sentence.bn')
-                <span class="error">{{ $message }}</span>
-            @enderror
-        </p>
+        @foreach ($sentence->translations as $index => $senTrans)
+            <p>
+                <input type="text"
+                    wire:model="sentence.translations.{{ $index }}.text" wire:keydown.enter="saveUpdates"
+                    placeholder="Enter translation here"
+                >
+                @error ('sentence.translations.'.$index. '.text')
+                    <span class="error">{{ $message }}</span>
+                @enderror
+            </p>
+        @endforeach
 
         <p>
             <input type="text"
@@ -82,10 +84,10 @@
             @enderror
 
             <input type="text"
-                wire:model.lazy="sentence.source" wire:keydown.enter="saveUpdates"
-                placeholder="Enter source name here"
+                wire:model.lazy="sentence.project" wire:keydown.enter="saveUpdates"
+                placeholder="Enter project name here"
             >
-            @error ('sentence.source')
+            @error ('sentence.project')
                 <span class="error">{{ $message }}</span>
             @enderror
         </p>
@@ -133,7 +135,7 @@
                 <span class="error">{{ $message }}</span>
             @enderror
 
-            <textarea class="disp-b mt-2" style="width: 30rem; height: 5rem; font-family: sans-serif; padding: 0.5rem;" 
+            <textarea class="disp-b mt-2 w-3/4 max-w-lg h-20 p-2 font-sans"
                 wire:model="sentence.note"
                 placeholder="Enter note here"
             ></textarea>

@@ -118,7 +118,7 @@
 
                                 <div>{{ $sentence->text }}</div>
 
-                                @foreach ($sentence->senTranses as $senTrans)
+                                @foreach ($sentence->translations as $senTrans)
                                     <div>{{ $senTrans->text }}</div>
                                 @endforeach
 
