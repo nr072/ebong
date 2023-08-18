@@ -32,6 +32,6 @@ class Sentence extends Model
 
     public function senTranses()
     {
-        return $this->belongsToMany(SentenceTranslation::class);
+        return $this->hasMany(SentenceTranslation::class);
     }
 }

@@ -16,18 +16,18 @@ class SentenceIndex extends Component
     private $paginCount = 50;
 
     // A reset function depends on these properties.
-    public $searchedEn = '';
-    public $searchedBn = '';
+    public $searchedSourceText = '';
+    public $searchedTargetText = '';
     public $searchedContext = '';
     public $searchedGroup = '';
-    public $searchedSource = '';
+    public $searchedProject = '';
 
     protected $queryString = [
-        'searchedEn' => ['except' => '', 'as' => 'en'],
-        'searchedBn' => ['except' => '', 'as' => 'bn'],
+        'searchedSourceText' => ['except' => '', 'as' => 'source'],
+        'searchedTargetText' => ['except' => '', 'as' => 'bn'],
         'searchedContext' => ['except' => '', 'as' => 'context'],
         'searchedGroup' => ['except' => '', 'as' => 'group'],
-        'searchedSource' => ['except' => '', 'as' => 'source'],
+        'searchedProject' => ['except' => '', 'as' => 'project'],
     ];
 
 
@@ -51,16 +51,16 @@ class SentenceIndex extends Component
     // These values depend on some properties of this class.
     public function resetSearched($column)
     {
-        if ($column === 'en') {
-            $this->reset('searchedEn');
-        } else if ($column === 'bn') {
-            $this->reset('searchedBn');
+        if ($column === 'sourceText') {
+            $this->reset('searchedSourceText');
+        } else if ($column === 'targetText') {
+            $this->reset('searchedTargetText');
         } else if ($column === 'context') {
             $this->reset('searchedContext');
         } else if ($column === 'group') {
             $this->reset('searchedGroup');
-        } else if ($column === 'source') {
-            $this->reset('searchedSource');
+        } else if ($column === 'project') {
+            $this->reset('searchedProject');
         }
     }
 
@@ -98,14 +98,17 @@ class SentenceIndex extends Component
     public function applySearchFilters()
     {
 
-        $query = Sentence::orderBy('en');
+        $query = Sentence::orderBy('text');
 
-        if ($this->searchedEn !== '') {
-            $query = $query->where('en', 'like', '%'.$this->searchedEn.'%');
+        if ($this->searchedSourceText !== '') {
+            $query = $query->where('text', 'like', '%'.$this->searchedSourceText.'%');
         }
 
-        if ($this->searchedBn !== '') {
-            $query = $query->where('bn', 'like', '%'.$this->searchedBn.'%');
+        // Sentence translations exist in another table.
+        if ($this->searchedTargetText !== '') {
+            $query = $query->whereHas('sentence_translations', function ($query){
+                        $query->where('text', 'like', '%'.$this->searchedTargetText.'%');
+            });
         }
 
         // Context searching works on the subcontext column too.
@@ -119,12 +122,12 @@ class SentenceIndex extends Component
         // The associated groups exist in another table.
         if ($this->searchedGroup !== '') {
             $query = $query->whereHas('groups', function ($query){
-                        $query->where('en', 'like', '%'.$this->searchedGroup.'%');
+                        $query->where('text', 'like', '%'.$this->searchedGroup.'%');
             });
         }
 
-        if ($this->searchedSource !== '') {
-            $query = $query->where('source', 'like', '%'.$this->searchedSource.'%');
+        if ($this->searchedProject !== '') {
+            $query = $query->where('project', 'like', '%'.$this->searchedProject.'%');
         }
 
         $this->sentences = $query->paginate($this->paginCount);

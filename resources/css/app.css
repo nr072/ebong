@@ -352,9 +352,10 @@ span.flag.info::before {
 
 
 
-.bn-text {
+/* TODO: Use this when there's a way to detect the target text's langauge. */
+/*.bn-text {
     font: 0.9em/1.5em 'lohit bengali';
-}
+}*/
 
 
 
@@ -468,7 +469,7 @@ span.flag.info::before {
 .cell-flags,
 .cell-text,
 .cell-group,
-.cell-source,
+.cell-project,
 .cell-buttons {
     text-align: center;
 }

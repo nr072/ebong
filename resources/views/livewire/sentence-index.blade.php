@@ -6,26 +6,26 @@
         <div>
             <div>
                 <input type="text"
-                    wire:model="searchedEn"
+                    wire:model="searchedSourceText"
                     class="w-96" 
-                    placeholder="Type to filter en"
+                    placeholder="Type to filter source text"
                 >
-                @if ($searchedEn)
+                @if ($searchedSourceText)
                     <button class="button"
-                        wire:click="resetSearched('en')"
+                        wire:click="resetSearched('sourceText')"
                         title="Click to clear searched string"
                     >&times;</button>
                 @endif
             </div>
             <div>
                 <input type="text"
-                    wire:model="searchedBn"
+                    wire:model="searchedTargetText"
                     class="w-96" 
-                    placeholder="Type to filter bn"
+                    placeholder="Type to filter target text"
                 >
-                @if ($searchedBn)
+                @if ($searchedTargetText)
                     <button class="button"
-                        wire:click="resetSearched('bn')"
+                        wire:click="resetSearched('targetText')"
                         title="Click to clear searched string"
                     >&times;</button>
                 @endif
@@ -60,12 +60,12 @@
             </div>
             <div>
                 <input type="text"
-                    wire:model="searchedSource"
-                    placeholder="Type to filter source"
+                    wire:model="searchedProject"
+                    placeholder="Type to filter project"
                 >
-                @if ($searchedSource)
+                @if ($searchedProject)
                     <button class="button"
-                        wire:click="resetSearched('source')"
+                        wire:click="resetSearched('project')"
                         title="Click to clear searched string"
                     >&times;</button>
                 @endif
@@ -87,7 +87,7 @@
                     <th class="cell-flags"></th>
                     <th class="cell-group">Groups</th>
                     <th>Text</th>
-                    <th class="cell-source">Source</th>
+                    <th class="cell-project">Project</th>
                     <th></th>
                 </tr>
             </thead>
@@ -116,9 +116,11 @@
 
                             <td>
 
-                                <div>{{ $sentence->en }}</div>
+                                <div>{{ $sentence->text }}</div>
 
-                                <div class="bn-text">{{ $sentence->bn }}</div>
+                                @foreach ($sentence->senTranses as $senTrans)
+                                    <div>{{ $senTrans->text }}</div>
+                                @endforeach
 
                                 {{-- @if ($sentence->context)
                                     <div class="text-indented text-gray">
@@ -160,7 +162,7 @@
                                 @endif --}}
                             </td>
 
-                            <td class="cell-source">{{ $sentence->source }}</td>
+                            <td class="cell-project">{{ $sentence->project }}</td>
 
                             <td class="cell-buttons">
                                 <button class="button warning"
