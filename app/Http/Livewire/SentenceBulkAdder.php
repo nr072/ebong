@@ -21,11 +21,13 @@ class SentenceBulkAdder extends Component
     // A sample JSON to be shown inside the <textarea> element.
     private $taPlaceholder = '[' . "\n" .
         "\t" . '{' . "\n" .
-            "\t\t" . '"en": "...",' . "\n" .
-            "\t\t" . '"bn": "...",' . "\n" .
+            "\t\t" . '"sourceText": "...",' . "\n" .
+            "\t\t" . '"sourceLang": "...",' . "\n" .
+            "\t\t" . '"targetText": "...",' . "\n" .
+            "\t\t" . '"targetLang": "...",' . "\n" .
             "\t\t" . '"context": "...",' . "\n" .
             "\t\t" . '"subcontext": "...",' . "\n" .
-            "\t\t" . '"source": "...",' . "\n" .
+            "\t\t" . '"project": "...",' . "\n" .
             "\t\t" . '"link1": "...",' . "\n" .
             "\t\t" . '"link2": "...",' . "\n" .
             "\t\t" . '"link3": "..."' . "\n" .
