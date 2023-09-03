@@ -119,7 +119,10 @@
                                 <div>{{ $sentence->text }}</div>
 
                                 @foreach ($sentence->translations as $senTrans)
-                                    <div>{{ $senTrans->text }}</div>
+                                    <div>
+                                        <span class="label">{{ $senTrans->lang }}</span>
+                                        <span class="align-middle">{{ $senTrans->text }}</span>
+                                    </div>
                                 @endforeach
 
                                 {{-- @if ($sentence->context)
