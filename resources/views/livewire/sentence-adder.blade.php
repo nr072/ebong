@@ -38,7 +38,7 @@
             {{-- Groups chosen for this sentence so far --}}
             @if (sizeof($chosenGroupIds) > 0)
                 @foreach ($chosenGroupIds as $id)
-                    <span class="chosen-assoc-group">
+                    <span class="pill">
                         {{ $allGroups[$id] }}
                         <button class="button" wire:click="dissociateGroup({{ $id }})">&times;</button>
                     </span>
@@ -59,7 +59,7 @@
 
 
         {{-- Each sentence --}}
-        @foreach ($inputs as $key => $value)
+        @foreach ($inputs as $sentenceIndex => $sentence)
             <fieldset class="new-sentence-fields-wrap flex flex-col">
 
                 <div class="mb-1">
@@ -68,53 +68,61 @@
                         <label class="input-label-set w-3/4">
                             <span>Source</span>
                             <input type="text"
-                                wire:model.lazy="inputs.{{ $key }}.sourceText" wire:keydown.enter="createSentence"
+                                wire:model.lazy="inputs.{{ $sentenceIndex }}.sourceText" wire:keydown.enter="createSentence"
                             >
-                            @error ('inputs.' . $key . '.sourceText')
+                            @error ('inputs.'.$sentenceIndex.'.sourceText')
                                 <span class="error">{{ $message }}</span>
                             @enderror
                         </label>
 
                         <label class="input-label-set w-1/6">
                             <span>Language</span>
-                            <select wire:model="inputs.{{ $key }}.sourceLang">
+                            <select wire:model="inputs.{{ $sentenceIndex }}.sourceLang">
                                 {{-- TODO: Language names need to be fetched
                                      from the database and dynamically added
                                      here. --}}
                                 <option value="en">en</option>
                             </select>
-                            @error ('inputs.' . $key . '.sourceLang')
+                            @error ('inputs.'.$sentenceIndex.'.sourceLang')
                                 <span class="error">{{ $message }}</span>
                             @enderror
                         </label>
 
                     </div>
 
-                    <div class="flex justify-between -mt-3 -mb-2">
+                    @foreach ($sentence['translations'] as $senTransIndex => $senTrans)
+                        <div class="flex justify-between -mt-3 -mb-2">
 
-                        <label class="input-label-set w-3/4">
-                            <span>Target</span>
-                            <input type="text"
-                                wire:model.lazy="inputs.{{ $key }}.targetText" wire:keydown.enter="createSentence"
-                            >
-                            @error ('inputs.' . $key . '.targetText')
-                                <span class="error">{{ $message }}</span>
-                            @enderror
-                        </label>
+                            <label class="input-label-set w-3/4">
+                                <span>Target</span>
+                                <input type="text"
+                                    wire:model.lazy="inputs.{{ $sentenceIndex }}.translations.{{ $senTransIndex }}.targetText" wire:keydown.enter="createSentence"
+                                >
+                                @error ('inputs.'.$sentenceIndex.'.translations.'.$senTransIndex.'.targetText')
+                                    <span class="error">{{ $message }}</span>
+                                @enderror
+                            </label>
 
-                        <label class="input-label-set w-1/6">
-                            <span>Language</span>
-                            <select wire:model="inputs.{{ $key }}.targetLang">>
-                                {{-- TODO: Language names need to be fetched
-                                     from the database and dynamically added
-                                     here. --}}
-                                <option value="bn">bn</option>
-                            </select>
-                            @error ('inputs.' . $key . '.targetLang')
-                                <span class="error">{{ $message }}</span>
-                            @enderror
-                        </label>
+                            <label class="input-label-set w-1/6">
+                                <span>Language</span>
+                                <select wire:model="inputs.{{ $sentenceIndex }}.translations.{{ $senTransIndex }}.targetLang">>
+                                    {{-- TODO: Language names need to be fetched
+                                         from the database and dynamically added
+                                         here. --}}
+                                    <option value="bn">bn</option>
+                                </select>
+                                @error ('inputs.'.$sentenceIndex.'.translations.'.$senTransIndex.'.targetLang')
+                                    <span class="error">{{ $message }}</span>
+                                @enderror
+                            </label>
 
+                        </div>
+                    @endforeach
+
+                    <div class="sen-trans-add-btn">
+                        <button class="button"
+                            wire:click="addAnotherSenTrans({{ $sentenceIndex }})"
+                        >Add another translation</button>
                     </div>
                 </div>
 
@@ -125,9 +133,9 @@
                             <label class="input-label-set">
                                 <span>Context</span>
                                 <input type="text"
-                                    wire:model="inputs.{{ $key }}.context" wire:keydown.enter="createSentence"
+                                    wire:model="inputs.{{ $sentenceIndex }}.context" wire:keydown.enter="createSentence"
                                 >
-                                @error ('inputs.' . $key . '.context')
+                                @error ('inputs.'.$sentenceIndex.'.context')
                                     <span class="error">{{ $message }}</span>
                                 @enderror
                             </label>
@@ -135,9 +143,9 @@
                             <label class="input-label-set">
                                 <span>Subcontext</span>
                                 <input type="text"
-                                    wire:model.lazy="inputs.{{ $key }}.subcontext" wire:keydown.enter="createSentence"
+                                    wire:model.lazy="inputs.{{ $sentenceIndex }}.subcontext" wire:keydown.enter="createSentence"
                                 >
-                                @error ('inputs.' . $key . '.subcontext')
+                                @error ('inputs.'.$sentenceIndex.'.subcontext')
                                     <span class="error">{{ $message }}</span>
                                 @enderror
                             </label>
@@ -147,9 +155,9 @@
                             <label class="input-label-set">
                                 <span>Project</span>
                                 <input type="text"
-                                    wire:model.lazy="inputs.{{ $key }}.project" wire:keydown.enter="createSentence"
+                                    wire:model.lazy="inputs.{{ $sentenceIndex }}.project" wire:keydown.enter="createSentence"
                                 >
-                                @error ('inputs.' . $key . '.project')
+                                @error ('inputs.'.$sentenceIndex.'.project')
                                     <span class="error">{{ $message }}</span>
                                 @enderror
                                 @if ($canShowProjectDropdown)
@@ -162,7 +170,7 @@
                                         @foreach ($projects as $project)
                                             @if ($project)
                                                 <button class="dropdown-option"
-                                                    wire:click="selectProject({{ $key }}, '{{ $project }}')"
+                                                    wire:click="selectProject({{ $sentenceIndex }}, '{{ $project }}')"
                                                 >{{ $project }}</button>
                                             @endif
                                         @endforeach
@@ -174,9 +182,9 @@
                             <label class="input-label-set">
                                 <span>Link 1</span>
                                 <input type="text"
-                                    wire:model.lazy="inputs.{{ $key }}.link1" wire:keydown.enter="createSentence"
+                                    wire:model.lazy="inputs.{{ $sentenceIndex }}.link1" wire:keydown.enter="createSentence"
                                 >
-                                @error ('inputs.' . $key . '.link1')
+                                @error ('inputs.'.$sentenceIndex.'.link1')
                                     <span class="error">{{ $message }}</span>
                                 @enderror
                             </label>
@@ -184,9 +192,9 @@
                             <label class="input-label-set">
                                 <span>Link 2</span>
                                 <input type="text"
-                                    wire:model.lazy="inputs.{{ $key }}.link2" wire:keydown.enter="createSentence"
+                                    wire:model.lazy="inputs.{{ $sentenceIndex }}.link2" wire:keydown.enter="createSentence"
                                 >
-                                @error ('inputs.' . $key . '.link2')
+                                @error ('inputs.'.$sentenceIndex.'.link2')
                                     <span class="error">{{ $message }}</span>
                                 @enderror
                             </label>
@@ -194,9 +202,9 @@
                             <label class="input-label-set">
                                 <span>Link 3</span>
                                 <input type="text"
-                                    wire:model.lazy="inputs.{{ $key }}.link3" wire:keydown.enter="createSentence"
+                                    wire:model.lazy="inputs.{{ $sentenceIndex }}.link3" wire:keydown.enter="createSentence"
                                 >
-                                @error ('inputs.' . $key . '.link3')
+                                @error ('inputs.'.$sentenceIndex.'.link3')
                                     <span class="error">{{ $message }}</span>
                                 @enderror
                             </label>
@@ -212,21 +220,21 @@
                         <p class="my-2">
                             <label>
                                 <span>Note type:</span>
-                                <select wire:model="inputs.{{ $key }}.noteType">
+                                <select wire:model="inputs.{{ $sentenceIndex }}.noteType">
                                     <option value="Note">Note</option>
                                     <option value="Reference">Reference</option>
                                 </select>
                             </label>
-                            @error ('inputs.' . $key . '.noteType')
+                            @error ('inputs.'.$sentenceIndex.'.noteType')
                                 <span class="error">{{ $message }}</span>
                             @enderror
 
                             <textarea class="disp-b mt-2 w-full h-20 p-2 font-sans" 
-                                wire:model="inputs.{{ $key }}.note"
+                                wire:model="inputs.{{ $sentenceIndex }}.note"
                                 wire:keydown.ctrl.enter="createSentence"
                                 placeholder="Enter optional notes/references here"
                             ></textarea>
-                            @error ('inputs.' . $key . '.note')
+                            @error ('inputs.'.$sentenceIndex.'.note')
                                 <span class="error">{{ $message }}</span>
                             @enderror
                         </p>
@@ -234,10 +242,10 @@
                         <p class="mt-5">
                             <label class="cursor-p" title="Click to mark this sentence">
                                 <input type="checkbox" class="ml-0"
-                                    wire:model="inputs.{{ $key }}.needsRevision">
+                                    wire:model="inputs.{{ $sentenceIndex }}.needsRevision">
                                 <span>Revision needed</span>
                             </label>
-                            @error ('inputs.' . $key . '.needsRevision')
+                            @error ('inputs.'.$sentenceIndex.'.needsRevision')
                                 <span class="error">{{ $message }}</span>
                             @enderror
                         </p>

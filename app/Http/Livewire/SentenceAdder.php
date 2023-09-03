@@ -70,10 +70,12 @@ class SentenceAdder extends Component
         manually set somewhere below.
     */
     protected $rules = [
+        'inputs' => 'array',
         'inputs.*.sourceText' => 'required|string',
         'inputs.*.sourceLang' => 'required|string|max:6',
-        'inputs.*.targetText' => 'nullable|string',
-        'inputs.*.targetLang' => 'nullable|string|max:6',
+        'inputs.*.translations' => 'array',
+        'inputs.*.translations.*.targetText' => 'nullable|string',
+        'inputs.*.translations.*.targetLang' => 'nullable|string|max:6',
         'inputs.*.context' => 'nullable|max:200',
         'inputs.*.subcontext' => 'nullable|max:200',
         'inputs.*.project' => 'nullable|max:100',
@@ -104,42 +106,38 @@ class SentenceAdder extends Component
         $validatedData = $this->validate();
 
         // A sentence is created for each set of sentence-related inputs.
-        foreach ($validatedData['inputs'] as $input) {
+        foreach ($validatedData['inputs'] as $sentence) {
 
             /*
                 Note to developer: Don't forget to add new column names
                 to the model's 'fillable' property.
             */
             $newSentence = Sentence::create([
-                'text' => trim( $input['sourceText'] ),
-                'lang' => trim( $input['sourceLang'] ),
-                'context' => trim( $input['context'] ),
-                'subcontext' => trim( $input['subcontext'] ),
-                'project' => trim( $input['project'] ),
-                'link_1' => trim( $input['link1'] ),
-                'link_2' => trim( $input['link2'] ),
-                'link_3' => trim( $input['link3'] ),
-                'note_type' => trim( $input['noteType'] ),
-                'note' => trim( $input['note'] ),
-                'needs_revision' => $input['needsRevision'],
+                'text' => trim( $sentence['sourceText'] ),
+                'lang' => trim( $sentence['sourceLang'] ),
+                'context' => trim( $sentence['context'] ),
+                'subcontext' => trim( $sentence['subcontext'] ),
+                'project' => trim( $sentence['project'] ),
+                'link_1' => trim( $sentence['link1'] ),
+                'link_2' => trim( $sentence['link2'] ),
+                'link_3' => trim( $sentence['link3'] ),
+                'note_type' => trim( $sentence['noteType'] ),
+                'note' => trim( $sentence['note'] ),
+                'needs_revision' => $sentence['needsRevision'],
             ]);
 
             // Groups are associated.
             $newSentence->groups()->attach( $validatedData['chosenGroupIds'] );
 
-            // A sentence translation is created and associated with the
+            // Sentence translations are created and associated with the
             // sentence.
-            /*
-                TODO
-                Note to developer: Multiple sentence translations will
-                probably be supported in the future. For now, a single
-                one is being created manually.
-            */
-            $newSenTrans = SentenceTranslation::create([
-                'text' => trim( $input['targetText'] ),
-                'lang' => trim( $input['targetLang'] ),
-                'sentence_id' => $newSentence->id,
-            ]);
+            foreach ($sentence['translations'] as $senTrans) {
+                $newSenTrans = SentenceTranslation::create([
+                    'text' => trim( $senTrans['targetText'] ),
+                    'lang' => trim( $senTrans['targetLang'] ),
+                    'sentence_id' => $newSentence->id,
+                ]);
+            }
 
         }
 
@@ -220,8 +218,12 @@ class SentenceAdder extends Component
             [
                 'sourceText' => '',
                 'sourceLang' => 'en',
-                'targetText' => '',
-                'targetLang' => 'bn',
+                'translations' => [
+                    0 => [
+                        'targetText' => '',
+                        'targetLang' => 'bn',
+                    ],
+                ],
                 'context' => '',
                 'subcontext' => '',
                 'project' => '',
@@ -233,6 +235,26 @@ class SentenceAdder extends Component
                 'needsRevision' => false,
             ]
         );
+    }
+
+
+
+    // An empty array is inserted into the selected sentence's data.
+    /*
+        TODO
+        Note to developer: The value 'bn' is hardcoded as the target
+        langauge for now. It needs to be blank by default and selectable
+        on the page by the user.
+    */
+    public function addAnotherSenTrans($sentenceIndex)
+    {
+        array_push(
+            $this->inputs[$sentenceIndex]['translations'],
+            [
+                'targetText' => '',
+                'targetLang' => 'bn',
+            ]
+        );;
     }
 
 

@@ -48,7 +48,7 @@
             <p class="mt-0">
                 <span style="display: block;">Already added words:</span>
                 @foreach ($chosenWordIds as $id)
-                    <span class="chosen-assoc-word">
+                    <span class="pill">
                         {{ $grouplessWords->find($id)->en }}
                         <button class="button" wire:click="removeWordFromGroup({{ $id }})">&times;</button>
                     </span>
