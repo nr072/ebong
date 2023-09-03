@@ -19,19 +19,23 @@ class SentenceBulkAdder extends Component
     public $sentences = [];
 
     // A sample JSON to be shown inside the <textarea> element.
-    private $taPlaceholder = '[' . "\n" .
-        "\t" . '{' . "\n" .
-            "\t\t" . '"sourceText": "...",' . "\n" .
-            "\t\t" . '"sourceLang": "...",' . "\n" .
-            "\t\t" . '"targetText": "...",' . "\n" .
-            "\t\t" . '"targetLang": "...",' . "\n" .
-            "\t\t" . '"context": "...",' . "\n" .
-            "\t\t" . '"subcontext": "...",' . "\n" .
-            "\t\t" . '"project": "...",' . "\n" .
-            "\t\t" . '"link1": "...",' . "\n" .
-            "\t\t" . '"link2": "...",' . "\n" .
-            "\t\t" . '"link3": "..."' . "\n" .
-        "\t" . '},' . "\n" .
+    private $taPlaceholder ='['."\n" .
+        '    {'."\n" .
+        '        "sourceText": "...",'."\n" .
+        '        "sourceLang": "...",'."\n" .
+        '        "translations": ['."\n" .
+        '            {'."\n" .
+        '                "targetText": "...",'."\n" .
+        '                "targetLang": "...",'."\n" .
+        '            },'."\n" .
+        '        ],'."\n" .
+        '        "context": "...",'."\n" .
+        '        "subcontext": "...",'."\n" .
+        '        "project": "...",'."\n" .
+        '        "link1": "...",'."\n" .
+        '        "link2": "...",'."\n" .
+        '        "link3": "..."'."\n" .
+        '    },'."\n" .
     ']';
 
 
