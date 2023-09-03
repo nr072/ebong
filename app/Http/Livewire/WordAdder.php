@@ -34,7 +34,7 @@ class WordAdder extends Component
 
     protected $rules = [
         'newWordEn' => 'required|string|max:50',
-        'newWordPos' => 'required|exists:poses,id',
+        'newWordPos' => 'nullable|exists:poses,id',
         'newWordGroup' => 'nullable|exists:groups,id',
     ];
 
@@ -76,7 +76,11 @@ class WordAdder extends Component
         // Word creation.
         $newWord = Word::create([
             'en' => trim( $vData['newWordEn'] ),
-            'pos_id' => trim( $vData['newWordPos'] ),
+            'pos_id' => (
+                $vData['newWordPos'] === ''
+                    ? null
+                    : trim( $vData['newWordPos'] )
+            ),
             'group_id' => (
                 $vData['newWordGroup'] === ''
                     ? null
