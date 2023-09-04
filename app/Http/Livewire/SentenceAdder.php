@@ -394,6 +394,9 @@ class SentenceAdder extends Component
     public function fillBulkData($sentence)
     {
 
+        // Input fields are cleared.
+        $this->reset('chosenGroupIds');
+
         foreach (array_keys($sentence) as $key) {
 
             // If a key exists in the (regular) adder's property, the

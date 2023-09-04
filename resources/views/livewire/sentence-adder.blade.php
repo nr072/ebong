@@ -181,7 +181,7 @@
 
                             <label class="input-label-set">
                                 <span>Link 1</span>
-                                <input type="text"
+                                <input type="url"
                                     wire:model.lazy="inputs.{{ $sentenceIndex }}.link1" wire:keydown.enter="createSentence"
                                 >
                                 @error ('inputs.'.$sentenceIndex.'.link1')
@@ -191,7 +191,7 @@
 
                             <label class="input-label-set">
                                 <span>Link 2</span>
-                                <input type="text"
+                                <input type="url"
                                     wire:model.lazy="inputs.{{ $sentenceIndex }}.link2" wire:keydown.enter="createSentence"
                                 >
                                 @error ('inputs.'.$sentenceIndex.'.link2')
@@ -201,7 +201,7 @@
 
                             <label class="input-label-set">
                                 <span>Link 3</span>
-                                <input type="text"
+                                <input type="url"
                                     wire:model.lazy="inputs.{{ $sentenceIndex }}.link3" wire:keydown.enter="createSentence"
                                 >
                                 @error ('inputs.'.$sentenceIndex.'.link3')
@@ -262,7 +262,10 @@
 
 
         <p>
-            <button class="button" wire:click="createSentence" @empty($inputs[0]['sourceText']) disabled @endempty>Confirm</button>
+            <button class="button"
+                wire:click="createSentence"
+                @empty($inputs[0]['sourceText']) disabled @endempty
+            >Confirm</button>
         </p>
 
         <p>Status: <span class="{{ $status['type'] }}">{{ $status['text'] }}<span></p>
