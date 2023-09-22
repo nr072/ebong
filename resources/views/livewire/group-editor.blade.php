@@ -14,7 +14,7 @@
                 <p class="mb-1">Words already associated with this group:</p>
                 <ul class="mt-0">
                     @foreach ($group->words as $word)
-                        <li>{{ $word->en }} <i>{{ $word->pos->short }}</i></li>
+                        <li>{{ $word->en }} <i>{{ $word->pos->short ?? '' }}</i></li>
                     @endforeach
                 </ul>
             @endif
@@ -37,7 +37,7 @@
                         @foreach ($words as $word)
                             <button class="dropdown-option"
                                 wire:click="associateWord({{ $word->id }})"
-                            >{{ $word->en }} <i>{{ $word->pos->short }}</i></button>
+                            >{{ $word->en }} <i>{{ $word->pos->short ?? '' }}</i></button>
                         @endforeach
                     </div>
                 @endif
@@ -51,8 +51,8 @@
                     <p>
                         <span>Curently associated:</span>
                         @foreach ($chosenWords as $word)
-                            <span class="chosen-assoc-word">
-                                {{ $word->en }} <i>{{ $word->pos->short }}</i>
+                            <span class="pill">
+                                {{ $word->en }} <i>{{ $word->pos->short ?? '' }}</i>
                                 <button class="button"
                                     wire:click="dissociateWord({{ $word->id }})"
                                 >&times;</button>

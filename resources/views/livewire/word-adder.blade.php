@@ -1,59 +1,59 @@
 <section class="word-adder">
 
-    <div style="display: inline-block; width: 49%; vertical-align: top;">
+    <div style="display: inline-block; width: 40%; vertical-align: top;">
 
         <h1>Add a word</h1>
 
         <div>
-            <p class="mb-2">
+            <label class="input-label-set">
+                <span>Word</span>
                 <input type="text"
                     wire:model="newWordEn" wire:keydown.enter="addWord"
                     placeholder="Enter a new word here"
                 >
-                @error ('newWordEn')
-                    <span class="error">{{ $message }}</span>
-                @enderror
-            </p>
+            </label>
+            @error ('newWordEn')
+                <span class="error">{{ $message }}</span>
+            @enderror
 
-            <p class="mt-2">
+            <label class="input-label-set">
+                <span>POS</span>
                 <select wire:model="newWordPos">
-                    <option value="0">Select POS</option>
+                    <option value="0">Select part of speech</option>
                     @foreach ($poses as $id => $en)
                         <option value="{{ $id }}">{{ $en }}</option>
                     @endforeach
                 </select>
-                @error ('newWordPos')
-                    <span class="error">{{ $message }}</span>
-                @enderror
-            </p>
+            </label>
+            @error ('newWordPos')
+                <span class="error">{{ $message }}</span>
+            @enderror
 
-            <p>
-                <label>
-                    Select a group:
-                    <select wire:model="newWordGroup">
-                        <option value="0">Select group</option>
-                        @foreach ($groups as $group)
-                            <option value="{{ $group->id }}">
-                                {{ $group->title }}
-                                ({{ $group->words->count() }} word{{ $group->words->count() > 1 ? 's' : '' }})
-                            </option>
-                        @endforeach
-                    </select>
-                </label>
-                @error ('newWordGroup')
-                    <span class="error">{{ $message }}</span>
-                @enderror
-            </p>
+            <label class="input-label-set">
+                <span>Group</span>
+                <select wire:model="newWordGroup">
+                    <option value="0">Select group</option>
+                    @foreach ($groups as $group)
+                        <option value="{{ $group->id }}">
+                            {{ $group->title }}
+                            ({{ $group->words->count() }} word{{ $group->words->count() > 1 ? 's' : '' }})
+                        </option>
+                    @endforeach
+                </select>
+            </label>
+            @error ('newWordGroup')
+                <span class="error">{{ $message }}</span>
+            @enderror
 
-            <button class="button"
+            <button class="button block w-1/2 mt-4 mx-auto"
                 wire:click="addWord"
                 @empty($newWordEn) disabled @endempty
-            >Add</button>
+            >Confirm</button>
         </div>
 
         {{-- A list of existing words that partially match the typed input --}}
         @if ($wordsMatchingSearched->count() > 0)
-            <div style="padding-top: 0.5em;">
+            <div class="mt-8">
                 <span>Matches found among existing words:</span>
                 <ul class="matched-list">
                     @foreach ($wordsMatchingSearched as $word)
@@ -61,6 +61,9 @@
                             {{ $word->en }}
                             @if ($word->pos)
                                 <small><i>{{ $word->pos->short }}</i></small>
+                            @endif
+                            @if ($word->group)
+                                (Group: {{ $word->group->title }})
                             @endif
                         </li>
                     @endforeach
@@ -74,19 +77,22 @@
 
 
 
-    <div style="display: inline-block; width: 49%;">
+    <div style="display: inline-block; width: 40%;">
 
         <h1>Words</h1>
 
-        <input type="text" wire:model="searchedEn" placeholder="Type to search en words">
-        @if ($searchedEn)
-            <button class="button" wire:click="resetSearchedEn">&times;</button>
-        @endif
+        <label class="input-label-set">
+            <span>Word</span>
+            <input type="search" wire:model="searchedEn" placeholder="Type to search en words">
+            @if ($searchedEn)
+                <button class="button" wire:click="resetSearchedEn">&times;</button>
+            @endif
+        </label>
 
         @if ($words->count() < 1)
             <p>Status: No words found</p>
         @else
-            <ul>
+            <ul class="mt-4">
                 @foreach ($words as $word)
                     <li class="single-word">
                         <span>

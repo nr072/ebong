@@ -4,33 +4,29 @@
 
     @if ($grouplessWords->count() > 0)
 
-        <p>
-            <label>
-                Group title:
-                <input type="text"
-                    wire:model="title" wire:keydown.enter="createGroup"
-                    placeholder="Enter group title here"
-                >
-            </label>
-            @error ('title')
-                <span class="error">{{ $message }}</span>
-            @enderror
-        </p>
+        <label class="input-label-set">
+            <span>Title</span>
+            <input type="text"
+                wire:model="title" wire:keydown.enter="createGroup"
+                placeholder="Enter group title here"
+            >
+        </label>
+        @error ('title')
+            <span class="error">{{ $message }}</span>
+        @enderror
 
-        <p>
-            <label>
-                Add an existing word:
-                <input type="text" class="searched-word"
-                    wire:model="searchedWord" wire:keydown.enter="createGroup"
-                    placeholder="Type to search words"
-                >
-            </label>
-            @error ('chosenWordIds')
-                <span class="error">{{ $message }}</span>
-            @enderror
-        </p>
+        <label class="input-label-set">
+            <span>Word(s)</span>
+            <input type="text" class="searched-word"
+                wire:model="searchedWord" wire:keydown.enter="createGroup"
+                placeholder="Type to search words"
+            >
+        </label>
+        @error ('chosenWordIds')
+            <span class="error">{{ $message }}</span>
+        @enderror
         @if (sizeof($filteredWords) > 0)
-            <div class="dropdown" style="margin-left: 10rem;">
+            <div class="dropdown" style="margin-left: 10rem; margin-top: -0.5em;">
                 @foreach ($filteredWords as $word)
                     @if (!in_array($word->id, $chosenWordIds, true))
                         <button class="dropdown-option" wire:click="addWordToGroup({{ $word->id }})">
@@ -45,23 +41,22 @@
         @endif
 
         @if (sizeof($chosenWordIds) > 0)
-            <p class="mt-0">
-                <span style="display: block;">Already added words:</span>
-                @foreach ($chosenWordIds as $id)
-                    <span class="pill">
-                        {{ $grouplessWords->find($id)->en }}
-                        <button class="button" wire:click="removeWordFromGroup({{ $id }})">&times;</button>
-                    </span>
-                @endforeach
-            </p>
+            <div class="mt-4">Already added words:
+            @foreach ($chosenWordIds as $id)
+                <span class="pill">
+                    {{ $grouplessWords->find($id)->en }}
+                    <button class="button"
+                        wire:click="removeWordFromGroup({{ $id }})"
+                    >&times;</button>
+                </span>
+            @endforeach
+            </div>
         @endif
 
-        <p>
-            <button class="button"
-                wire:click="createGroup"
-                @empty($title) disabled @endempty
-            >Confirm</button>
-        </p>
+        <button class="button block w-1/2 mt-4 mx-auto"
+            wire:click="createGroup"
+            @empty($title) disabled @endempty
+        >Confirm</button>
 
         <p>Status: <span class="{{ $status['type'] }}">{{ $status['text'] }}</span></p>
 

@@ -43,7 +43,7 @@
             {{-- Groups chosen for this sentence so far --}}
             @if (sizeof($chosenGroupIds) > 0)
                 @foreach ($chosenGroupIds as $id)
-                    <span class="chosen-assoc-group">
+                    <span class="pill">
                         {{ $allGroups[$id] }}
                         <button class="button" wire:click="dissociateGroup({{ $id }})">&times;</button>
                     </span>

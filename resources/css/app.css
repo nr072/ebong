@@ -89,7 +89,6 @@ select {
     padding-top: 0.15rem;
     padding-bottom: 0.15rem;
     border: none;
-/*    border-color: var(--color-1-light);*/
     background: var(--color-1-lightest);
 }
 
@@ -101,8 +100,11 @@ textarea:focus {
     border-color: var(--color-1-dark);
 }
 
-input[type='text'] {
-    line-height: 1em;
+input[type='text'],
+input[type='url'],
+input[type='search'],
+select {
+    line-height: 1.25em;
     background: var(--color-1-lightest);
 }
 
@@ -222,6 +224,46 @@ h1 {
 
 
 
+input[type="search" i]::-webkit-search-cancel-button {
+    display: none;
+}
+
+
+
+.input-label-set {
+    display: flex;
+    margin: 0.5em 0;
+    align-items: baseline;
+}
+
+.input-label-set > span:not(.error) {
+    text-transform: uppercase;
+    font-size: 0.7em;
+    font-family: sans-serif;
+    margin-right: 0.5em;
+    max-width: 8em;
+    min-width: 7em;
+    white-space: nowrap;
+}
+
+.input-label-set > input[type='text'],
+.input-label-set > input[type='url'],
+.input-label-set > input[type='search'] {
+    padding: 0.15rem 0.5rem;
+    width: 100%;
+}
+
+.input-label-set > select {
+    padding: 0.15rem 0.5rem;
+    min-width: 50%;
+}
+
+.input-label-set span.error {
+    text-wrap: wrap;
+}
+
+
+
 /* ==================================================================
 
                               UTILITY CLASSES
@@ -271,7 +313,7 @@ h1 {
     padding: 0.25rem;
     border: 1px solid #ccc;
     max-height: 25vh;
-    min-height: 10vh;
+/*    min-height: 10vh;*/
     min-width: 10rem;
     overflow-y: auto;
     box-shadow: 1px 1px 5px #ccc;
@@ -423,6 +465,11 @@ span.label {
                                 WORD ADDER
 
    ================================================================== */
+
+.word-adder {
+    display: flex;
+    justify-content: space-evenly;
+}
 
 .word-adder .matched-list {
     border: 1px solid #ccc;
@@ -588,31 +635,6 @@ td.cell-group {
 }
 
 
-
-.new-sentence-fields-wrap .input-label-set {
-    display: flex;
-    margin: 0.5em 0;
-    align-items: baseline;
-}
-
-.input-label-set > span:not(.error) {
-    text-transform: uppercase;
-    font-size: 0.7em;
-    font-family: sans-serif;
-    margin-right: 0.5em;
-    max-width: 8em;
-    min-width: 7em;
-    white-space: nowrap;
-}
-
-.input-label-set > input[type='text'] {
-    padding: 0.15rem 0.5rem;
-    width: 100%;
-}
-
-.input-label-set span.error {
-    text-wrap: wrap;
-}
 
 .sen-trans-add-btn {
     margin-left: 5.25em;

@@ -2,16 +2,17 @@
 
     <h1>Groups</h1>
 
-    <p>
+    <label class="input-label-set">
+        <span>Title</span>
         <input type="text" wire:model="searched" placeholder="Type to search groups">
         @if ($searched)
             <button class="button" wire:click="resetSearched">&times;</button>
         @endif
-    </p>
+    </label>
 
     @if ($groups->count() > 0)
 
-        <ul>
+        <ul class="mt-4">
             @foreach ($groups as $group)
 
                 <li class="mt-2">
