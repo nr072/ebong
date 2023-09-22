@@ -104,6 +104,9 @@
                             @if ($word->pos)
                                 <small><i>{{ $word->pos->short }}</i></small>
                             @endif
+                            @if ($word->group)
+                                (Group: {{ $word->group->title }})
+                            @endif
                         </span>
                     </li>
                 @endforeach

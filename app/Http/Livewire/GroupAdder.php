@@ -103,6 +103,9 @@ class GroupAdder extends Component
             $query = Word::where('id', 0);
         }
 
+        // Already chosen words are excluded.
+        $query = $query->whereNotIn('id', $this->chosenWordIds);
+
         $this->filteredWords = $query->get();
     }
 
