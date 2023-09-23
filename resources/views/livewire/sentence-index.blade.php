@@ -2,8 +2,11 @@
 
     {{-- <h1>Sentences</h1> --}}
 
-    <div class="search-fields-wrap flex justify-evenly mt-5">
-        <div>
+    <div id="search-panel" class="search-panel flex justify-evenly">
+        <button id="search-panel-toggler" class="search-panel-toggler"
+            title="Click to hide/reveal the search panel" 
+        >▼</button>
+        <div class="my-2">
             <div>
                 <input type="text"
                     wire:model="searchedSourceText"
@@ -45,7 +48,7 @@
             </div>
         </div>
 
-        <div>
+        <div class="my-2">
             <div>
                 <input type="text"
                     wire:model="searchedGroup"
@@ -184,5 +187,31 @@
         {{ $sentences->links() }}
 
     @endif
+
+
+
+    <script type="text/javascript">
+
+        "use strict";
+
+        // The search panel can be hidden/revealed via a toggler button.
+        const searchPanelToggler = document.getElementById("search-panel-toggler");
+        if (searchPanelToggler) {
+            searchPanelToggler.addEventListener("click", event => {
+
+                const searchPanel = document.getElementById("search-panel");
+                searchPanel.classList.toggle("collapsed");
+
+                const togglerText = event.target.innerText.trim().toLowerCase();
+                if (togglerText === "▼") {
+                    searchPanelToggler.textContent = "▲";
+                } else if (togglerText === "▲") {
+                    searchPanelToggler.textContent = "▼";
+                }
+
+            });
+        }
+
+    </script>
 
 </section>

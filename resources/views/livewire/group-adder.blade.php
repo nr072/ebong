@@ -53,7 +53,7 @@
             </div>
         @endif
 
-        <button class="button block w-1/2 mt-4 mx-auto"
+        <button class="button emerald block w-1/2 mt-4 mx-auto"
             wire:click="createGroup"
             @empty($title) disabled @endempty
         >Confirm</button>

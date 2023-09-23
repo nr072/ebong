@@ -15,7 +15,7 @@
         <style type="text/css">
             .topbar {
                 background: var(--color-1-dark);
-                box-shadow: 0px 3px 6px #555;
+                box-shadow: 0px 3px 6px rgb(0 0 0 / 65%);
                 position: fixed;
                 width: 100%;
                 left: 0;

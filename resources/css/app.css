@@ -224,6 +224,20 @@ h1 {
 
 
 
+.button[disabled] {
+    background: var(--color-1-lightest);
+    border-color: var(--color-1-lighter);
+    color: var(--color-1);
+}
+.button:not([disabled]):hover {
+    background: var(--color-1-light);
+    border-color: var(--color-1-light);
+    color: var(--color-1-darkest);
+}
+
+
+
+/* Browser's default cross icon didn't look good on Chromium. */
 input[type="search" i]::-webkit-search-cancel-button {
     display: none;
 }
@@ -494,33 +508,64 @@ span.label {
     margin-bottom: 9em;
 }
 
-.sentence-index .search-fields-wrap {
+.sentence-index .search-panel {
     position: fixed;
     background: var(--color-1-light);
     width: 100%;
     margin: 0;
     left: 0;
     bottom: 0;
-    padding: 0.5rem 0;
-    box-shadow: 0px 0px 9px -1px #333;
+    box-shadow: 0px 0px 7px 0px rgb(0 0 0 / 65%);
     z-index: var(--topbar-z-index);
+    max-height: 50vh;
+    transition: max-height 0.5s ease;
+}
+.sentence-index .search-panel.collapsed {
+    max-height: 5px;
 }
 
-.sentence-index .search-fields-wrap input,
-.sentence-index .search-fields-wrap input + button {
+.sentence-index .search-panel-toggler {
+    position: absolute;
+    right: 1em;
+    margin-top: -2em;
+    background: var(--color-1-light);
+    color: var(--color-1-darker);
+    box-shadow: 0px 0px 7px 0px rgb(0 0 0 / 55%);
+    z-index: var(--topbar-z-index);
+    padding: 0.25rem 0.75em;
+    border-radius: 0.25em 0.25em 0 0;
+}
+.sentence-index .search-panel-toggler:hover {
+    background: var(--color-1);
+}
+
+/* To hide the toggler button's bottom shadow. */
+.sentence-index .search-panel-toggler::after {
+    width: 110%;
+    height: 30%;
+    content: ' ';
+    display: inline-block;
+    position: absolute;
+    right: -5%;
+    background: var(--color-1-light);
+    margin-top: 70%;
+}
+
+.sentence-index .search-panel input,
+.sentence-index .search-panel input + button {
     border-radius: 0;
     line-height: .5rem;
     height: 1.5rem;
     margin: 0.25rem 3rem 0.25rem 1rem;
 }
 
-.sentence-index .search-fields-wrap input + button {
+.sentence-index .search-panel input + button {
     position: absolute;
     margin: 0.25rem 0 0 -3rem;
     border-color: transparent;
     background: var(--color-1);
 }
-.sentence-index .search-fields-wrap input + button:hover {
+.sentence-index .search-panel input + button:hover {
     outline: 1px solid var(--color-1-dark);
     background: var(--color-1);
 }

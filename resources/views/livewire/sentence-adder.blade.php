@@ -9,6 +9,7 @@
             <input type="text" class="searched-group mr-5"
                 wire:model="searchedGroup"
                 wire:keydown.enter="createSentence"
+                placeholder="Type a word here to associate"
             >
 
             {{-- Dropdown that shows groups matching the search string --}}
@@ -119,96 +120,90 @@
                         </div>
                     @endforeach
 
-                    <div class="sen-trans-add-btn">
-                        <button class="button"
-                            wire:click="addAnotherSenTrans({{ $sentenceIndex }})"
-                        >Add another translation</button>
-                    </div>
+                    <button class="button ml-24"
+                        wire:click="addAnotherSenTrans({{ $sentenceIndex }})"
+                    >Add another translation</button>
                 </div>
 
                 <div class="flex flex-row">
                     <div class="w-1/2 mr-8">
 
-                        <div class="mb-5">
-                            <label class="input-label-set">
-                                <span>Context</span>
-                                <input type="text"
-                                    wire:model="inputs.{{ $sentenceIndex }}.context" wire:keydown.enter="createSentence"
-                                >
-                                @error ('inputs.'.$sentenceIndex.'.context')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </label>
+                        <label class="input-label-set">
+                            <span>Context</span>
+                            <input type="text"
+                                wire:model="inputs.{{ $sentenceIndex }}.context" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.'.$sentenceIndex.'.context')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
 
-                            <label class="input-label-set">
-                                <span>Subcontext</span>
-                                <input type="text"
-                                    wire:model.lazy="inputs.{{ $sentenceIndex }}.subcontext" wire:keydown.enter="createSentence"
-                                >
-                                @error ('inputs.'.$sentenceIndex.'.subcontext')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </label>
-                        </div>
+                        <label class="input-label-set">
+                            <span>Subcontext</span>
+                            <input type="text"
+                                wire:model.lazy="inputs.{{ $sentenceIndex }}.subcontext" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.'.$sentenceIndex.'.subcontext')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
 
-                        <div>
-                            <label class="input-label-set">
-                                <span>Project</span>
-                                <input type="text"
-                                    wire:model.lazy="inputs.{{ $sentenceIndex }}.project" wire:keydown.enter="createSentence"
-                                >
-                                @error ('inputs.'.$sentenceIndex.'.project')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                                @if ($canShowProjectDropdown)
-                                    <span class="dropdown" style="margin-top: 1.5rem; margin-left: 6rem;">
+                        <label class="input-label-set">
+                            <span>Project</span>
+                            <input type="text"
+                                wire:model.lazy="inputs.{{ $sentenceIndex }}.project" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.'.$sentenceIndex.'.project')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                            @if ($canShowProjectDropdown)
+                                <span class="dropdown" style="margin-top: 1.5rem; margin-left: 6rem;">
 
-                                        <button class="button" style="float: right;"
-                                            wire:click="toggleProjectDropdown(0)"
-                                        >&times;</button>
+                                    <button class="button" style="float: right;"
+                                        wire:click="toggleProjectDropdown(0)"
+                                    >&times;</button>
 
-                                        @foreach ($projects as $project)
-                                            @if ($project)
-                                                <button class="dropdown-option"
-                                                    wire:click="selectProject({{ $sentenceIndex }}, '{{ $project }}')"
-                                                >{{ $project }}</button>
-                                            @endif
-                                        @endforeach
+                                    @foreach ($projects as $project)
+                                        @if ($project)
+                                            <button class="dropdown-option"
+                                                wire:click="selectProject({{ $sentenceIndex }}, '{{ $project }}')"
+                                            >{{ $project }}</button>
+                                        @endif
+                                    @endforeach
 
-                                    </span>
-                                @endif
-                            </label>
+                                </span>
+                            @endif
+                        </label>
 
-                            <label class="input-label-set">
-                                <span>Link 1</span>
-                                <input type="url"
-                                    wire:model.lazy="inputs.{{ $sentenceIndex }}.link1" wire:keydown.enter="createSentence"
-                                >
-                                @error ('inputs.'.$sentenceIndex.'.link1')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </label>
+                        <label class="input-label-set">
+                            <span>Link 1</span>
+                            <input type="url"
+                                wire:model.lazy="inputs.{{ $sentenceIndex }}.link1" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.'.$sentenceIndex.'.link1')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
 
-                            <label class="input-label-set">
-                                <span>Link 2</span>
-                                <input type="url"
-                                    wire:model.lazy="inputs.{{ $sentenceIndex }}.link2" wire:keydown.enter="createSentence"
-                                >
-                                @error ('inputs.'.$sentenceIndex.'.link2')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </label>
+                        <label class="input-label-set">
+                            <span>Link 2</span>
+                            <input type="url"
+                                wire:model.lazy="inputs.{{ $sentenceIndex }}.link2" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.'.$sentenceIndex.'.link2')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
 
-                            <label class="input-label-set">
-                                <span>Link 3</span>
-                                <input type="url"
-                                    wire:model.lazy="inputs.{{ $sentenceIndex }}.link3" wire:keydown.enter="createSentence"
-                                >
-                                @error ('inputs.'.$sentenceIndex.'.link3')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </label>
-                        </div>
+                        <label class="input-label-set">
+                            <span>Link 3</span>
+                            <input type="url"
+                                wire:model.lazy="inputs.{{ $sentenceIndex }}.link3" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.'.$sentenceIndex.'.link3')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
                     </div>
 
                     <div class="w-1/2 ml-8">
@@ -256,17 +251,15 @@
         @endforeach
 
         <p class="text-center">
-            <button class="button emerald" wire:click="addAnotherSentence">Add another sentence</button>
+            <button class="button" wire:click="addAnotherSentence">Add another sentence</button>
         </p>
 
 
 
-        <p>
-            <button class="button"
-                wire:click="createSentence"
-                @empty($inputs[0]['sourceText']) disabled @endempty
-            >Confirm</button>
-        </p>
+        <button class="button emerald block w-1/2 mt-4 mx-auto"
+            wire:click="createSentence"
+            @empty($inputs[0]['sourceText']) disabled @endempty
+        >Confirm & add sentence(s)</button>
 
         <p>Status: <span class="{{ $status['type'] }}">{{ $status['text'] }}<span></p>
 
