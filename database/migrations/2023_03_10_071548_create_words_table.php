@@ -27,7 +27,7 @@ class CreateWordsTable extends Migration
                     ->cascadeOnUpdate()
                     ->restrictOnDelete();
 
-            $table->foreignId('group_id')
+            $table->foreignId('cluster_id')
                     ->nullable()
                     ->constrained()
                     ->cascadeOnUpdate()

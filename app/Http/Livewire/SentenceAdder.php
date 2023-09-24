@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Group;
+use App\Models\Cluster;
 use App\Models\Sentence;
 use App\Models\SentenceTranslation;
 use App\Models\Word;
@@ -16,16 +16,16 @@ class SentenceAdder extends Component
     public $inputs = [];
 
     // 
-    private $allGroups;
+    private $allClusters;
 
-    private $filteredGroups;
+    private $filteredClusters;
 
-    // The IDs of the associated groups.
-    public $chosenGroupIds = [];
+    // The IDs of the associated clusters.
+    public $chosenClusterIds = [];
 
 
 
-    public $canShowGroupDropdown = false;
+    public $canShowClusterDropdown = false;
 
 
 
@@ -33,15 +33,15 @@ class SentenceAdder extends Component
 
 
 
-    // This string is actually matched with both words and groups. So,
-    // this will help the user find relevant groups easily regardless of
-    // which from they search for. For example, the group 'die' would be
+    // This string is actually matched with both words and clusters. So,
+    // this will help the user find relevant clusters easily regardless of
+    // which from they search for. For example, the cluster 'die' would be
     // shown regardless of which of these words the user searches: 'die',
     // 'dying', 'death'.
-    public $searchedGroup;
+    public $searchedCluster;
 
     protected $queryString = [
-        'searchedGroup' => ['except' => '', 'as' => 'af-group'],
+        'searchedCluster' => ['except' => '', 'as' => 'af-cluster'],
     ];
 
 
@@ -86,8 +86,8 @@ class SentenceAdder extends Component
         'inputs.*.note' => 'nullable|string',
         'inputs.*.noteType' => 'required|in:Note,Reference',
         'inputs.*.needsRevision' => 'required|boolean',
-        'chosenGroupIds' => 'required|array',
-        'chosenGroupIds.*' => 'numeric',
+        'chosenClusterIds' => 'required|array',
+        'chosenClusterIds.*' => 'numeric',
     ];
 
 
@@ -128,8 +128,8 @@ class SentenceAdder extends Component
                 'needs_revision' => $sentence['needsRevision'],
             ]);
 
-            // Groups are associated.
-            $newSentence->groups()->attach( $validatedData['chosenGroupIds'] );
+            // Clusters are associated.
+            $newSentence->clusters()->attach( $validatedData['chosenClusterIds'] );
 
             // Sentence translations are created and associated with the
             // sentence.
@@ -165,29 +165,29 @@ class SentenceAdder extends Component
 
 
 
-    // The selected group's ID is stored in an array.
-    public function associateGroup($id)
+    // The selected cluster's ID is stored in an array.
+    public function associateCluster($id)
     {
-        array_push($this->chosenGroupIds, $id);
-        $this->chosenGroupIds = array_unique($this->chosenGroupIds);
+        array_push($this->chosenClusterIds, $id);
+        $this->chosenClusterIds = array_unique($this->chosenClusterIds);
 
-        $this->reset('searchedGroup');
+        $this->reset('searchedCluster');
 
-        // Used for focusing the group input field.
-        $this->emit('sentence-adder-group-associated');
+        // Used for focusing the cluster input field.
+        $this->emit('sentence-adder-cluster-associated');
     }
 
-    // The group's ID is removed from the array.
-    public function dissociateGroup($id)
+    // The cluster's ID is removed from the array.
+    public function dissociateCluster($id)
     {
-        if (in_array($id, $this->chosenGroupIds)) {
+        if (in_array($id, $this->chosenClusterIds)) {
             unset(
-                $this->chosenGroupIds[ array_search($id, $this->chosenGroupIds) ]
+                $this->chosenClusterIds[ array_search($id, $this->chosenClusterIds) ]
             );
         }
 
-        // Used for focusing the group input field.
-        $this->emit('sentence-adder-group-dissociated');
+        // Used for focusing the cluster input field.
+        $this->emit('sentence-adder-cluster-dissociated');
     }
 
 
@@ -276,40 +276,40 @@ class SentenceAdder extends Component
         $this->canShowProjectDropdown = $canShow === 1 ? true : false;
     }
 
-    public function toggleGroupDropdown($canShow = 0)
+    public function toggleClusterDropdown($canShow = 0)
     {
-        $this->canShowGroupDropdown = $canShow === 1 ? true : false;
+        $this->canShowClusterDropdown = $canShow === 1 ? true : false;
     }
 
 
 
-    // Potential, existing groups are suggested to be associated. This
+    // Potential, existing clusters are suggested to be associated. This
     // works by matching words from the sentence and then displaying a
-    // list of groups that those words belong to.
-    public function autosuggestGroups()
+    // list of clusters that those words belong to.
+    public function autosuggestClusters()
     {
         foreach ($this->inputs as $sentence) {
 
             $wordsInSentence = explode(' ', strtolower($sentence['sourceText']));
 
-            $suggestedGroupIds = [];
+            $suggestedClusterIds = [];
 
-            // The group IDs for all the matching words are stored in an
+            // The cluster IDs for all the matching words are stored in an
             // array.
             $wordsinDb = Word::whereIn('en', $wordsInSentence)->get();
             foreach ($wordsinDb as $word) {
 
-                // Some words may not exist in any group yet.
-                if ($word->group) {
-                    array_push($suggestedGroupIds, $word->group->id);
+                // Some words may not exist in any cluster yet.
+                if ($word->cluster) {
+                    array_push($suggestedClusterIds, $word->cluster->id);
                 }
 
             }
 
-            // IDs for manually chosen groups and autosuggestd groups are
+            // IDs for manually chosen clusters and autosuggestd clusters are
             // merged. Duplicated are removed.
-            $this->chosenGroupIds = array_unique(
-                array_merge($this->chosenGroupIds, $suggestedGroupIds)
+            $this->chosenClusterIds = array_unique(
+                array_merge($this->chosenClusterIds, $suggestedClusterIds)
             );
 
         }
@@ -319,38 +319,38 @@ class SentenceAdder extends Component
 
     /*
         When a string is typed, its match is searched in both word en and
-        group titles (as opposed to in group titles only) but the group is
+        cluster titles (as opposed to in cluster titles only) but the cluster is
         what's shown in the dropdown in the end.
 
         This is done for the sake of user convenience. This allows the
-        user to find both exact word matches and related group matches.
+        user to find both exact word matches and related cluster matches.
         For example, let's assume that a sentence contains the word 'dying'
-        and that it exists in the 'die' group. Now, if the user didn't
-        already know which group to search for, they'd type 'dying' and
-        wouldn't find any group. The current implementation solves this
+        and that it exists in the 'die' cluster. Now, if the user didn't
+        already know which cluster to search for, they'd type 'dying' and
+        wouldn't find any cluster. The current implementation solves this
         problem by showing the user a union of results obtained by combining
-        both word and group matches. So, if the user now types 'dying', its
-        group is fetched under the hood and 'die' is displayed to the user.
+        both word and cluster matches. So, if the user now types 'dying', its
+        cluster is fetched under the hood and 'die' is displayed to the user.
     */
     public function applySearchFilters()
     {
-        if ($this->searchedGroup) {
+        if ($this->searchedCluster) {
 
-            // A list of groups whose own titles match the search string.
-            $groupsFromGroup = Group::orderBy('title')
-                            ->where('title', 'like', $this->searchedGroup.'%')
+            // A list of clusters whose own titles match the search string.
+            $clustersFromCluster = Cluster::orderBy('title')
+                            ->where('title', 'like', $this->searchedCluster.'%')
                             ->get();
 
-            // A list of groups whose words match the search string.
-            $groupsFromWord = collect([]);
+            // A list of clusters whose words match the search string.
+            $clustersFromWord = collect([]);
             $matchedWords = Word::orderBy('en')
-                            ->where('en', 'like', $this->searchedGroup.'%')
+                            ->where('en', 'like', $this->searchedCluster.'%')
                             ->get();
             foreach ($matchedWords as $word) {
 
-                // Some words may not exist in any group yet.
-                if ($word->group) {
-                    $groupsFromWord = $groupsFromWord->concat([$word->group]);
+                // Some words may not exist in any cluster yet.
+                if ($word->cluster) {
+                    $clustersFromWord = $clustersFromWord->concat([$word->cluster]);
                 }
 
             }
@@ -359,13 +359,13 @@ class SentenceAdder extends Component
 
             // These need to be (empty) collections so they don't throw errors
             // when merged (or when properties are used in the view).
-            $groupsFromGroup = collect([]);
-            $groupsFromWord = collect([]);
+            $clustersFromCluster = collect([]);
+            $clustersFromWord = collect([]);
 
         }
 
-        // Groups from both sides are merged. Duplicates are removed.
-        $this->filteredGroups = $groupsFromGroup->concat($groupsFromWord)
+        // Clusters from both sides are merged. Duplicates are removed.
+        $this->filteredClusters = $clustersFromCluster->concat($clustersFromWord)
                                                 ->unique();
     }
 
@@ -376,8 +376,8 @@ class SentenceAdder extends Component
     public function checkDropdownToggling($whichDropdown = 'all')
     {
 
-        if ($whichDropdown === 'group' || $whichDropdown === 'all') {
-            $this->canShowGroupDropdown = $this->searchedGroup ? true : false;
+        if ($whichDropdown === 'cluster' || $whichDropdown === 'all') {
+            $this->canShowClusterDropdown = $this->searchedCluster ? true : false;
         }
 
         if ($whichDropdown === 'project' || $whichDropdown === 'all') {
@@ -398,7 +398,7 @@ class SentenceAdder extends Component
     {
 
         // Input fields are cleared.
-        $this->reset('chosenGroupIds');
+        $this->reset('chosenClusterIds');
 
         foreach (array_keys($sentence) as $key) {
 
@@ -415,7 +415,7 @@ class SentenceAdder extends Component
         // Autosuggestion doesn't trigger automatically (probably because
         // the values were set internally), so the function needs to be
         // called..
-        $this->autosuggestGroups();
+        $this->autosuggestClusters();
 
     }
 
@@ -458,17 +458,17 @@ class SentenceAdder extends Component
     public function updatedInputs()
     {
         if ($this->canEnableAutosuggestion) {
-            $this->autosuggestGroups();
+            $this->autosuggestClusters();
         }
     }
 
 
 
-    // The dropdown's visibility needs to be checked every time the group
+    // The dropdown's visibility needs to be checked every time the cluster
     // search string is modified.
-    public function updatedSearchedGroup()
+    public function updatedSearchedCluster()
     {
-        $this->checkDropdownToggling('group');
+        $this->checkDropdownToggling('cluster');
     }
 
 
@@ -489,7 +489,7 @@ class SentenceAdder extends Component
     public function render()
     {
 
-        $this->allGroups = Group::orderBy('title')->pluck('title', 'id');
+        $this->allClusters = Cluster::orderBy('title')->pluck('title', 'id');
 
         $this->applySearchFilters();
 
@@ -497,8 +497,8 @@ class SentenceAdder extends Component
         $this->projects = Sentence::groupBy('project')->pluck('project');
 
         return view('livewire.sentence-adder', [
-            'allGroups' => $this->allGroups,
-            'filteredGroups' => $this->filteredGroups,
+            'allClusters' => $this->allClusters,
+            'filteredClusters' => $this->filteredClusters,
         ]);
 
     }

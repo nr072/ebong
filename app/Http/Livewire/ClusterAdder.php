@@ -4,18 +4,18 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Word;
-use App\Models\Group;
+use App\Models\Cluster;
 
 use Illuminate\Support\Facades\Log;
 
-class GroupAdder extends Component
+class ClusterAdder extends Component
 {
 
     public $title = "";
 
-    // Once a word has been added to a group, it shouldn't show up as
-    // a suggestion to be added to another group.
-    private $grouplessWords = [];
+    // Once a word has been added to a cluster, it shouldn't show up as
+    // a suggestion to be added to another cluster.
+    private $clusterlessWords = [];
 
 
 
@@ -55,7 +55,7 @@ class GroupAdder extends Component
 
 
 
-    public function createGroup()
+    public function createCluster()
     {
 
         // Nice visual cue that things are starting.
@@ -64,29 +64,29 @@ class GroupAdder extends Component
 
         $validatedData = $this->validate();
 
-        // Group creation.
-        $newGroup = Group::create([
+        // Cluster creation.
+        $newCluster = Cluster::create([
             'title' => $validatedData['title'],
         ]);
 
-        // Selected words are included in the newly created group.
+        // Selected words are included in the newly created cluster.
         foreach ($validatedData['chosenWordIds'] as $id) {
             $word = Word::find($id);
-            $word->group_id = $newGroup->id;
+            $word->cluster_id = $newCluster->id;
             $word->save();
         }
 
         // Input fields are cleared.
         $this->reset();
 
-        if ($newGroup) {
+        if ($newCluster) {
 
             // Nice visual cue again.
             $this->status['type'] = 'success';
-            $this->status['text'] = 'New group created';
+            $this->status['text'] = 'New cluster created';
 
             // An event is emitted in case another component needs to update.
-            $this->emitTo('group-index', 'groupCreated');
+            $this->emitTo('cluster-index', 'clusterCreated');
 
         }
 
@@ -98,7 +98,7 @@ class GroupAdder extends Component
     public function applySearchFilters()
     {
         if ($this->searchedWord) {
-            $query = Word::where('group_id', null)
+            $query = Word::where('cluster_id', null)
                             ->where('en', 'like', $this->searchedWord.'%');
         } else {
             $query = Word::where('id', 0);
@@ -112,23 +112,23 @@ class GroupAdder extends Component
 
 
 
-    public function addWordToGroup($id)
+    public function addWordToCluster($id)
     {
         array_push($this->chosenWordIds, $id);
         $this->reset('searchedWord');
 
         // Used for focusing the assoc word input field.
-        $this->emit('word-added-to-group');
+        $this->emit('word-added-to-cluster');
     }
 
-    public function removeWordFromGroup($id)
+    public function removeWordFromCluster($id)
     {
         if (in_array($id, $this->chosenWordIds)) {
             unset($this->chosenWordIds[ array_search($id, $this->chosenWordIds) ]);
         }
 
         // Used for focusing the assoc word input field.
-        $this->emit('word-removed-from-group');
+        $this->emit('word-removed-from-cluster');
     }
 
 
@@ -142,15 +142,15 @@ class GroupAdder extends Component
 
     public function render()
     {
-        $this->grouplessWords = Word::orderBy('en')
-                                    ->where('group_id', null)
+        $this->clusterlessWords = Word::orderBy('en')
+                                    ->where('cluster_id', null)
                                     ->select('id', 'en')
                                     ->get();
 
         $this->applySearchFilters();
 
-        return view('livewire.group-adder', [
-            'grouplessWords' => $this->grouplessWords,
+        return view('livewire.cluster-adder', [
+            'clusterlessWords' => $this->clusterlessWords,
             'filteredWords' => $this->filteredWords,
         ]);
     }

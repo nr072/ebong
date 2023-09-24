@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome');
 
 Route::view('/words', 'words')->name('words-page');
-Route::view('/groups', 'groups')->name('groups-page');
+Route::view('/clusters', 'clusters')->name('clusters-page');
 Route::view('/sentences', 'sentence-index')->name('sentence-index-page');
 Route::view('/sentences/add', 'sentence-add')->name('sentence-add-page');

@@ -3,12 +3,12 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Group;
+use App\Models\Cluster;
 use App\Models\Word;
 
 use Illuminate\Support\Facades\Log;
 
-class GroupEditor extends Component
+class ClusterEditor extends Component
 {
 
     public $canShowEditor = false;
@@ -18,8 +18,8 @@ class GroupEditor extends Component
 
 
 
-    // The group that's being edited.
-    public $group = [];
+    // The cluster that's being edited.
+    public $cluster = [];
 
 
 
@@ -32,10 +32,10 @@ class GroupEditor extends Component
 
 
 
-    // Words that can be added to this group. These are the ones shown in
+    // Words that can be added to this cluster. These are the ones shown in
     // the dropdown.
     // These won't be all words because some may already be associated with
-    // this group or other groups and some may get filtered out based on
+    // this cluster or other clusters and some may get filtered out based on
     // the search string. So, basically:
     //   filtered = all words - already associated - filtered out
     private $filteredWords = [];
@@ -59,7 +59,7 @@ class GroupEditor extends Component
 
     // Certain functions are executed when certian events have been emitted.
     protected $listeners = [
-        'editButtonClicked' => 'editGroup',
+        'editButtonClicked' => 'editCluster',
     ];
 
 
@@ -81,7 +81,7 @@ class GroupEditor extends Component
     {
         $this->reset();
         $this->toggleEditor(0);
-        $this->emitTo('group-index', 'editorClosed');
+        $this->emitTo('cluster-index', 'editorClosed');
     }
 
 
@@ -105,15 +105,15 @@ class GroupEditor extends Component
 
 
 
-    // The editor is displayed with the selected group's data in its
+    // The editor is displayed with the selected cluster's data in its
     // input fields.
-    public function editGroup(Group $groupToEdit)
+    public function editCluster(Cluster $clusterToEdit)
     {
-        $this->group = $groupToEdit;
+        $this->cluster = $clusterToEdit;
 
-        // IDs of words already associated with the group are added to the
+        // IDs of words already associated with the cluster are added to the
         // ID array so that they can be updated if necessary.
-        $alreadyAssocWordIds = $this->group->words->pluck('id')->toArray();
+        $alreadyAssocWordIds = $this->cluster->words->pluck('id')->toArray();
         $this->chosenWordIds = array_unique(
             array_merge($this->chosenWordIds, $alreadyAssocWordIds)
         );
@@ -125,13 +125,13 @@ class GroupEditor extends Component
 
 
     // When the user types in the search field, matching results are shown
-    // excluding words that are already associated with this group or other
-    // groups.
+    // excluding words that are already associated with this cluster or other
+    // clusters.
     public function applySearchFilters()
     {
         $query = Word::orderBy('en')
                         ->whereNotIn('id', $this->chosenWordIds)
-                        ->where('group_id', null);
+                        ->where('cluster_id', null);
 
         if ($this->searched) {
             $query = $query->where('en', 'like', $this->searched.'%');
@@ -158,7 +158,7 @@ class GroupEditor extends Component
 
         $this->checkDropdownToggling();
 
-        $this->emitTo('group-index', 'wordAssociated');
+        $this->emitTo('cluster-index', 'wordAssociated');
     }
 
     // The word's ID is removed from the array.
@@ -170,7 +170,7 @@ class GroupEditor extends Component
             );
         }
 
-        $this->emitTo('group-index', 'wordDissociated');
+        $this->emitTo('cluster-index', 'wordDissociated');
     }
 
 
@@ -189,7 +189,7 @@ class GroupEditor extends Component
     {
         $vData = $this->validate();
 
-        $alreadyAssocWordIds = $this->group->words->pluck('id')->toArray();
+        $alreadyAssocWordIds = $this->cluster->words->pluck('id')->toArray();
 
         /*
             First, associations are removed for the words that have been
@@ -203,7 +203,7 @@ class GroupEditor extends Component
         $IdsToRemove = array_diff($alreadyAssocWordIds, $vData['chosenWordIds']);
         foreach ($IdsToRemove as $id) {
             $word = Word::find($id);
-            $word->group_id = null;
+            $word->cluster_id = null;
             $word->save();
         }
 
@@ -211,13 +211,13 @@ class GroupEditor extends Component
         // the user.
         $IdsToAdd = array_diff($vData['chosenWordIds'], $alreadyAssocWordIds);
         foreach ($IdsToAdd as $id) {
-            $this->group->words()->save( Word::find($id) );
+            $this->cluster->words()->save( Word::find($id) );
         }
 
         $this->reset();
 
-        $this->emitTo('group-index', 'groupUpdated');
-        $this->emitTo('group-index', 'editorClosed');
+        $this->emitTo('cluster-index', 'clusterUpdated');
+        $this->emitTo('cluster-index', 'editorClosed');
     }
 
 
@@ -240,13 +240,13 @@ class GroupEditor extends Component
 
     public function render()
     {
-        if ($this->group) {
+        if ($this->cluster) {
             $this->applySearchFilters();
         }
 
         $this->updateChosenWords();
 
-        return view('livewire.group-editor', [
+        return view('livewire.cluster-editor', [
             'words' => $this->filteredWords,
             'chosenWords' => $this->chosenWords,
         ]);

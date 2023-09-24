@@ -6,14 +6,14 @@
             wire:click="closeEditor"
         >&times;</button>
 
-        @if ($group)
+        @if ($cluster)
 
-            <h1>{{ $group->title }}</h1>
+            <h1>{{ $cluster->title }}</h1>
 
-            @if ($group->words->count() > 0)
-                <p class="mb-1">Words already associated with this group:</p>
+            @if ($cluster->words->count() > 0)
+                <p class="mb-1">Words already associated with this cluster:</p>
                 <ul class="mt-0">
-                    @foreach ($group->words as $word)
+                    @foreach ($cluster->words as $word)
                         <li>{{ $word->en }} <i>{{ $word->pos->short ?? '' }}</i></li>
                     @endforeach
                 </ul>

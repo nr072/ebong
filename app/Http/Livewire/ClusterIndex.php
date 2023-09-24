@@ -3,20 +3,20 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Group;
+use App\Models\Cluster;
 
 use Illuminate\Support\Facades\Log;
 
-class GroupIndex extends Component
+class ClusterIndex extends Component
 {
 
-    private $allGroups;
+    private $allClusters;
 
     private $paginCount = 10;
 
 
 
-    // When a group is being edited, all the edit buttons are hidden.
+    // When a cluster is being edited, all the edit buttons are hidden.
     public $isEditing = false;
 
 
@@ -25,16 +25,16 @@ class GroupIndex extends Component
     public $searched = '';
 
     protected $queryString = [
-        'searched' => ['except' => '', 'as' => 'group'],
+        'searched' => ['except' => '', 'as' => 'cluster'],
     ];
 
 
 
     // Certain functions are executed when certian events are emitted.
     protected $listeners = [
-        'groupCreated' => 'render',
+        'clusterCreated' => 'render',
         'editorClosed' => 'showEditButtons',
-        'groupUpdated' => 'render',
+        'clusterUpdated' => 'render',
     ];
 
 
@@ -42,13 +42,13 @@ class GroupIndex extends Component
     // Search filters (if any) are applied.
     public function applySearchFilters()
     {
-        $query = Group::orderBy('title');
+        $query = Cluster::orderBy('title');
         
         if ($this->searched) {
             $query = $query->where('title', 'like', '%'.$this->searched.'%');
         }
 
-        $this->allGroups = $query->paginate($this->paginCount);
+        $this->allClusters = $query->paginate($this->paginCount);
 
     }
 
@@ -61,15 +61,15 @@ class GroupIndex extends Component
 
 
 
-    public function editGroup($id)
+    public function editCluster($id)
     {
         $this->toggleEditButtons(0);
-        $this->emitTo('group-editor', 'editButtonClicked', $id);
+        $this->emitTo('cluster-editor', 'editButtonClicked', $id);
     }
 
 
 
-    // When a group is being edited, all the edit buttons are hidden.
+    // When a cluster is being edited, all the edit buttons are hidden.
     // When the editor is closed, they are shown again.
     private function toggleEditButtons($canShow = 0)
     {
@@ -92,8 +92,8 @@ class GroupIndex extends Component
     {
         $this->applySearchFilters();
 
-        return view('livewire.group-index', [
-            'groups' => $this->allGroups,
+        return view('livewire.cluster-index', [
+            'clusters' => $this->allClusters,
         ]);
     }
 

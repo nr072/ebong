@@ -533,7 +533,7 @@ span.label {
    ------------------------------------------------------------------ */
 
 .word-adder .matched-list,
-.group-adder .groupless-word-list {
+.cluster-adder .clusterless-word-list {
     border: 1px solid #ccc;
     margin-top: 0;
     padding: 0.5em;
@@ -630,7 +630,7 @@ span.label {
 
 .cell-flags,
 .cell-text,
-.cell-group,
+.cell-cluster,
 .cell-project,
 .cell-buttons {
     text-align: center;
@@ -644,11 +644,11 @@ th.cell-flags {
     min-width: 5.5em;
 }
 
-td.cell-group {
+td.cell-cluster {
     font-variant: small-caps;
 }
 
-.cell-group > div {
+.cell-cluster > div {
     line-height: 1em;
 }
 

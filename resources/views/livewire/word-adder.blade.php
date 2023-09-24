@@ -36,18 +36,18 @@
             @enderror
 
             <label class="input-label-set">
-                <span class="input-label">Group</span>
-                <select wire:model="newWordGroup">
-                    <option value="0">Select group</option>
-                    @foreach ($groups as $group)
-                        <option value="{{ $group->id }}">
-                            {{ $group->title }}
-                            ({{ $group->words->count() }} word{{ $group->words->count() > 1 ? 's' : '' }})
+                <span class="input-label">Cluster</span>
+                <select wire:model="newWordCluster">
+                    <option value="0">Select cluster</option>
+                    @foreach ($clusters as $cluster)
+                        <option value="{{ $cluster->id }}">
+                            {{ $cluster->title }}
+                            ({{ $cluster->words->count() }} word{{ $cluster->words->count() > 1 ? 's' : '' }})
                         </option>
                     @endforeach
                 </select>
             </label>
-            @error ('newWordGroup')
+            @error ('newWordCluster')
                 <span class="error">{{ $message }}</span>
             @enderror
 
@@ -67,8 +67,8 @@
                             @if ($word->pos)
                                 <small><i>{{ $word->pos->short }}</i></small>
                             @endif
-                            @if ($word->group)
-                                (Group: {{ $word->group->title }})
+                            @if ($word->cluster)
+                                (Cluster: {{ $word->cluster->title }})
                             @endif
                         </li>
                     @endforeach
@@ -114,8 +114,8 @@
                             @if ($word->pos)
                                 <small><i>{{ $word->pos->short }}</i></small>
                             @endif
-                            @if ($word->group)
-                                (Group: {{ $word->group->title }})
+                            @if ($word->cluster)
+                                (Cluster: {{ $word->cluster->title }})
                             @endif
                         </span>
                     </li>

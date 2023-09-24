@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Sentence;
 use App\Models\Pos;
-use App\Models\Group;
+use App\Models\Cluster;
 
 class Word extends Model
 {
@@ -15,7 +15,7 @@ class Word extends Model
     protected $fillable = [
         'en',
         'pos_id',
-        'group_id',
+        'cluster_id',
     ];
 
     public function sentences()
@@ -28,8 +28,8 @@ class Word extends Model
         return $this->belongsTo(Pos::class);
     }
 
-    public function group()
+    public function cluster()
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(Cluster::class);
     }
 }

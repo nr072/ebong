@@ -1,14 +1,14 @@
-<section class="group-adder half-width-section">
+<section class="cluster-adder half-width-section">
 
-    <h1>Add a group</h1>
+    <h1>Add a cluster</h1>
 
-    @if ($grouplessWords->count() > 0)
+    @if ($clusterlessWords->count() > 0)
 
         <label class="input-label-set">
             <span class="input-label required">Title</span>
             <input type="text"
-                wire:model="title" wire:keydown.enter="createGroup"
-                placeholder="Enter group title here"
+                wire:model="title" wire:keydown.enter="createCluster"
+                placeholder="Enter cluster title here"
                 required
             >
             @if ($title)
@@ -24,7 +24,7 @@
         <label class="input-label-set">
             <span class="input-label required">Word(s)</span>
             <input type="text" class="searched-word"
-                wire:model="searchedWord" wire:keydown.enter="createGroup"
+                wire:model="searchedWord" wire:keydown.enter="createCluster"
                 placeholder="Type to search words"
                 required
             >
@@ -41,7 +41,7 @@
             <div class="dropdown" style="margin-left: 10rem; margin-top: -0.5em;">
                 @foreach ($filteredWords as $word)
                     @if (!in_array($word->id, $chosenWordIds, true))
-                        <button class="dropdown-option" wire:click="addWordToGroup({{ $word->id }})">
+                        <button class="dropdown-option" wire:click="addWordToCluster({{ $word->id }})">
                             {{ $word->en }}
                             @if ($word->pos)
                                 <small><i>{{ $word->pos->short }}</i></small>
@@ -58,9 +58,9 @@
             <div class="mt-4">Already added words:
             @foreach ($chosenWordIds as $id)
                 <span class="pill">
-                    {{ $grouplessWords->find($id)->en }}
+                    {{ $clusterlessWords->find($id)->en }}
                     <button class="button"
-                        wire:click="removeWordFromGroup({{ $id }})"
+                        wire:click="removeWordFromCluster({{ $id }})"
                     >&times;</button>
                 </span>
             @endforeach
@@ -69,12 +69,12 @@
 
 
 
-        {{-- A list of words that don't belong to any groups yet. --}}
-        @if ($grouplessWords->count() > 0)
+        {{-- A list of words that don't belong to any clusters yet. --}}
+        @if ($clusterlessWords->count() > 0)
             <div class="my-8">
                 <span>Available words:</span>
-                <ul class="groupless-word-list">
-                    @foreach ($grouplessWords as $word)
+                <ul class="clusterless-word-list">
+                    @foreach ($clusterlessWords as $word)
                         <li>
                             {{ $word->en }}
                             @if ($word->pos)
@@ -89,7 +89,7 @@
 
 
         <button class="button emerald block w-1/2 mt-4 mx-auto"
-            wire:click="createGroup"
+            wire:click="createCluster"
         >Confirm</button>
 
         <p>Status: <span class="{{ $status['type'] }}">{{ $status['text'] }}</span></p>
@@ -107,8 +107,8 @@
                         document.querySelector(".searched-word")?.focus();
                     };
 
-                    Livewire.on("word-added-to-group", focusWordField);
-                    Livewire.on("word-removed-from-group", focusWordField);
+                    Livewire.on("word-added-to-cluster", focusWordField);
+                    Livewire.on("word-removed-from-cluster", focusWordField);
 
                 });
 

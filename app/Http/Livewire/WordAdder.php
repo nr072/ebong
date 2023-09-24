@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Group;
+use App\Models\Cluster;
 use App\Models\Pos;
 use App\Models\Word;
 
@@ -14,10 +14,10 @@ class WordAdder extends Component
 
     public $newWordEn = '';
     public $newWordPos = '';
-    public $newWordGroup = '';
+    public $newWordCluster = '';
 
-    // Used for showing a list of existing groups to add this new word to.
-    private $allGroups = [];
+    // Used for showing a list of existing clusters to add this new word to.
+    private $allClusters = [];
 
     // String typed in the index to see matching words.
     public $searchedEn = '';
@@ -35,7 +35,7 @@ class WordAdder extends Component
     protected $rules = [
         'newWordEn' => 'required|string|max:50',
         'newWordPos' => 'nullable|exists:poses,id',
-        'newWordGroup' => 'nullable|exists:groups,id',
+        'newWordCluster' => 'nullable|exists:clusters,id',
     ];
 
 
@@ -81,10 +81,10 @@ class WordAdder extends Component
                     ? null
                     : trim( $vData['newWordPos'] )
             ),
-            'group_id' => (
-                $vData['newWordGroup'] === ''
+            'cluster_id' => (
+                $vData['newWordCluster'] === ''
                     ? null
-                    : trim( $vData['newWordGroup'] )
+                    : trim( $vData['newWordCluster'] )
             ),
         ]);
 
@@ -142,7 +142,7 @@ class WordAdder extends Component
 
     public function render()
     {
-        $this->allGroups = Group::orderBy('title')->get();
+        $this->allClusters = Cluster::orderBy('title')->get();
 
         $this->applySearchFilters();
 
@@ -150,7 +150,7 @@ class WordAdder extends Component
             'words' => $this->words,
             'poses' => Pos::pluck('en', 'id'),
             'wordsMatchingSearched' => $this->wordsMatchingSearched,
-            'groups' => $this->allGroups,
+            'clusters' => $this->allClusters,
         ]);
     }
 

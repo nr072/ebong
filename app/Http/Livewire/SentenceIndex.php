@@ -19,14 +19,14 @@ class SentenceIndex extends Component
     public $searchedSourceText = '';
     public $searchedTargetText = '';
     public $searchedContext = '';
-    public $searchedGroup = '';
+    public $searchedCluster = '';
     public $searchedProject = '';
 
     protected $queryString = [
         'searchedSourceText' => ['except' => '', 'as' => 'source'],
         'searchedTargetText' => ['except' => '', 'as' => 'bn'],
         'searchedContext' => ['except' => '', 'as' => 'context'],
-        'searchedGroup' => ['except' => '', 'as' => 'group'],
+        'searchedCluster' => ['except' => '', 'as' => 'cluster'],
         'searchedProject' => ['except' => '', 'as' => 'project'],
     ];
 
@@ -57,8 +57,8 @@ class SentenceIndex extends Component
             $this->reset('searchedTargetText');
         } else if ($column === 'context') {
             $this->reset('searchedContext');
-        } else if ($column === 'group') {
-            $this->reset('searchedGroup');
+        } else if ($column === 'cluster') {
+            $this->reset('searchedCluster');
         } else if ($column === 'project') {
             $this->reset('searchedProject');
         }
@@ -119,10 +119,10 @@ class SentenceIndex extends Component
             });
         }
 
-        // The associated groups exist in another table.
-        if ($this->searchedGroup !== '') {
-            $query = $query->whereHas('groups', function ($query){
-                        $query->where('text', 'like', '%'.$this->searchedGroup.'%');
+        // The associated clusters exist in another table.
+        if ($this->searchedCluster !== '') {
+            $query = $query->whereHas('clusters', function ($query){
+                        $query->where('text', 'like', '%'.$this->searchedCluster.'%');
             });
         }
 

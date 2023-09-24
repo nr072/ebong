@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Group;
+use App\Models\Cluster;
 use App\Models\SentenceTranslation;
 
 class Sentence extends Model
@@ -26,9 +26,9 @@ class Sentence extends Model
         'needs_revision',
     ];
 
-    public function groups()
+    public function clusters()
     {
-        return $this->belongsToMany(Group::class);
+        return $this->belongsToMany(Cluster::class);
     }
 
     public function translations()

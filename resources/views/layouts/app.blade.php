@@ -55,7 +55,7 @@
                     <a href="{{ route('words-page') }}">words</a>
                 </li>
                 <li>
-                    <a href="{{ route('groups-page') }}">groups</a>
+                    <a href="{{ route('clusters-page') }}">clusters</a>
                 </li>
                 <li>
                     <a href="{{ route('sentence-index-page') }}">sentence index</a>

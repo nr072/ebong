@@ -1,33 +1,33 @@
 <section class="half-width-section">
 
-    <h1>Groups</h1>
+    <h1>Clusters</h1>
 
     <label class="input-label-set">
         <span class="input-label">Title</span>
-        <input type="text" wire:model="searched" placeholder="Type to search groups">
+        <input type="text" wire:model="searched" placeholder="Type to search clusters">
         @if ($searched)
             <button class="button" wire:click="resetSearched">&times;</button>
         @endif
     </label>
 
-    @if ($groups->count() > 0)
+    @if ($clusters->count() > 0)
 
         <ul class="mt-4">
-            @foreach ($groups as $group)
+            @foreach ($clusters as $cluster)
 
                 <li class="mt-2">
 
-                    <span>{{ $group->title }}</span>
+                    <span>{{ $cluster->title }}</span>
 
                     <button class="button warning mb-0 ml-1"
-                        wire:click="editGroup({{ $group->id }})"
+                        wire:click="editCluster({{ $cluster->id }})"
                         @if ($isEditing) disabled @endif
                     >Edit</button>
 
-                    @if ($group->words()->count() > 0)
+                    @if ($cluster->words()->count() > 0)
                         <ul>
 
-                            @foreach ($group->words as $word)
+                            @foreach ($cluster->words as $word)
                                 <li>
                                     {{ $word->en }}
                                     @if ($word->pos)
@@ -44,11 +44,11 @@
             @endforeach
         </ul>
 
-        {{ $groups->links() }}
+        {{ $clusters->links() }}
 
     @else
 
-        <p>Status: No groups found</p>
+        <p>Status: No clusters found</p>
 
     @endif
     

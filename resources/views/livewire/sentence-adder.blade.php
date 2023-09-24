@@ -2,30 +2,30 @@
 
     <h1>Add a sentence</h1>
 
-    @if ($allGroups->count() > 0)
+    @if ($allClusters->count() > 0)
 
         <div>
             <span class="required">Associate with:</span>
-            <input type="text" class="searched-group mr-5"
-                wire:model="searchedGroup"
+            <input type="text" class="searched-cluster mr-5"
+                wire:model="searchedCluster"
                 wire:keydown.enter="createSentence"
                 placeholder="Type a word here to associate"
             >
 
-            {{-- Dropdown that shows groups matching the search string --}}
-            @if ($filteredGroups->count() > 0 && $canShowGroupDropdown)
+            {{-- Dropdown that shows clusters matching the search string --}}
+            @if ($filteredClusters->count() > 0 && $canShowClusterDropdown)
                 <div class="dropdown" style="margin-left: 7em;">
 
                     <button class="button" style="float: right;"
-                        wire:click="toggleGroupDropdown(0)"
+                        wire:click="toggleClusterDropdown(0)"
                     >&times;</button>
 
-                    @foreach ($filteredGroups as $group)
-                        @if (!in_array($group->id, $chosenGroupIds, true))
+                    @foreach ($filteredClusters as $cluster)
+                        @if (!in_array($cluster->id, $chosenClusterIds, true))
 
-                            <button class="dropdown-option" wire:click="associateGroup({{ $group->id }})">
-                                <b>{{ $group->title }}:</b>
-                                @foreach ($group->words as $word)
+                            <button class="dropdown-option" wire:click="associateCluster({{ $cluster->id }})">
+                                <b>{{ $cluster->title }}:</b>
+                                @foreach ($cluster->words as $word)
                                     <span>{{ $word->en }},</span>
                                 @endforeach
                             </button>
@@ -36,17 +36,17 @@
                 </div>
             @endif
 
-            {{-- Groups chosen for this sentence so far --}}
-            @if (sizeof($chosenGroupIds) > 0)
-                @foreach ($chosenGroupIds as $id)
+            {{-- Clusters chosen for this sentence so far --}}
+            @if (sizeof($chosenClusterIds) > 0)
+                @foreach ($chosenClusterIds as $id)
                     <span class="pill">
-                        {{ $allGroups[$id] }}
-                        <button class="button" wire:click="dissociateGroup({{ $id }})">&times;</button>
+                        {{ $allClusters[$id] }}
+                        <button class="button" wire:click="dissociateCluster({{ $id }})">&times;</button>
                     </span>
                 @endforeach
             @endif
         </div>
-        @error ('chosenGroupIds')
+        @error ('chosenClusterIds')
             <span class="error">{{ $message }}</span>
         @enderror
 
@@ -329,12 +329,12 @@
 
                 document.addEventListener("livewire:load", () => {
 
-                    const focusGroupField = () => {
-                        document.querySelector(".sentence-adder .searched-group")?.focus();
+                    const focusClusterField = () => {
+                        document.querySelector(".sentence-adder .searched-cluster")?.focus();
                     };
 
-                    Livewire.on("sentence-adder-group-associated", focusGroupField);
-                    Livewire.on("sentence-adder-group-dissociated", focusGroupField);
+                    Livewire.on("sentence-adder-cluster-associated", focusClusterField);
+                    Livewire.on("sentence-adder-cluster-dissociated", focusClusterField);
 
                 });
 
@@ -343,7 +343,7 @@
 
     @else
 
-        <p>Status: No groups found</p>
+        <p>Status: No clusters found</p>
 
     @endif
 

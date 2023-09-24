@@ -3,10 +3,10 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Group;
+use App\Models\Cluster;
 use App\Models\Sentence;
 
-class CreateGroupSentenceTable extends Migration
+class CreateClusterSentenceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,13 +15,13 @@ class CreateGroupSentenceTable extends Migration
      */
     public function up()
     {
-        Schema::create('group_sentence', function (Blueprint $table) {
+        Schema::create('cluster_sentence', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->foreignIdFor(Sentence::class)->constrained()
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
-            $table->foreignIdFor(Group::class)->constrained()
+            $table->foreignIdFor(Cluster::class)->constrained()
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
         });
@@ -34,6 +34,6 @@ class CreateGroupSentenceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group_sentence');
+        Schema::dropIfExists('cluster_sentence');
     }
 }

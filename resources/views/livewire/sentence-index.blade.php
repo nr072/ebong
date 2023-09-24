@@ -51,12 +51,12 @@
         <div class="my-2">
             <div>
                 <input type="text"
-                    wire:model="searchedGroup"
-                    placeholder="Type to filter associated group"
+                    wire:model="searchedCluster"
+                    placeholder="Type to filter associated cluster"
                 >
-                @if ($searchedGroup)
+                @if ($searchedCluster)
                     <button class="button input-clear-btn"
-                        wire:click="resetSearched('group')"
+                        wire:click="resetSearched('cluster')"
                         title="Click to clear searched string"
                     >&times;</button>
                 @endif
@@ -88,7 +88,7 @@
             <thead>
                 <tr>
                     <th class="cell-flags"></th>
-                    <th class="cell-group">Groups</th>
+                    <th class="cell-cluster">Clusters</th>
                     <th>Text</th>
                     <th class="cell-project">Project</th>
                     <th></th>
@@ -111,9 +111,9 @@
                                 @endif
                             </td>
 
-                            <td class="cell-group">
-                                @foreach ($sentence->groups as $group)
-                                    <div>{{ $group->title }}</div>
+                            <td class="cell-cluster">
+                                @foreach ($sentence->clusters as $cluster)
+                                    <div>{{ $cluster->title }}</div>
                                 @endforeach
                             </td>
 
