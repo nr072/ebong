@@ -14,6 +14,7 @@ class Sentence extends Model
     protected $fillable = [
         'text',
         'lang',
+        'stringKey',
         'context',
         'subcontext',
         'project',

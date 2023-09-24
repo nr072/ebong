@@ -76,6 +76,7 @@ class SentenceAdder extends Component
         'inputs.*.translations' => 'array',
         'inputs.*.translations.*.targetText' => 'nullable|string',
         'inputs.*.translations.*.targetLang' => 'nullable|string|max:6',
+        'inputs.*.stringKey' => 'nullable|max:200',
         'inputs.*.context' => 'nullable|max:200',
         'inputs.*.subcontext' => 'nullable|max:200',
         'inputs.*.project' => 'nullable|max:100',
@@ -115,6 +116,7 @@ class SentenceAdder extends Component
             $newSentence = Sentence::create([
                 'text' => trim( $sentence['sourceText'] ),
                 'lang' => trim( $sentence['sourceLang'] ),
+                'stringKey' => trim( $sentence['stringKey'] ),
                 'context' => trim( $sentence['context'] ),
                 'subcontext' => trim( $sentence['subcontext'] ),
                 'project' => trim( $sentence['project'] ),
@@ -224,6 +226,7 @@ class SentenceAdder extends Component
                         'targetLang' => 'bn',
                     ],
                 ],
+                'stringKey' => '',
                 'context' => '',
                 'subcontext' => '',
                 'project' => '',

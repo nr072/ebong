@@ -129,6 +129,16 @@
                     <div class="w-1/2 mr-8">
 
                         <label class="input-label-set">
+                            <span>String key</span>
+                            <input type="text"
+                                wire:model="inputs.{{ $sentenceIndex }}.stringKey" wire:keydown.enter="createSentence"
+                            >
+                            @error ('inputs.'.$sentenceIndex.'.stringKey')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
+
+                        <label class="input-label-set">
                             <span>Context</span>
                             <input type="text"
                                 wire:model="inputs.{{ $sentenceIndex }}.context" wire:keydown.enter="createSentence"

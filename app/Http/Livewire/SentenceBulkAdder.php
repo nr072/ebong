@@ -29,6 +29,7 @@ class SentenceBulkAdder extends Component
         '                "targetLang": "...",'."\n" .
         '            },'."\n" .
         '        ],'."\n" .
+        '        "stringKey": "...",'."\n" .
         '        "context": "...",'."\n" .
         '        "subcontext": "...",'."\n" .
         '        "project": "...",'."\n" .

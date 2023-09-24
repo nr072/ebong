@@ -21,6 +21,7 @@ class CreateSentencesTable extends Migration
             $table->text('text');
             $table->string('lang', 6)->default('en');
 
+            $table->string('stringKey', 200)->nullable();
             $table->string('context', 200)->nullable();
             $table->string('subcontext', 200)->nullable();
 

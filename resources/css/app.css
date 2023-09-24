@@ -224,15 +224,23 @@ h1 {
 
 
 
-.button[disabled] {
-    background: var(--color-1-lightest);
-    border-color: var(--color-1-lighter);
-    color: var(--color-1);
+.button {
+    border-color: var(--color-1);
 }
 .button:not([disabled]):hover {
     background: var(--color-1-light);
     border-color: var(--color-1-light);
     color: var(--color-1-darkest);
+}
+.button[disabled] {
+    background: var(--color-1-lightest);
+    border-color: var(--color-1-lighter);
+    color: var(--color-1);
+}
+.button[disabled]:hover {
+    background: var(--color-1-lightest);
+    border-color: var(--color-1-lighter);
+    color: var(--color-1);
 }
 
 
@@ -350,14 +358,6 @@ input[type="search" i]::-webkit-search-cancel-button {
 
 
 
-section.half-width-section {
-    width: 45%;
-    display: inline-block;
-    vertical-align: top;
-}
-
-
-
 .disp-b {
     display: block;
 }
@@ -366,6 +366,14 @@ section.half-width-section {
 
 .cursor-p {
     cursor: pointer;
+}
+
+
+
+section.half-width-section {
+    width: 45%;
+    display: inline-block;
+    vertical-align: top;
 }
 
 
@@ -433,13 +441,12 @@ span.label {
 
     .button {
         font-family: sans-serif;
-        @apply inline-block rounded px-3 pb-1 pt-1 my-1
+        color: var(--color-1-darkest);
+        @apply inline-block px-3 pb-1 pt-1 my-1
                 text-xs font-medium uppercase leading-normal
-                border border-gray-400
+                border
                 transition duration-150 ease-in-out
-                disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200
-                hover:bg-gray-300 
-                focus:outline-none focus:ring-0;
+                disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200;
     }
 
     .button.generic {
@@ -515,7 +522,7 @@ span.label {
     margin: 0;
     left: 0;
     bottom: 0;
-    box-shadow: 0px 0px 7px 0px rgb(0 0 0 / 65%);
+    box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 65%);
     z-index: var(--topbar-z-index);
     max-height: 50vh;
     transition: max-height 0.5s ease;
@@ -530,7 +537,7 @@ span.label {
     margin-top: -2em;
     background: var(--color-1-light);
     color: var(--color-1-darker);
-    box-shadow: 0px 0px 7px 0px rgb(0 0 0 / 55%);
+    box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 55%);
     z-index: var(--topbar-z-index);
     padding: 0.25rem 0.75em;
     border-radius: 0.25em 0.25em 0 0;
