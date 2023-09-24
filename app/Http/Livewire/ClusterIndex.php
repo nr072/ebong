@@ -42,10 +42,10 @@ class ClusterIndex extends Component
     // Search filters (if any) are applied.
     public function applySearchFilters()
     {
-        $query = Cluster::orderBy('title');
+        $query = Cluster::orderBy('name');
         
         if ($this->searched) {
-            $query = $query->where('title', 'like', '%'.$this->searched.'%');
+            $query = $query->where('name', 'like', '%'.$this->searched.'%');
         }
 
         $this->allClusters = $query->paginate($this->paginCount);

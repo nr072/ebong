@@ -113,7 +113,7 @@
 
                             <td class="cell-cluster">
                                 @foreach ($sentence->clusters as $cluster)
-                                    <div>{{ $cluster->title }}</div>
+                                    <div>{{ $cluster->name }}</div>
                                 @endforeach
                             </td>
 

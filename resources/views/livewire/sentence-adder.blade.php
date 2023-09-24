@@ -24,7 +24,7 @@
                         @if (!in_array($cluster->id, $chosenClusterIds, true))
 
                             <button class="dropdown-option" wire:click="associateCluster({{ $cluster->id }})">
-                                <b>{{ $cluster->title }}:</b>
+                                <b>{{ $cluster->name }}:</b>
                                 @foreach ($cluster->words as $word)
                                     <span>{{ $word->en }},</span>
                                 @endforeach

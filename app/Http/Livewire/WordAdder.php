@@ -142,7 +142,7 @@ class WordAdder extends Component
 
     public function render()
     {
-        $this->allClusters = Cluster::orderBy('title')->get();
+        $this->allClusters = Cluster::orderBy('name')->get();
 
         $this->applySearchFilters();
 

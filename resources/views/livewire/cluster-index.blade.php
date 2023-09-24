@@ -3,7 +3,7 @@
     <h1>Clusters</h1>
 
     <label class="input-label-set">
-        <span class="input-label">Title</span>
+        <span class="input-label">Name</span>
         <input type="text" wire:model="searched" placeholder="Type to search clusters">
         @if ($searched)
             <button class="button" wire:click="resetSearched">&times;</button>
@@ -17,7 +17,7 @@
 
                 <li class="mt-2">
 
-                    <span>{{ $cluster->title }}</span>
+                    <span>{{ $cluster->name }}</span>
 
                     <button class="button warning mb-0 ml-1"
                         wire:click="editCluster({{ $cluster->id }})"

@@ -41,7 +41,7 @@
                     <option value="0">Select cluster</option>
                     @foreach ($clusters as $cluster)
                         <option value="{{ $cluster->id }}">
-                            {{ $cluster->title }}
+                            {{ $cluster->name }}
                             ({{ $cluster->words->count() }} word{{ $cluster->words->count() > 1 ? 's' : '' }})
                         </option>
                     @endforeach
@@ -68,7 +68,7 @@
                                 <small><i>{{ $word->pos->short }}</i></small>
                             @endif
                             @if ($word->cluster)
-                                (Cluster: {{ $word->cluster->title }})
+                                (Cluster: {{ $word->cluster->name }})
                             @endif
                         </li>
                     @endforeach
@@ -115,7 +115,7 @@
                                 <small><i>{{ $word->pos->short }}</i></small>
                             @endif
                             @if ($word->cluster)
-                                (Cluster: {{ $word->cluster->title }})
+                                (Cluster: {{ $word->cluster->name }})
                             @endif
                         </span>
                     </li>

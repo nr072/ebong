@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class ClusterAdder extends Component
 {
 
-    public $title = "";
+    public $name = "";
 
     // Once a word has been added to a cluster, it shouldn't show up as
     // a suggestion to be added to another cluster.
@@ -24,7 +24,7 @@ class ClusterAdder extends Component
 
     protected $queryString = [
         'searchedWord' => ['except' => '', 'as' => 'af-word'],
-        'title' => ['except' => '', 'as' => 'af-title'],
+        'name' => ['except' => '', 'as' => 'af-name'],
     ];
 
     // Contains the results after the search filter has been applied.
@@ -48,7 +48,7 @@ class ClusterAdder extends Component
 
     // Validation rules.
     protected $rules = [
-        'title' => 'required|string|max:50',
+        'name' => 'required|string|max:50',
         'chosenWordIds' => 'required|array|min:1',
         'chosenWordIds.*' => 'numeric',
     ];
@@ -66,7 +66,7 @@ class ClusterAdder extends Component
 
         // Cluster creation.
         $newCluster = Cluster::create([
-            'title' => $validatedData['title'],
+            'name' => $validatedData['name'],
         ]);
 
         // Selected words are included in the newly created cluster.

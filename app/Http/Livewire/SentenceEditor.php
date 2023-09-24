@@ -205,7 +205,7 @@ class SentenceEditor extends Component
 
     /*
         When a string is typed, its match is searched in both word en and
-        cluster titles (as opposed to in cluster titles only) but the cluster is
+        cluster names (as opposed to in cluster names only) but the cluster is
         what's shown in the dropdown in the end.
 
         This is done for the sake of user convenience. This allows the
@@ -222,9 +222,9 @@ class SentenceEditor extends Component
     {
         if ($this->searchedCluster) {
 
-            // A list of clusters whose own titles match the search string.
-            $clustersFromCluster = Cluster::orderBy('title')
-                            ->where('title', 'like', $this->searchedCluster.'%')
+            // A list of clusters whose own names match the search string.
+            $clustersFromCluster = Cluster::orderBy('name')
+                            ->where('name', 'like', $this->searchedCluster.'%')
                             ->get();
 
             // A list of clusters whose words match the search string.
@@ -290,7 +290,7 @@ class SentenceEditor extends Component
     public function render()
     {
 
-        $this->allClusters = Cluster::orderBy('title')->pluck('title', 'id');
+        $this->allClusters = Cluster::orderBy('name')->pluck('name', 'id');
 
         $this->applySearchFilters();
 

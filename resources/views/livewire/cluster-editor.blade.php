@@ -8,7 +8,7 @@
 
         @if ($cluster)
 
-            <h1>{{ $cluster->title }}</h1>
+            <h1>{{ $cluster->name }}</h1>
 
             @if ($cluster->words->count() > 0)
                 <p class="mb-1">Words already associated with this cluster:</p>

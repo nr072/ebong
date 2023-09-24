@@ -5,19 +5,19 @@
     @if ($clusterlessWords->count() > 0)
 
         <label class="input-label-set">
-            <span class="input-label required">Title</span>
+            <span class="input-label required">Name</span>
             <input type="text"
-                wire:model="title" wire:keydown.enter="createCluster"
-                placeholder="Enter cluster title here"
+                wire:model="name" wire:keydown.enter="createCluster"
+                placeholder="Enter cluster name here"
                 required
             >
-            @if ($title)
+            @if ($name)
                 <button class="button input-clear-btn"
-                    wire:click="resetInput('title')"
+                    wire:click="resetInput('name')"
                 >&times;</button>
             @endif
         </label>
-        @error ('title')
+        @error ('name')
             <span class="error">{{ $message }}</span>
         @enderror
 
