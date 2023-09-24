@@ -6,7 +6,7 @@
 
     <div>
         <textarea wire:model.lazy="input"
-            class="w-full max-w-full" style="min-height: 40vh;"
+            class="bulk-adder-input w-full max-w-full" style="min-height: 40vh;"
             placeholder="{{ $taPlaceholder }}"
         ></textarea>
         @error ('input')

@@ -1,14 +1,15 @@
-<section class="half-width-section">
+<section class="group-adder half-width-section">
 
     <h1>Add a group</h1>
 
     @if ($grouplessWords->count() > 0)
 
         <label class="input-label-set">
-            <span>Title</span>
+            <span class="input-label required">Title</span>
             <input type="text"
                 wire:model="title" wire:keydown.enter="createGroup"
                 placeholder="Enter group title here"
+                required
             >
         </label>
         @error ('title')
@@ -16,10 +17,11 @@
         @enderror
 
         <label class="input-label-set">
-            <span>Word(s)</span>
+            <span class="input-label required">Word(s)</span>
             <input type="text" class="searched-word"
                 wire:model="searchedWord" wire:keydown.enter="createGroup"
                 placeholder="Type to search words"
+                required
             >
         </label>
         @error ('chosenWordIds')

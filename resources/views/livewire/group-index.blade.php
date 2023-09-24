@@ -3,7 +3,7 @@
     <h1>Groups</h1>
 
     <label class="input-label-set">
-        <span>Title</span>
+        <span class="input-label">Title</span>
         <input type="text" wire:model="searched" placeholder="Type to search groups">
         @if ($searched)
             <button class="button" wire:click="resetSearched">&times;</button>

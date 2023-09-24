@@ -4,7 +4,7 @@
 
     @if ($allGroups->count() > 0)
 
-        <span>Associate with: </span>
+        <span class="required">Associate with:</span>
         <div>
             <input type="text" class="searched-group mr-5"
                 wire:model="searchedGroup"
@@ -67,9 +67,10 @@
                     <div class="flex justify-between">
 
                         <label class="input-label-set w-3/4">
-                            <span>Source</span>
+                            <span class="input-label required">Source</span>
                             <input type="text"
                                 wire:model.lazy="inputs.{{ $sentenceIndex }}.sourceText" wire:keydown.enter="createSentence"
+                                required
                             >
                             @error ('inputs.'.$sentenceIndex.'.sourceText')
                                 <span class="error">{{ $message }}</span>
@@ -77,8 +78,8 @@
                         </label>
 
                         <label class="input-label-set w-1/6">
-                            <span>Language</span>
-                            <select wire:model="inputs.{{ $sentenceIndex }}.sourceLang">
+                            <span class="input-label required">Language</span>
+                            <select wire:model="inputs.{{ $sentenceIndex }}.sourceLang" required>
                                 {{-- TODO: Language names need to be fetched
                                      from the database and dynamically added
                                      here. --}}
@@ -95,7 +96,7 @@
                         <div class="flex justify-between -mt-3 -mb-2">
 
                             <label class="input-label-set w-3/4">
-                                <span>Target</span>
+                                <span class="input-label">Target</span>
                                 <input type="text"
                                     wire:model.lazy="inputs.{{ $sentenceIndex }}.translations.{{ $senTransIndex }}.targetText" wire:keydown.enter="createSentence"
                                 >
@@ -105,7 +106,7 @@
                             </label>
 
                             <label class="input-label-set w-1/6">
-                                <span>Language</span>
+                                <span class="input-label">Language</span>
                                 <select wire:model="inputs.{{ $sentenceIndex }}.translations.{{ $senTransIndex }}.targetLang">>
                                     {{-- TODO: Language names need to be fetched
                                          from the database and dynamically added
@@ -129,7 +130,7 @@
                     <div class="w-1/2 mr-8">
 
                         <label class="input-label-set">
-                            <span>String key</span>
+                            <span class="input-label">String key</span>
                             <input type="text"
                                 wire:model="inputs.{{ $sentenceIndex }}.stringKey" wire:keydown.enter="createSentence"
                             >
@@ -139,7 +140,7 @@
                         </label>
 
                         <label class="input-label-set">
-                            <span>Context</span>
+                            <span class="input-label">Context</span>
                             <input type="text"
                                 wire:model="inputs.{{ $sentenceIndex }}.context" wire:keydown.enter="createSentence"
                             >
@@ -149,7 +150,7 @@
                         </label>
 
                         <label class="input-label-set">
-                            <span>Subcontext</span>
+                            <span class="input-label">Subcontext</span>
                             <input type="text"
                                 wire:model.lazy="inputs.{{ $sentenceIndex }}.subcontext" wire:keydown.enter="createSentence"
                             >
@@ -159,7 +160,7 @@
                         </label>
 
                         <label class="input-label-set">
-                            <span>Project</span>
+                            <span class="input-label">Project</span>
                             <input type="text"
                                 wire:model.lazy="inputs.{{ $sentenceIndex }}.project" wire:keydown.enter="createSentence"
                             >
@@ -167,7 +168,7 @@
                                 <span class="error">{{ $message }}</span>
                             @enderror
                             @if ($canShowProjectDropdown)
-                                <span class="dropdown" style="margin-top: 1.5rem; margin-left: 6rem;">
+                                <div class="dropdown" style="margin-top: 1.5rem; margin-left: 6rem;">
 
                                     <button class="button" style="float: right;"
                                         wire:click="toggleProjectDropdown(0)"
@@ -181,12 +182,12 @@
                                         @endif
                                     @endforeach
 
-                                </span>
+                                </div>
                             @endif
                         </label>
 
                         <label class="input-label-set">
-                            <span>Link 1</span>
+                            <span class="input-label">Link 1</span>
                             <input type="url"
                                 wire:model.lazy="inputs.{{ $sentenceIndex }}.link1" wire:keydown.enter="createSentence"
                             >
@@ -196,7 +197,7 @@
                         </label>
 
                         <label class="input-label-set">
-                            <span>Link 2</span>
+                            <span class="input-label">Link 2</span>
                             <input type="url"
                                 wire:model.lazy="inputs.{{ $sentenceIndex }}.link2" wire:keydown.enter="createSentence"
                             >
@@ -206,7 +207,7 @@
                         </label>
 
                         <label class="input-label-set">
-                            <span>Link 3</span>
+                            <span class="input-label">Link 3</span>
                             <input type="url"
                                 wire:model.lazy="inputs.{{ $sentenceIndex }}.link3" wire:keydown.enter="createSentence"
                             >
@@ -247,8 +248,10 @@
                         <p class="mt-5">
                             <label class="cursor-p" title="Click to mark this sentence">
                                 <input type="checkbox" class="ml-0"
-                                    wire:model="inputs.{{ $sentenceIndex }}.needsRevision">
-                                <span>Revision needed</span>
+                                    wire:model="inputs.{{ $sentenceIndex }}.needsRevision"
+                                    required
+                                >
+                                <span class="required">Revision needed</span>
                             </label>
                             @error ('inputs.'.$sentenceIndex.'.needsRevision')
                                 <span class="error">{{ $message }}</span>

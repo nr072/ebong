@@ -258,7 +258,7 @@ input[type="search" i]::-webkit-search-cancel-button {
     align-items: baseline;
 }
 
-.input-label-set > span:not(.error) {
+.input-label-set > span.input-label {
     text-transform: uppercase;
     font-size: 0.7em;
     font-family: sans-serif;
@@ -331,7 +331,6 @@ input[type="search" i]::-webkit-search-cancel-button {
 
 
 .dropdown {
-    margin-bottom: 0.5rem;
     padding: 0.25rem;
     border: 1px solid #ccc;
     max-height: 25vh;
@@ -366,6 +365,15 @@ input[type="search" i]::-webkit-search-cancel-button {
 
 .cursor-p {
     cursor: pointer;
+}
+
+
+
+.required::after {
+    content: '*';
+    color: indianred;
+    font-size: 1rem;
+    margin: 0 0.15em;
 }
 
 
@@ -704,4 +712,11 @@ td.cell-group {
     font-size: 0.8rem;
     max-height: 50vh;
     overflow: auto;
+}
+
+.sentence-bulk-adder .bulk-adder-input {
+    width: 100%;
+    font-family: courier, monospace;
+    font-size: 0.8em;
+    line-height: 1.25em;
 }

@@ -6,10 +6,11 @@
 
         <div>
             <label class="input-label-set">
-                <span>Word</span>
+                <span class="input-label required">Word</span>
                 <input type="text"
                     wire:model="newWordEn" wire:keydown.enter="addWord"
                     placeholder="Enter a new word here"
+                    required
                 >
             </label>
             @error ('newWordEn')
@@ -17,7 +18,7 @@
             @enderror
 
             <label class="input-label-set">
-                <span>POS</span>
+                <span class="input-label">POS</span>
                 <select wire:model="newWordPos">
                     <option value="0">Select part of speech</option>
                     @foreach ($poses as $id => $en)
@@ -30,7 +31,7 @@
             @enderror
 
             <label class="input-label-set">
-                <span>Group</span>
+                <span class="input-label">Group</span>
                 <select wire:model="newWordGroup">
                     <option value="0">Select group</option>
                     @foreach ($groups as $group)
@@ -82,7 +83,7 @@
         <h1>Words</h1>
 
         <label class="input-label-set">
-            <span>Word</span>
+            <span class="input-label">Word</span>
             <input type="search" wire:model="searchedEn" placeholder="Type to search en words">
             @if ($searchedEn)
                 <button class="button" wire:click="resetSearchedEn">&times;</button>
