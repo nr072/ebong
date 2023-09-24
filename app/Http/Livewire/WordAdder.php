@@ -133,6 +133,13 @@ class WordAdder extends Component
 
 
 
+    // Specified input fields are cleared.
+    public function resetInput($fieldName = '') {
+        $this->reset($fieldName);
+    }
+
+
+
     public function render()
     {
         $this->allGroups = Group::orderBy('title')->get();

@@ -11,6 +11,11 @@
                 placeholder="Enter group title here"
                 required
             >
+            @if ($title)
+                <button class="button input-clear-btn"
+                    wire:click="resetInput('title')"
+                >&times;</button>
+            @endif
         </label>
         @error ('title')
             <span class="error">{{ $message }}</span>
@@ -23,6 +28,11 @@
                 placeholder="Type to search words"
                 required
             >
+            @if ($searchedWord)
+                <button class="button input-clear-btn"
+                    wire:click="resetInput('searchedWord')"
+                >&times;</button>
+            @endif
         </label>
         @error ('chosenWordIds')
             <span class="error">{{ $message }}</span>

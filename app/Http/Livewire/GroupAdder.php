@@ -24,6 +24,7 @@ class GroupAdder extends Component
 
     protected $queryString = [
         'searchedWord' => ['except' => '', 'as' => 'af-word'],
+        'title' => ['except' => '', 'as' => 'af-title'],
     ];
 
     // Contains the results after the search filter has been applied.
@@ -114,6 +115,7 @@ class GroupAdder extends Component
     public function addWordToGroup($id)
     {
         array_push($this->chosenWordIds, $id);
+        $this->reset('searchedWord');
 
         // Used for focusing the assoc word input field.
         $this->emit('word-added-to-group');
@@ -127,6 +129,13 @@ class GroupAdder extends Component
 
         // Used for focusing the assoc word input field.
         $this->emit('word-removed-from-group');
+    }
+
+
+
+    // Specified input fields are cleared.
+    public function resetInput($fieldName = '') {
+        $this->reset($fieldName);
     }
 
 

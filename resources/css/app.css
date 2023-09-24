@@ -402,8 +402,11 @@ input[type="search" i]::-webkit-search-cancel-button {
 input + button.input-clear-btn {
     margin: 0;
     padding: 0.15rem 0.5rem;
-    line-height: 1.25em;
-    font-size: 1em;
+    line-height: 1.5em;
+    font-size: 0.75em;
+    border-width: 2px;
+    border-color: var(--color-1-lightest);
+    height: 2.05em;
 }
 
 
@@ -542,7 +545,7 @@ span.label {
 
 
 /* ------------------------------------------------------------------
-                                WORD ADDER
+                            WORD ADDER
    ------------------------------------------------------------------ */
 
 .word-adder {
@@ -605,20 +608,20 @@ span.label {
 }
 
 .sentence-index .search-panel input,
-.sentence-index .search-panel input + button {
+.sentence-index .search-panel .input-clear-btn {
     border-radius: 0;
     line-height: .5rem;
     height: 1.5rem;
     margin: 0.25rem 3rem 0.25rem 1rem;
 }
 
-.sentence-index .search-panel input + button {
+.sentence-index .search-panel .input-clear-btn {
     position: absolute;
     margin: 0.25rem 0 0 -3rem;
-    border-color: transparent;
-    background: var(--color-1);
+    border-color: var(--color-1-lightest);
+    background: var(--color-1-lighter);
 }
-.sentence-index .search-panel input + button:hover {
+.sentence-index .search-panel .input-clear-btn:hover {
     outline: 1px solid var(--color-1-dark);
     background: var(--color-1);
 }
@@ -697,11 +700,9 @@ td.cell-group {
 
 
 
-/* ==================================================================
-
-                              SENTENCE ADDER
-
-   ================================================================== */
+/* ------------------------------------------------------------------
+                            SENTENCE ADDER
+   ------------------------------------------------------------------ */
 
 .new-sentence-fields-wrap {
     padding: 1em 1.5rem 2rem;
@@ -719,11 +720,9 @@ td.cell-group {
 
 
 
-/* ==================================================================
-
+/* ------------------------------------------------------------------
                         SENTENCE BULK ADDER
-
-   ================================================================== */
+   ------------------------------------------------------------------ */
 
 .sentence-bulk-adder .json-preview {
     font-size: 0.8rem;

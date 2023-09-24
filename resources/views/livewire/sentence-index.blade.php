@@ -14,7 +14,7 @@
                     placeholder="Type to filter source text"
                 >
                 @if ($searchedSourceText)
-                    <button class="button"
+                    <button class="button input-clear-btn"
                         wire:click="resetSearched('sourceText')"
                         title="Click to clear searched string"
                     >&times;</button>
@@ -27,20 +27,20 @@
                     placeholder="Type to filter target text"
                 >
                 @if ($searchedTargetText)
-                    <button class="button"
+                    <button class="button input-clear-btn"
                         wire:click="resetSearched('targetText')"
                         title="Click to clear searched string"
                     >&times;</button>
                 @endif
             </div>
-            <div class="mt-1">
+            <div>
                 <input type="text"
                     wire:model="searchedContext"
                     class="w-96" 
                     placeholder="Type to filter context"
                 >
                 @if ($searchedContext)
-                    <button class="button"
+                    <button class="button input-clear-btn"
                         wire:click="resetSearched('context')"
                         title="Click to clear searched string"
                     >&times;</button>
@@ -55,7 +55,7 @@
                     placeholder="Type to filter associated group"
                 >
                 @if ($searchedGroup)
-                    <button class="button"
+                    <button class="button input-clear-btn"
                         wire:click="resetSearched('group')"
                         title="Click to clear searched string"
                     >&times;</button>
@@ -67,7 +67,7 @@
                     placeholder="Type to filter project"
                 >
                 @if ($searchedProject)
-                    <button class="button"
+                    <button class="button input-clear-btn"
                         wire:click="resetSearched('project')"
                         title="Click to clear searched string"
                     >&times;</button>

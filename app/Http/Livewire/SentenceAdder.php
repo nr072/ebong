@@ -421,6 +421,40 @@ class SentenceAdder extends Component
 
 
 
+    // Specified input fields are cleared.
+    public function resetInput(
+        $sentenceIndex = null,
+        $field = '',
+        $nestedIndex = null,
+        $nestedField = null
+    ) {
+        // If nested index and nested field name are provided, only
+        // they are cleared. If they aren't provided, the entire field
+        // is reset.
+        if (isset($nestedIndex) && isset($nestedField)) {
+
+            $nestedIndex = intval($nestedIndex);
+            $nestedValueSize = sizeof($this->inputs[$sentenceIndex][$field]);
+            if ($nestedIndex < 0 || $nestedIndex > $nestedValueSize) {
+                return;
+            }
+
+            $this->inputs[$sentenceIndex][$field][$nestedIndex][$nestedField] = '';
+
+        } else {
+
+            $sentenceIndex = intval($sentenceIndex);
+            if ($sentenceIndex < 0 || $sentenceIndex > sizeof($this->inputs)) {
+                return;
+            }
+
+            $this->inputs[$sentenceIndex][$field] = '';
+
+        }
+    }
+
+
+
     public function updatedInputs()
     {
         if ($this->canEnableAutosuggestion) {

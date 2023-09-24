@@ -63,7 +63,7 @@
         @foreach ($inputs as $sentenceIndex => $sentence)
             <fieldset class="new-sentence-fields-wrap flex flex-col">
 
-                <div class="mb-1">
+                <div>
                     <div class="flex justify-between">
 
                         <label class="input-label-set w-3/4">
@@ -72,6 +72,11 @@
                                 wire:model.lazy="inputs.{{ $sentenceIndex }}.sourceText" wire:keydown.enter="createSentence"
                                 required
                             >
+                            @if ($inputs[$sentenceIndex]['sourceText'])
+                                <button class="button input-clear-btn"
+                                    wire:click="resetInput({{ $sentenceIndex }}, 'sourceText')"
+                                >&times;</button>
+                            @endif
                             @error ('inputs.'.$sentenceIndex.'.sourceText')
                                 <span class="error">{{ $message }}</span>
                             @enderror
@@ -93,13 +98,18 @@
                     </div>
 
                     @foreach ($sentence['translations'] as $senTransIndex => $senTrans)
-                        <div class="flex justify-between -mt-3 -mb-2">
+                        <div class="flex justify-between -mt-2 -mb-1">
 
                             <label class="input-label-set w-3/4">
                                 <span class="input-label">Target</span>
                                 <input type="text"
                                     wire:model.lazy="inputs.{{ $sentenceIndex }}.translations.{{ $senTransIndex }}.targetText" wire:keydown.enter="createSentence"
                                 >
+                                @if ($inputs[$sentenceIndex]['translations'][$senTransIndex]['targetText'])
+                                    <button class="button input-clear-btn"
+                                        wire:click="resetInput({{ $sentenceIndex }}, 'translations', {{ $senTransIndex }}, 'targetText')"
+                                    >&times;</button>
+                                @endif
                                 @error ('inputs.'.$sentenceIndex.'.translations.'.$senTransIndex.'.targetText')
                                     <span class="error">{{ $message }}</span>
                                 @enderror
@@ -134,6 +144,11 @@
                             <input type="text"
                                 wire:model="inputs.{{ $sentenceIndex }}.stringKey" wire:keydown.enter="createSentence"
                             >
+                            @if ($inputs[$sentenceIndex]['stringKey'])
+                                <button class="button input-clear-btn"
+                                    wire:click="resetInput({{ $sentenceIndex }}, 'stringKey')"
+                                >&times;</button>
+                            @endif
                             @error ('inputs.'.$sentenceIndex.'.stringKey')
                                 <span class="error">{{ $message }}</span>
                             @enderror
@@ -144,6 +159,11 @@
                             <input type="text"
                                 wire:model="inputs.{{ $sentenceIndex }}.context" wire:keydown.enter="createSentence"
                             >
+                            @if ($inputs[$sentenceIndex]['context'])
+                                <button class="button input-clear-btn"
+                                    wire:click="resetInput({{ $sentenceIndex }}, 'context')"
+                                >&times;</button>
+                            @endif
                             @error ('inputs.'.$sentenceIndex.'.context')
                                 <span class="error">{{ $message }}</span>
                             @enderror
@@ -154,6 +174,11 @@
                             <input type="text"
                                 wire:model.lazy="inputs.{{ $sentenceIndex }}.subcontext" wire:keydown.enter="createSentence"
                             >
+                            @if ($inputs[$sentenceIndex]['subcontext'])
+                                <button class="button input-clear-btn"
+                                    wire:click="resetInput({{ $sentenceIndex }}, 'subcontext')"
+                                >&times;</button>
+                            @endif
                             @error ('inputs.'.$sentenceIndex.'.subcontext')
                                 <span class="error">{{ $message }}</span>
                             @enderror
@@ -164,6 +189,11 @@
                             <input type="text"
                                 wire:model.lazy="inputs.{{ $sentenceIndex }}.project" wire:keydown.enter="createSentence"
                             >
+                            @if ($inputs[$sentenceIndex]['project'])
+                                <button class="button input-clear-btn"
+                                    wire:click="resetInput({{ $sentenceIndex }}, 'project')"
+                                >&times;</button>
+                            @endif
                             @error ('inputs.'.$sentenceIndex.'.project')
                                 <span class="error">{{ $message }}</span>
                             @enderror
@@ -191,6 +221,11 @@
                             <input type="url"
                                 wire:model.lazy="inputs.{{ $sentenceIndex }}.link1" wire:keydown.enter="createSentence"
                             >
+                            @if ($inputs[$sentenceIndex]['link1'])
+                                <button class="button input-clear-btn"
+                                    wire:click="resetInput({{ $sentenceIndex }}, 'link1')"
+                                >&times;</button>
+                            @endif
                             @error ('inputs.'.$sentenceIndex.'.link1')
                                 <span class="error">{{ $message }}</span>
                             @enderror
@@ -201,6 +236,11 @@
                             <input type="url"
                                 wire:model.lazy="inputs.{{ $sentenceIndex }}.link2" wire:keydown.enter="createSentence"
                             >
+                            @if ($inputs[$sentenceIndex]['link2'])
+                                <button class="button input-clear-btn"
+                                    wire:click="resetInput({{ $sentenceIndex }}, 'link2')"
+                                >&times;</button>
+                            @endif
                             @error ('inputs.'.$sentenceIndex.'.link2')
                                 <span class="error">{{ $message }}</span>
                             @enderror
@@ -211,6 +251,11 @@
                             <input type="url"
                                 wire:model.lazy="inputs.{{ $sentenceIndex }}.link3" wire:keydown.enter="createSentence"
                             >
+                            @if ($inputs[$sentenceIndex]['link3'])
+                                <button class="button input-clear-btn"
+                                    wire:click="resetInput({{ $sentenceIndex }}, 'link3')"
+                                >&times;</button>
+                            @endif
                             @error ('inputs.'.$sentenceIndex.'.link3')
                                 <span class="error">{{ $message }}</span>
                             @enderror
@@ -235,7 +280,7 @@
                                 <span class="error">{{ $message }}</span>
                             @enderror
 
-                            <textarea class="disp-b mt-2 w-full h-20 p-2 font-sans" 
+                            <textarea class="disp-b mt-2 w-full h-20 p-2" 
                                 wire:model="inputs.{{ $sentenceIndex }}.note"
                                 wire:keydown.ctrl.enter="createSentence"
                                 placeholder="Enter optional notes/references here"

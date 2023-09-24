@@ -106,7 +106,7 @@ class SentenceIndex extends Component
 
         // Sentence translations exist in another table.
         if ($this->searchedTargetText !== '') {
-            $query = $query->whereHas('sentence_translations', function ($query){
+            $query = $query->whereHas('translations', function ($query){
                         $query->where('text', 'like', '%'.$this->searchedTargetText.'%');
             });
         }

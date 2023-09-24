@@ -12,6 +12,11 @@
                     placeholder="Enter a new word here"
                     required
                 >
+                @if ($newWordEn)
+                    <button class="button input-clear-btn"
+                        wire:click="resetInput('newWordEn')"
+                    >&times;</button>
+                @endif
             </label>
             @error ('newWordEn')
                 <span class="error">{{ $message }}</span>
@@ -83,9 +88,14 @@
 
         <label class="input-label-set">
             <span class="input-label">Word</span>
-            <input type="search" wire:model="searchedEn" placeholder="Type to search en words">
+            <input type="search"
+                wire:model="searchedEn"
+                placeholder="Type to search en words"
+            >
             @if ($searchedEn)
-                <button class="button" wire:click="resetSearchedEn">&times;</button>
+                <button class="button input-clear-btn"
+                    wire:click="resetSearchedEn"
+                >&times;</button>
             @endif
         </label>
 
