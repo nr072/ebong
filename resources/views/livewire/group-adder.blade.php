@@ -60,6 +60,23 @@
             @empty($title) disabled @endempty
         >Confirm</button>
 
+        {{-- A list of words that don't belong to any groups yet. --}}
+        @if ($grouplessWords->count() > 0)
+            <div class="my-8">
+                <span>Available words:</span>
+                <ul class="groupless-word-list">
+                    @foreach ($grouplessWords as $word)
+                        <li>
+                            {{ $word->en }}
+                            @if ($word->pos)
+                                <small><i>{{ $word->pos->short }}</i></small>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <p>Status: <span class="{{ $status['type'] }}">{{ $status['text'] }}</span></p>
 
 
