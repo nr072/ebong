@@ -4,8 +4,8 @@
 
     @if ($allGroups->count() > 0)
 
-        <span class="required">Associate with:</span>
         <div>
+            <span class="required">Associate with:</span>
             <input type="text" class="searched-group mr-5"
                 wire:model="searchedGroup"
                 wire:keydown.enter="createSentence"
@@ -14,7 +14,7 @@
 
             {{-- Dropdown that shows groups matching the search string --}}
             @if ($filteredGroups->count() > 0 && $canShowGroupDropdown)
-                <div class="dropdown">
+                <div class="dropdown" style="margin-left: 7em;">
 
                     <button class="button" style="float: right;"
                         wire:click="toggleGroupDropdown(0)"
@@ -271,7 +271,6 @@
 
         <button class="button emerald block w-1/2 mt-4 mx-auto"
             wire:click="createSentence"
-            @empty($inputs[0]['sourceText']) disabled @endempty
         >Confirm & add sentence(s)</button>
 
         <p>Status: <span class="{{ $status['type'] }}">{{ $status['text'] }}<span></p>

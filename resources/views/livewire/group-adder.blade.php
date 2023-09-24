@@ -42,6 +42,8 @@
             </div>
         @endif
 
+
+
         @if (sizeof($chosenWordIds) > 0)
             <div class="mt-4">Already added words:
             @foreach ($chosenWordIds as $id)
@@ -55,10 +57,7 @@
             </div>
         @endif
 
-        <button class="button emerald block w-1/2 mt-4 mx-auto"
-            wire:click="createGroup"
-            @empty($title) disabled @endempty
-        >Confirm</button>
+
 
         {{-- A list of words that don't belong to any groups yet. --}}
         @if ($grouplessWords->count() > 0)
@@ -76,6 +75,12 @@
                 </ul>
             </div>
         @endif
+
+
+
+        <button class="button emerald block w-1/2 mt-4 mx-auto"
+            wire:click="createGroup"
+        >Confirm</button>
 
         <p>Status: <span class="{{ $status['type'] }}">{{ $status['text'] }}</span></p>
 

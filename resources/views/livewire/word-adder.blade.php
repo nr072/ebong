@@ -48,7 +48,6 @@
 
             <button class="button emerald block w-1/2 mt-4 mx-auto"
                 wire:click="addWord"
-                @empty($newWordEn) disabled @endempty
             >Confirm</button>
         </div>
 
